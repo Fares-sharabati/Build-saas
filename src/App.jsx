@@ -83,11 +83,11 @@ const storage = {
 // ─── Theme tokens ──────────────────────────────────────────────────────────────
 const DARK_THEME = {
   // surfaces
-  bg:"#09111f",         surface:"#0f1a2e",   card:"#14213d",
-  surf2:"#0a1526",      // table header
+  bg:"#080e1c",         surface:"#0e1828",   card:"#131f36",
+  surf2:"rgba(255,255,255,0.04)",  // table header
 
   // borders
-  border:"#1e3050",     border2:"#2d4a70",
+  border:"rgba(255,255,255,0.09)",   border2:"rgba(255,255,255,0.16)",
 
   // accent — same blue (lighter for dark bg)
   accent:"#3b82f6",     accentDim:"#1e3a6e",   accentMid:"#2563eb88",
@@ -101,7 +101,7 @@ const DARK_THEME = {
 
   // text scale
   text:"#e2e8f0",       text2:"#cbd5e1",
-  text3:"#64748b",      muted:"#475569",
+  text3:"#94a3b8",      muted:"#64748b",
 
   // chrome
   navy:"#09111f",       navy2:"#0f1a2e",
@@ -740,6 +740,7 @@ function RowActions({ children, align="left" }){
  * variant: "primary" | "secondary" | "danger" | "success"
  */
 function Btn({ onClick, disabled, variant="primary", color, size="md", children, style:xs={} }){
+  const [hov,setHov] = useState(false);
   const pad = size==="sm"?"6px 12px":size==="lg"?"11px 24px":"9px 18px";
   const fs  = size==="sm"?12:size==="lg"?14:13;
   const fw  = 600;
@@ -752,12 +753,22 @@ function Btn({ onClick, disabled, variant="primary", color, size="md", children,
     ghost:     ()=>({ background:"transparent",      color:C.text3||C.muted, border:`1px solid ${C.border}` }),
   };
   const base = (bases[variant]||bases.primary)();
+  const hovMap = {
+    primary:   { opacity:.87 },
+    secondary: { background:C.card, borderColor:C.border2||C.border },
+    danger:    { background:C.red+"22", borderColor:C.red+"55" },
+    success:   { opacity:.87 },
+    ghost:     { background:C.surf2||C.surface, color:C.text2||C.text },
+  };
+  const hoverStyle = (hov && !disabled) ? (hovMap[variant]||hovMap.primary) : {};
   const disabledStyle = disabled ? { opacity:0.5, cursor:"not-allowed", boxShadow:"none" } : {};
   return(
     <button onClick={onClick} disabled={disabled}
-      style={{ ...base, ...disabledStyle, padding:pad, borderRadius:8, fontFamily:F, fontWeight:fw,
+      onMouseEnter={()=>!disabled&&setHov(true)}
+      onMouseLeave={()=>setHov(false)}
+      style={{ ...base, ...disabledStyle, ...hoverStyle, padding:pad, borderRadius:8, fontFamily:F, fontWeight:fw,
         fontSize:fs, cursor:disabled?"not-allowed":"pointer", display:"inline-flex", alignItems:"center",
-        gap:6, whiteSpace:"nowrap", transition:"opacity .15s, box-shadow .15s", ...xs }}>
+        gap:6, whiteSpace:"nowrap", transition:"opacity 150ms, box-shadow 150ms, background 150ms, color 150ms", ...xs }}>
       {children}
     </button>
   );
@@ -1099,7 +1110,7 @@ function ContactModal({ client,onClose }){
           </div>
         ))}
         <div style={{ display:"flex",gap:8,marginTop:18 }}>
-          <a href={`tel:${client.phone}`} style={{ flex:1,background:C.accent,color:"#000",padding:"10px 0",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,textDecoration:"none",textAlign:"center" }}>Call</a>
+          <a href={`tel:${client.phone}`} style={{ flex:1,background:C.accent,color:"#fff",padding:"10px 0",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,textDecoration:"none",textAlign:"center" }}>Call</a>
           <a href={`mailto:${client.email}`} style={{ flex:1,background:C.surface,color:C.text,border:`1px solid ${C.border}`,padding:"10px 0",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,textDecoration:"none",textAlign:"center" }}>Email</a>
         </div>
       </div>
@@ -1250,7 +1261,7 @@ function InvModal({ pending,onConfirm,onCancel }){
             </>
             :<>
               <button onClick={()=>setStep("upload")} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,padding:"11px 18px",borderRadius:8,fontFamily:F,fontSize:13,cursor:"pointer" }}>Back</button>
-              <button onClick={()=>onConfirm({status,desc:desc||invNum||"Invoice",amount,due:dueDate,supplier,invNum,invDate,currency})} style={{ background:C.accent,color:"#000",border:"none",padding:"11px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>Save Invoice</button>
+              <button onClick={()=>onConfirm({status,desc:desc||invNum||"Invoice",amount,due:dueDate,supplier,invNum,invDate,currency})} style={{ background:C.accent,color:"#fff",border:"none",padding:"11px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>Save Invoice</button>
             </>
           }
         </div>
@@ -1291,7 +1302,7 @@ function FilePreviewModal({ file,onClose }){
           </div>
           {dataUrl&&(
             <a href={dataUrl} download={name}
-              style={{ background:C.accent,color:"#fff",border:"none",padding:"7px 14px",borderRadius:7,fontFamily:F,fontWeight:600,fontSize:12,textDecoration:"none",flexShrink:0,display:"flex",alignItems:"center",gap:5,boxShadow:C.sh1||"0 1px 3px rgba(0,0,0,.1)" }}>
+              style={{ background:C.accent,color:"#fff",border:"none",padding:"7px 14px",borderRadius:8,fontFamily:F,fontWeight:600,fontSize:12,textDecoration:"none",flexShrink:0,display:"flex",alignItems:"center",gap:5,boxShadow:C.sh1||"0 1px 3px rgba(0,0,0,.1)" }}>
               <Ic.Attach size={12} color="#fff"/> Download
             </a>
           )}
@@ -2018,7 +2029,7 @@ function PlansPanel({ project,onActivity }){
             </div>
             <div><label style={LBL()}>Notes <span style={{color:C.muted,fontWeight:400}}>(optional)</span></label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={planNotes} onChange={e=>setPlanNotes(e.target.value)} placeholder="Version info, revision notes…"/></div>
           </InlineFormShell>
-        :<button onClick={()=>{ setPlanTitle("");setPlanCat("drawing");setPlanNotes("");setPlanFile(null);setPlanErr("");setShowAdd(true); }} style={{ background:C.blue,color:"#fff",border:"none",padding:"10px 22px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",gap:7 }}>+ Add Document</button>
+        :<button onClick={()=>{ setPlanTitle("");setPlanCat("drawing");setPlanNotes("");setPlanFile(null);setPlanErr("");setShowAdd(true); }} style={{ background:C.accent,color:"#fff",border:"none",padding:"10px 22px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer",display:"flex",alignItems:"center",gap:7 }}>+ Add Document</button>
       }
     </div>
   );
@@ -2067,13 +2078,13 @@ function TeamPanel({ project,onOpenTeamPage }){
             <input style={INP()} placeholder="Phone *" value={tmPhone} onChange={e=>{setTmPhone(e.target.value);setTmErr("");}}/>
           </div>
           <div style={{ display:"flex",gap:8,marginTop:10 }}>
-            <button onClick={submitMember} style={{ background:C.green,color:"#000",border:"none",padding:"8px 16px",borderRadius:7,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer" }}>Add</button>
+            <button onClick={submitMember} style={{ background:C.green,color:"#fff",border:"none",padding:"8px 16px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer" }}>Add</button>
             <button onClick={()=>{setTmName("");setTmPhone("");setTmErr("");setShowAdd(false);}} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,padding:"8px 14px",borderRadius:7,fontFamily:F,fontSize:12,cursor:"pointer" }}>Cancel</button>
           </div>
         </div>
       )}
       <div style={{ display:"flex",gap:8 }}>
-        {!showAdd&&<button onClick={()=>setShowAdd(true)} style={{ background:C.green,color:"#000",border:"none",padding:"9px 16px",borderRadius:7,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>+ Add Member</button>}
+        {!showAdd&&<button onClick={()=>setShowAdd(true)} style={{ background:C.green,color:"#fff",border:"none",padding:"9px 16px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>+ Add Member</button>}
         <button onClick={onOpenTeamPage} style={{ background:"transparent",color:C.text,border:`1px solid ${C.border}`,padding:"9px 16px",borderRadius:7,fontFamily:F,fontWeight:600,fontSize:13,cursor:"pointer" }}>Full Team →</button>
       </div>
     </div>
@@ -2381,12 +2392,12 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
 
                   {/* Actions */}
                   <div style={{ display:"flex",gap:8,flexShrink:0 }}>
-                    <button onClick={()=>setEditing(m)} style={{ background:C.blueDim,color:C.blue,border:`1px solid ${C.blue}44`,padding:"7px 14px",borderRadius:7,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"all .15s" }}
+                    <button onClick={()=>setEditing(m)} style={{ background:C.blueDim,color:C.blue,border:`1px solid ${C.blue}44`,padding:"7px 14px",borderRadius:8,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"background 150ms,color 150ms" }}
                       onMouseEnter={e=>{e.currentTarget.style.background=C.blue;e.currentTarget.style.color="#fff";}}
                       onMouseLeave={e=>{e.currentTarget.style.background=C.blueDim;e.currentTarget.style.color=C.blue;}}>
                       Edit
                     </button>
-                    <button onClick={()=>setDeleting(m)} style={{ background:C.redDim,color:C.red,border:`1px solid ${C.red}44`,padding:"7px 14px",borderRadius:7,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"all .15s" }}
+                    <button onClick={()=>setDeleting(m)} style={{ background:C.redDim,color:C.red,border:`1px solid ${C.red}44`,padding:"7px 14px",borderRadius:8,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"background 150ms,color 150ms" }}
                       onMouseEnter={e=>{e.currentTarget.style.background=C.red;e.currentTarget.style.color="#fff";}}
                       onMouseLeave={e=>{e.currentTarget.style.background=C.redDim;e.currentTarget.style.color=C.red;}}>
                       Delete
@@ -2464,7 +2475,7 @@ function TasksPage({ tasks,addTask,updateTask,removeTask,allProjects=[] }){
               <div style={{ padding:"12px 16px",display:"flex",flexDirection:"column",gap:8 }}>
                 {mtasks.map(t=>(
                   <div key={t.id} style={{ background:C.surface,border:`1px solid ${t.status==="done"?C.green+"44":C.border}`,borderRadius:9,padding:"12px 16px",display:"flex",alignItems:"center",gap:14,opacity:t.status==="done"?.7:1 }}>
-                    <button onClick={()=>updateTask(t.id,{status:t.status==="done"?"pending":"done"})} style={{ width:22,height:22,borderRadius:"50%",border:`2px solid ${t.status==="done"?C.green:C.border}`,background:t.status==="done"?C.green:"transparent",color:"#000",fontSize:12,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center" }}>{t.status==="done"&&<Ic.Check size={10} color={C.green}/>}</button>
+                    <button onClick={()=>updateTask(t.id,{status:t.status==="done"?"pending":"done"})} style={{ width:22,height:22,borderRadius:"50%",border:`2px solid ${t.status==="done"?C.green:C.border}`,background:t.status==="done"?C.green:"transparent",color:"#fff",fontSize:12,cursor:"pointer",flexShrink:0,display:"flex",alignItems:"center",justifyContent:"center" }}>{t.status==="done"&&<Ic.Check size={10} color={C.green}/>}</button>
                     <div style={{ flex:1,minWidth:0 }}>
                       <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:13,textDecoration:t.status==="done"?"line-through":"none" }}>{t.title}</div>
                       {t.desc&&<div style={{ color:C.muted,fontFamily:F,fontSize:11,marginTop:2 }}>{t.desc}</div>}
@@ -2581,7 +2592,7 @@ function UploadOfferModal({ tenderId, onConfirm, onCancel }){
                 <div style={{ fontSize:40,marginBottom:10 }}></div>
                 <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15,marginBottom:6 }}>Drop offer document here</div>
                 <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginBottom:12 }}>PDF · Images · Screenshots · Word docs</div>
-                <div style={{ display:"inline-block",background:C.accent,color:"#000",padding:"9px 22px",borderRadius:7,fontFamily:F,fontWeight:700,fontSize:13 }}>Browse Files</div>
+                <div style={{ display:"inline-block",background:C.accent,color:"#fff",padding:"9px 22px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13 }}>Browse Files</div>
                 <input ref={dropRef} type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.doc,.docx,.txt" style={{ display:"none" }} onChange={e=>{const f=e.target.files[0];if(f)handleFile(f);e.target.value="";}}/>
               </div>
               <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"14px 16px" }}>
@@ -2738,7 +2749,7 @@ function TendersPage({ allProjects=[] }){
               <div><label style={LBL()}>Description (optional)</label><textarea style={{ ...INP(),resize:"none" }} rows={2} placeholder="Specifications, quantity…" value={mDesc} onChange={e=>setMDesc(e.target.value)}/></div>
             </div>
             <div style={{ display:"flex",gap:10,marginTop:22 }}>
-              <button onClick={submitMat} style={{ flex:1,background:C.accent,color:"#000",border:"none",padding:"12px 0",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer" }}>Add Material</button>
+              <button onClick={submitMat} style={{ flex:1,background:C.accent,color:"#fff",border:"none",padding:"12px 0",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer" }}>Add Material</button>
               <button onClick={()=>setShowAddMat(false)} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,padding:"12px 18px",borderRadius:8,fontFamily:F,fontSize:13,cursor:"pointer" }}>Cancel</button>
             </div>
           </div>
@@ -4274,8 +4285,8 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
                     <>
                       <div style={{ display:"flex",justifyContent:"space-between",marginBottom:8,flexWrap:"wrap",gap:8 }}>
                         <div style={{ display:"flex",gap:22,flexWrap:"wrap" }}>
-                          {[["Started",project.startDate||project.startDateFmt||"—"],["Due",project.dueFmt]].map(([k,v])=>(
-                            <div key={k}><div style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase" }}>{k}</div><div style={{ color:C.text,fontFamily:F,fontSize:13,fontWeight:600,marginTop:2 }}>{v}</div></div>
+                          {[["Started",fmtDate(project.startDateISO||project.startDate)||"—"],["Due",project.dueFmt||fmtDate(project.due)||"—"]].map(([k,v])=>(
+                            <div key={k}><div style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase" }}>{k}</div><div style={{ color:C.text2||C.text,fontFamily:F,fontSize:13,fontWeight:600,marginTop:2 }}>{v}</div></div>
                           ))}
                           {days!==null&&(
                             <div><div style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase" }}>Remaining</div>
@@ -4403,7 +4414,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
               <span style={{ background:C.accentDim,color:C.accent,padding:"1px 6px",borderRadius:99,fontSize:10,fontWeight:700 }}>{notes.length}</span>
             </div>
             <textarea value={noteText} onChange={e=>setNoteText(e.target.value)} onKeyDown={e=>{if((e.metaKey||e.ctrlKey)&&e.key==="Enter")saveNote();}} placeholder="Write a note…" rows={3} style={{ resize:"none",background:C.surface,border:`1px solid ${C.border}`,borderRadius:7,padding:"8px 10px",fontSize:12,color:C.text,fontFamily:F,lineHeight:1.5,outline:"none",width:"100%",boxSizing:"border-box" }}/>
-            <button onClick={saveNote} style={{ background:C.accent,color:"#000",border:"none",padding:"7px 0",borderRadius:6,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer" }}>Save</button>
+            <button onClick={saveNote} style={{ background:C.accent,color:"#fff",border:"none",padding:"7px 0",borderRadius:6,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer" }}>Save</button>
             <div style={{ display:"flex",flexDirection:"column",gap:8,maxHeight:280,overflowY:"auto" }}>
               {notes.length===0&&<div style={{ color:C.muted,fontFamily:F,fontSize:11,textAlign:"center",padding:"8px 0" }}>No notes yet</div>}
               {notes.map(n=>(
@@ -4562,7 +4573,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
                       <div style={{ marginBottom:8 }}>{v==="business"?<Ic.Projects size={24} color={projType===v?C.purple:C.muted}/>:<Ic.Team size={24} color={projType===v?C.blue:C.muted}/>}</div>
                       <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>{l}</div>
                       <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:3 }}>{sub}</div>
-                      <div style={{ width:16,height:16,borderRadius:"50%",border:`2px solid ${projType===v?v==="business"?C.purple:C.blue:C.border}`,background:projType===v?v==="business"?C.purple:C.blue:"transparent",marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#000",fontWeight:700 }}>{projType===v&&"✓"}</div>
+                      <div style={{ width:16,height:16,borderRadius:"50%",border:`2px solid ${projType===v?v==="business"?C.purple:C.blue:C.border}`,background:projType===v?v==="business"?C.purple:C.blue:"transparent",marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#fff",fontWeight:700 }}>{projType===v&&"✓"}</div>
                     </div>
                   ))}
                 </div>
@@ -4614,7 +4625,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
             :<button onClick={onCancel} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,padding:"11px 20px",borderRadius:8,fontFamily:F,fontSize:13,cursor:"pointer" }}>Cancel</button>
           }
           {step<3
-            ?<button onClick={goNext} style={{ background:C.accent,color:"#000",border:"none",padding:"11px 32px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>Next →</button>
+            ?<button onClick={goNext} style={{ background:C.accent,color:"#fff",border:"none",padding:"11px 32px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>Next →</button>
             :<Btn onClick={handleSave}>Save Changes</Btn>
           }
         </div>
@@ -4762,7 +4773,7 @@ function NewProjectModal({ onConfirm, onCancel }){
                       <div style={{ marginBottom:8 }}>{v==="business"?<Ic.Projects size={24} color={projType===v?C.purple:C.muted}/>:<Ic.Team size={24} color={projType===v?C.blue:C.muted}/>}</div>
                       <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>{l}</div>
                       <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:3 }}>{sub}</div>
-                      <div style={{ width:16,height:16,borderRadius:"50%",border:`2px solid ${projType===v?v==="business"?C.purple:C.blue:C.border}`,background:projType===v?v==="business"?C.purple:C.blue:"transparent",marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#000",fontWeight:700 }}>{projType===v&&"✓"}</div>
+                      <div style={{ width:16,height:16,borderRadius:"50%",border:`2px solid ${projType===v?v==="business"?C.purple:C.blue:C.border}`,background:projType===v?v==="business"?C.purple:C.blue:"transparent",marginTop:10,display:"flex",alignItems:"center",justifyContent:"center",fontSize:9,color:"#fff",fontWeight:700 }}>{projType===v&&"✓"}</div>
                     </div>
                   ))}
                 </div>
@@ -4825,7 +4836,7 @@ function NewProjectModal({ onConfirm, onCancel }){
           </button>
           <div style={{ display:"flex",gap:10 }}>
             {step<3
-              ?<button onClick={goNext} style={{ background:C.accent,color:"#000",border:"none",padding:"11px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer" }}>Continue →</button>
+              ?<button onClick={goNext} style={{ background:C.accent,color:"#fff",border:"none",padding:"11px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer" }}>Continue →</button>
               :<button onClick={handleCreate} style={{ background:C.green,color:"#fff",border:"none",padding:"11px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",gap:7 }}>Create Project</button>
             }
           </div>
@@ -7026,7 +7037,7 @@ Address the contractor as "the Company". Flag overdue amounts if any.`;
                   <th style={TH({background:C.surf2||C.surface,color:C.text,fontWeight:700})}>Total</th>
                 </tr></thead>
                 <tbody>
-                  <tr style={{background:C.text}}><td colSpan={visCF.length+2} style={{padding:"7px 14px",color:"#fff",fontFamily:F,fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:".9px"}}>Inflows — from payment records</td></tr>
+                  <tr style={{background:C.navy2||C.navy||"#0f172a"}}><td colSpan={visCF.length+2} style={{padding:"7px 14px",color:"#fff",fontFamily:F,fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:".9px"}}>Inflows — from payment records</td></tr>
                   <tr>
                     <td style={TD({paddingLeft:24})}>Payments received</td>
                     {visCF.map((m,i)=><td key={i} style={TD({fontFamily:FM||F,textAlign:"right",color:m.inflow?C.green:C.muted})}>{m.inflow?fmtS(m.inflow):"—"}</td>)}
@@ -7037,7 +7048,7 @@ Address the contractor as "the Company". Flag overdue amounts if any.`;
                     {visCF.map((m,i)=><td key={i} style={TD({fontFamily:FM||F,textAlign:"right",fontWeight:600})}>{fmtS(m.inflow)}</td>)}
                     <td style={TD({fontFamily:FM||F,textAlign:"right",fontWeight:700})}>{fmtS(cfIn)}</td>
                   </tr>
-                  <tr style={{background:C.text}}><td colSpan={visCF.length+2} style={{padding:"7px 14px",color:"#fff",fontFamily:F,fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:".9px"}}>Outflows — from paid invoices (by due date)</td></tr>
+                  <tr style={{background:C.navy2||C.navy||"#0f172a"}}><td colSpan={visCF.length+2} style={{padding:"7px 14px",color:"#fff",fontFamily:F,fontSize:11,fontWeight:600,textTransform:"uppercase",letterSpacing:".9px"}}>Outflows — from paid invoices (by due date)</td></tr>
                   {INVOICE_CATS.map(cat=>{
                     const mTots = MONTHS.slice(lo,hi+1).map(m=>
                       projInvoices.filter(i=>isActual(i)&&normalizeCat(i.desc)===cat&&toYM(i.dueDate||i.dueFmt||i.due)===m).reduce((s,i)=>s+Number(i.amount||0),0)
@@ -7642,10 +7653,10 @@ function AppInner({ session, profile, onLogout }){
                       if(handle) handle.style.opacity="0";
                     }}>
                     <button onClick={()=>switchTab(n.id)}
-                      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.background=C.border+"50"; e.currentTarget.style.color=C.text; }}}
+                      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.background=C.isDark?"rgba(255,255,255,0.07)":C.border+"40"; e.currentTarget.style.color=C.text; }}}
                       onMouseLeave={e=>{ if(!active){ e.currentTarget.style.background="transparent"; e.currentTarget.style.color=C.text3||C.muted; }}}
                       style={{ display:"flex",alignItems:"center",gap:10,width:"100%",
-                        padding:"8px 14px",borderRadius:7,marginBottom:1,
+                        padding:"8px 14px",borderRadius:8,marginBottom:1,
                         cursor:"pointer",textAlign:"left",
                         fontFamily:F,fontSize:13,fontWeight:active?600:400,
                         background:active?(C.accentDim||C.blueDim):"transparent",
