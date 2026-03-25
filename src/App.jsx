@@ -212,6 +212,53 @@ function ThemeProvider({ children }){
   return <ThemeCtx.Provider value={{ theme, isDark, toggleTheme }}>{children}</ThemeCtx.Provider>;
 }
 
+// ─── Global Language System ───────────────────────────────────────────────────
+const LANGUAGES = [
+  { code:"en", label:"English" },
+  { code:"tr", label:"Türkçe" },
+];
+
+const TRANSLATIONS = {
+  en: {},
+  tr: {
+    // Navigation labels
+    "Dashboard":        "Panel",
+    "Projects":         "Projeler",
+    "Invoices":         "Faturalar",
+    "Payments":         "Ödemeler",
+    "Team":             "Ekip",
+    "Calendar":         "Takvim",
+    "Tasks":            "Görevler",
+    "Accountant":       "Muhasebeci",
+    "User Management":  "Kullanıcı Yönetimi",
+    // Sidebar section labels
+    "Workspace":        "Çalışma Alanı",
+    "Finance":          "Finans",
+    "Tools":            "Araçlar",
+    // Sidebar bottom
+    "Light mode":       "Açık mod",
+    "Dark mode":        "Koyu mod",
+    "Sign out":         "Çıkış yap",
+    "Language":         "Dil",
+    // Common buttons
+    "Add Invoice":      "Fatura Ekle",
+  },
+};
+
+const LangCtx = React.createContext({ lang:"en", setLang:()=>{}, t:(k)=>k });
+function useLang(){ return React.useContext(LangCtx); }
+function LangProvider({ children }){
+  const [lang,setLangState] = React.useState(()=>{
+    try{ const s=localStorage.getItem("bf:lang"); return (s&&LANGUAGES.some(l=>l.code===s))?s:"en"; }catch{ return "en"; }
+  });
+  const setLang=(l)=>{ setLangState(l); try{ localStorage.setItem("bf:lang",l); }catch{}; };
+  const t=(key)=>{
+    if(lang==="en") return key;
+    return (TRANSLATIONS[lang]&&TRANSLATIONS[lang][key]!=null) ? TRANSLATIONS[lang][key] : key;
+  };
+  return <LangCtx.Provider value={{ lang, setLang, t }}>{children}</LangCtx.Provider>;
+}
+
 // ─── Global Currency System ───────────────────────────────────────────────────
 const CURRENCIES = ["AED","USD","SAR","EUR","GBP","QAR","KWD","BHD","OMR"];
 
@@ -1845,7 +1892,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
 
       {/* Add button */}
       {mode==="list"&&(
-        <Btn variant="primary" onClick={openAdd}><Ic.Plus size={13} color="#000"/> Add Invoice</Btn>
+        <Btn variant="primary" onClick={openAdd}><Ic.Plus size={13} color="currentColor"/> Add Invoice</Btn>
       )}
     </div>
   );
@@ -7427,14 +7474,15 @@ export default function App({ session, profile, onLogout }){
 
   return (
     <CompanyCtx.Provider value={profile.company_id}>
-      <CurrencyProvider><ThemeProvider>
+      <LangProvider><CurrencyProvider><ThemeProvider>
         <AppInner session={session} profile={profile} onLogout={onLogout}/>
-      </ThemeProvider></CurrencyProvider>
+      </ThemeProvider></CurrencyProvider></LangProvider>
     </CompanyCtx.Provider>
   );
 }
 
 function AppInner({ session, profile, onLogout }){
+  const { lang, setLang, t } = useLang();
   const { theme, isDark, toggleTheme } = useTheme();
   ThemeRef.current = theme;
   const [tab,setTab]=useState("projects");
@@ -7639,7 +7687,7 @@ function AppInner({ session, profile, onLogout }){
                   {showLabel&&(
                     <div style={{ padding:"14px 18px 3px",color:C.muted,fontFamily:F,
                       fontSize:10,fontWeight:500,textTransform:"uppercase",letterSpacing:".55px",opacity:.65 }}>
-                      {thisGroup}
+                      {t(thisGroup)}
                     </div>
                   )}
                   {/* Nav button — drag handle appears only on hover */}
@@ -7674,7 +7722,7 @@ function AppInner({ session, profile, onLogout }){
                         {[0,1,2].map(i=><span key={i} style={{ width:10,height:1.5,background:C.muted,borderRadius:1,display:"block" }}/>)}
                       </span>
                       {n.IcComp && <n.IcComp c={active?C.accent:(C.muted||"#94a3b8")}/>}
-                      <span>{n.label}</span>
+                      <span>{t(n.label)}</span>
                     </button>
                   </div>
                 </div>
@@ -7706,8 +7754,20 @@ function AppInner({ session, profile, onLogout }){
                 ? <><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></>
                 : <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>}
             </svg>
-            {isDark?"Light mode":"Dark mode"}
+            {isDark?t("Light mode"):t("Dark mode")}
           </button>
+          {/* Language selector */}
+          <div style={{ display:"flex",alignItems:"center",gap:8,padding:"7px 16px" }}>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color:C.text3||C.muted,flexShrink:0 }}>
+              <circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+            </svg>
+            <select value={lang} onChange={e=>setLang(e.target.value)}
+              style={{ background:"transparent",border:"none",outline:"none",
+                color:C.text3||C.muted,fontFamily:F,fontSize:12,fontWeight:400,
+                cursor:"pointer",padding:0,flex:1,appearance:"none",WebkitAppearance:"none" }}>
+              {LANGUAGES.map(l=><option key={l.code} value={l.code} style={{ background:C.card,color:C.text }}>{l.label}</option>)}
+            </select>
+          </div>
           {/* Sign out */}
           {onLogout&&<button onClick={onLogout}
             style={{ display:"flex",alignItems:"center",gap:7,width:"100%",
@@ -7718,7 +7778,7 @@ function AppInner({ session, profile, onLogout }){
             onMouseEnter={e=>e.currentTarget.style.color=C.red}
             onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
-            Sign out
+            {t("Sign out")}
           </button>}
         </div>
       </div>
