@@ -1332,7 +1332,7 @@ function FilePreviewModal({ file,onClose }){
   );
 }
 
-function AddMemberModal({ project,onConfirm,onCancel }){
+function AddMemberModal({ project,onConfirm,onCancel,allProjects=[] }){
   const [name,setName]=useState("");const [role,setRole]=useState(ROLES[0]);const [projId,setProjId]=useState(project.id);
   const [phone,setPhone]=useState("");const [email,setEmail]=useState("");const [status,setStatus]=useState("on-site");const [err,setErr]=useState("");
   const submit=()=>{
@@ -2025,7 +2025,7 @@ function PlansPanel({ project,onActivity }){
 }
 
 function TeamPanel({ project,onOpenTeamPage }){
-  const { members,ready,addMember }=useTeam(project.id);
+  const { members,ready,addMember,removeMember }=useTeam(project.id);
   const [showAdd,setShowAdd]=useState(false);
   const [tmName,setTmName]=useState(""); const [tmRole,setTmRole]=useState(ROLES[0]);
   const [tmPhone,setTmPhone]=useState(""); const [tmStatus,setTmStatus]=useState("on-site");
@@ -2038,7 +2038,7 @@ function TeamPanel({ project,onOpenTeamPage }){
     const color=MCOLORS_LIST[Math.floor(Math.random()*MCOLORS_LIST.length)];
     const init=tmName.trim().split(" ").map(w=>w[0]).join("").slice(0,2).toUpperCase();
     await addMember({ id:`m${Date.now()}`,name:tmName.trim(),role:tmRole,phone:tmPhone.trim(),status:tmStatus,color,init,projId:project.id,projectName:project.name,type:"employee" });
-    setShowAdd(false);
+    setTmName("");setTmPhone("");setTmErr("");setShowAdd(false);
   };
 
   if(!ready)return <div style={{ color:C.muted,fontFamily:F,fontSize:12,padding:"14px 0",textAlign:"center" }}>Loading…</div>;
@@ -2052,14 +2052,30 @@ function TeamPanel({ project,onOpenTeamPage }){
               <div style={{ width:34,height:34,borderRadius:"50%",background:(m.color||C.blue)+"22",border:`2px solid ${(m.color||C.blue)}44`,display:"flex",alignItems:"center",justifyContent:"center",color:m.color||C.blue,fontFamily:F,fontWeight:700,fontSize:12,flexShrink:0 }}>{m.init}</div>
               <div style={{ flex:1,minWidth:0 }}><div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:13 }}>{m.name}</div><div style={{ color:C.muted,fontFamily:F,fontSize:11,marginTop:1 }}>{m.role}</div></div>
               <Badge status={m.status||"on-site"}/>
+              <button onClick={()=>removeMember(m.id)} title="Remove member" style={{ background:"transparent",border:`1px solid ${C.border}`,borderRadius:5,color:C.muted,width:24,height:24,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}><Ic.X size={10} color={C.muted}/></button>
             </div>
           ))}
           {members.length>4&&<div style={{ color:C.muted,fontFamily:F,fontSize:11,textAlign:"center",padding:"4px 0" }}>+{members.length-4} more</div>}
         </div>
       )}
-      <div style={{ display:"flex",gap:8 }}>
-            <button onClick={onOpenTeamPage} style={{ background:"transparent",color:C.text,border:`1px solid ${C.border}`,padding:"9px 16px",borderRadius:7,fontFamily:F,fontWeight:600,fontSize:13,cursor:"pointer" }}>Full Team →</button>
+      {showAdd&&(
+        <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,padding:"14px",marginBottom:12 }}>
+          {tmErr&&<div style={{ color:C.red,fontFamily:F,fontSize:11,marginBottom:8 }}>{tmErr}</div>}
+          <div style={{ display:"flex",flexDirection:"column",gap:10 }}>
+            <input style={INP()} placeholder="Full Name *" value={tmName} onChange={e=>{setTmName(e.target.value);setTmErr("");}}/>
+            <select value={tmRole} onChange={e=>setTmRole(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>{ROLES.map(r=><option key={r} value={r}>{r}</option>)}</select>
+            <input style={INP()} placeholder="Phone *" value={tmPhone} onChange={e=>{setTmPhone(e.target.value);setTmErr("");}}/>
           </div>
+          <div style={{ display:"flex",gap:8,marginTop:10 }}>
+            <button onClick={submitMember} style={{ background:C.green,color:"#000",border:"none",padding:"8px 16px",borderRadius:7,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer" }}>Add</button>
+            <button onClick={()=>{setTmName("");setTmPhone("");setTmErr("");setShowAdd(false);}} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,padding:"8px 14px",borderRadius:7,fontFamily:F,fontSize:12,cursor:"pointer" }}>Cancel</button>
+          </div>
+        </div>
+      )}
+      <div style={{ display:"flex",gap:8 }}>
+        {!showAdd&&<button onClick={()=>setShowAdd(true)} style={{ background:C.green,color:"#000",border:"none",padding:"9px 16px",borderRadius:7,fontFamily:F,fontWeight:700,fontSize:13,cursor:"pointer" }}>+ Add Member</button>}
+        <button onClick={onOpenTeamPage} style={{ background:"transparent",color:C.text,border:`1px solid ${C.border}`,padding:"9px 16px",borderRadius:7,fontFamily:F,fontWeight:600,fontSize:13,cursor:"pointer" }}>Full Team →</button>
+      </div>
     </div>
   );
 }
@@ -2253,7 +2269,7 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
 
   return(
     <div>
-      {showAdd  && <AddMemberModal project={project} onConfirm={handleAdd} onCancel={()=>setShowAdd(false)}/>}
+      {showAdd  && <AddMemberModal project={project} onConfirm={handleAdd} onCancel={()=>setShowAdd(false)} allProjects={allProjects}/>}
       {editing  && <EditMemberModal member={editing} allProjects={allProjects}
           onConfirm={patch=>{ setConfirmEditData({member:editing,patch}); setEditing(null); }}
           onCancel={()=>setEditing(null)}/>}
@@ -2304,6 +2320,7 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
             </div>
             <div style={{ color:C.muted,fontFamily:F,fontSize:13,marginLeft:14 }}>{project.address}</div>
           </div>
+          <Btn onClick={()=>setShowAdd(true)}>+ Add Member</Btn>
 
         </div>
       </div>
@@ -2329,7 +2346,7 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
 
         {ready&&members.length===0&&(
           <div style={{ border:`2px dashed ${C.border}`,borderRadius:10,padding:"40px 20px",textAlign:"center",color:C.muted,fontFamily:F,fontSize:13 }}>
-            <div style={{ fontSize:36,marginBottom:10 }}></div>No team members yet — they're managed via Supabase
+            <div style={{ fontSize:36,marginBottom:10 }}></div>No team members yet — click "+ Add Member" to get started
           </div>
         )}
 
@@ -7382,9 +7399,6 @@ const NAV=[
   { id:"team",       label:"Team",            IcComp: ({c})=><Ic.Team      size={15} color={c}/> },
   { id:"calendar",   label:"Calendar",        IcComp: ({c})=><Ic.Calendar  size={15} color={c}/> },
   { id:"tasks",      label:"Tasks",           IcComp: ({c})=><Ic.Tasks     size={15} color={c}/> },
-  { id:"tenders",    label:"Tenders",         IcComp: ({c})=><Ic.Tenders   size={15} color={c}/> },
-  { id:"reports",    label:"Reports",         IcComp: ({c})=><Ic.Reports   size={15} color={c}/> },
-  { id:"prices",     label:"Price Tracking",  IcComp: ({c})=><Ic.Prices    size={15} color={c}/> },
   { id:"accountant", label:"Accountant",      IcComp: ({c})=><Ic.Accountant size={15} color={c}/> },
 ];
 
@@ -7525,10 +7539,10 @@ function AppInner({ session, profile, onLogout }){
     if(tab==="team")       return <TeamGlobal allProjects={allProjects} onLog={pushGlobal}/>;
     if(tab==="calendar")   return <CalendarPage allInvoices={allInvoices} tasks={tasks} onAddTask={addTask} projectEvents={projectMilestoneEvents} payments={payments} allProjects={allProjects}/>;
     if(tab==="tasks")      return <TasksPage tasks={tasks} addTask={addTask} updateTask={updateTask} removeTask={removeTask} allProjects={allProjects}/>;
-    if(tab==="tenders")    return <TendersPage allProjects={allProjects}/>;
+    if(tab==="tenders")    return null;
     if(tab==="payments")   return <PaymentsPage payments={payments} allProjects={allProjects} addPayment={handleAddPayment} allInvoices={allInvoices} removePayment={handleRemovePayment} updatePayment={handleUpdatePayment}/>;
-    if(tab==="reports")    return <ReportPage tasks={tasks} allProjects={allProjects} allInvoices={allInvoices}/>;
-    if(tab==="prices")     return <PriceTrackingPage/>;
+    if(tab==="reports")    return null;
+    if(tab==="prices")     return null;
     if(tab==="accountant") return <AccountantPage allProjects={allProjects} allInvoices={allInvoices} payments={payments}/>;
     if(tab==="users") return <UsersPage currentUser={session.user} profile={profile}/>;
     return <div style={{ color:C.muted,fontFamily:F,fontSize:14,padding:"40px 0",textAlign:"center" }}>Coming soon…</div>;
@@ -7554,7 +7568,7 @@ function AppInner({ session, profile, onLogout }){
       <div style={{ width:220,background:C.surface,borderRight:`1px solid ${C.border}`,display:"flex",flexDirection:"column",flexShrink:0,boxShadow:C.sh1||"1px 0 3px rgba(0,0,0,.04)" }}>
         <div style={{ padding:"18px 20px 16px",borderBottom:`1px solid ${C.border}` }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
-            <div style={{ width:30,height:30,background:C.accent,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>
+            <div style={{ width:32,height:32,background:C.accent,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,boxShadow:`0 1px 3px ${C.accent}55` }}>
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 20h20M6 20V10l6-7 6 7v10M10 20v-5h4v5"/></svg>
             </div>
             <div>
@@ -7563,7 +7577,7 @@ function AppInner({ session, profile, onLogout }){
             </div>
           </div>
         </div>
-        <nav style={{ flex:1,padding:"8px 0",overflowY:"auto" }}>
+        <nav style={{ flex:1,padding:"6px 8px",overflowY:"auto" }}>
           {/* Section label helper */}
           {(()=>{
             // Default group membership — used for section labels only, not for restricting drag
@@ -7612,8 +7626,8 @@ function AppInner({ session, profile, onLogout }){
                   onDrop={e=>{ e.preventDefault(); handleNavDrop(n.id); }}>
                   {/* Section label — appears only when group changes */}
                   {showLabel&&(
-                    <div style={{ padding:"12px 16px 4px",color:C.muted,fontFamily:F,
-                      fontSize:10,fontWeight:600,textTransform:"uppercase",letterSpacing:".8px" }}>
+                    <div style={{ padding:"14px 18px 3px",color:C.muted,fontFamily:F,
+                      fontSize:10,fontWeight:500,textTransform:"uppercase",letterSpacing:".55px",opacity:.65 }}>
                       {thisGroup}
                     </div>
                   )}
@@ -7628,16 +7642,18 @@ function AppInner({ session, profile, onLogout }){
                       if(handle) handle.style.opacity="0";
                     }}>
                     <button onClick={()=>switchTab(n.id)}
-                      style={{ display:"flex",alignItems:"center",gap:9,width:"100%",
-                        padding:"7px 16px",borderRadius:0,marginBottom:0,
+                      onMouseEnter={e=>{ if(!active){ e.currentTarget.style.background=C.border+"50"; e.currentTarget.style.color=C.text; }}}
+                      onMouseLeave={e=>{ if(!active){ e.currentTarget.style.background="transparent"; e.currentTarget.style.color=C.text3||C.muted; }}}
+                      style={{ display:"flex",alignItems:"center",gap:10,width:"100%",
+                        padding:"8px 14px",borderRadius:7,marginBottom:1,
                         cursor:"pointer",textAlign:"left",
                         fontFamily:F,fontSize:13,fontWeight:active?600:400,
                         background:active?(C.accentDim||C.blueDim):"transparent",
                         color:active?C.accent:(C.text3||C.muted),
                         borderTop:"none",borderRight:"none",borderBottom:"none",
-                        borderLeft:active?`3px solid ${C.accent}`:"3px solid transparent",
-                        paddingLeft:active?"13px":"16px",
-                        transition:"all .13s" }}>
+                        borderLeft:active?`2px solid ${C.accent}`:"2px solid transparent",
+                        paddingLeft:active?"12px":"14px",
+                        transition:"background 150ms,color 150ms,border-color 150ms" }}>
                       {/* Drag handle — hidden by default, revealed on row hover */}
                       <span
                         className="nav-drag-handle"
@@ -7657,22 +7673,22 @@ function AppInner({ session, profile, onLogout }){
         </nav>
         <div style={{ padding:"12px 0",borderTop:`1px solid ${C.border}` }}>
           {/* User row — no avatar per design rules */}
-          <div style={{ padding:"10px 16px 8px",display:"flex",flexDirection:"column",gap:2 }}>
-            <div style={{ color:C.text2||C.text,fontFamily:F,fontSize:13,fontWeight:600,
+          <div style={{ padding:"10px 16px 8px",display:"flex",flexDirection:"column",gap:3 }}>
+            <div style={{ color:C.text2||C.text,fontFamily:F,fontSize:13,fontWeight:500,
               overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>
               {profile?.full_name||profile?.email||"User"}
             </div>
-            <div style={{ color:C.muted,fontFamily:F,fontSize:11,textTransform:"capitalize" }}>
+            <div style={{ color:C.muted,fontFamily:F,fontSize:11,textTransform:"capitalize",opacity:.75 }}>
               {profile?.role||"member"}
             </div>
           </div>
           {/* Theme toggle */}
           <button onClick={toggleTheme}
             style={{ display:"flex",alignItems:"center",gap:8,width:"100%",
-              padding:"8px 16px",cursor:"pointer",
+              padding:"7px 16px",cursor:"pointer",
               background:"transparent",border:"none",
-              color:C.text3||C.muted,fontFamily:F,fontSize:12,fontWeight:500,
-              transition:"color .13s" }}
+              color:C.text3||C.muted,fontFamily:F,fontSize:12,fontWeight:400,
+              transition:"color 150ms" }}
             title={isDark?"Switch to Light Mode":"Switch to Dark Mode"}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               {isDark
@@ -7684,10 +7700,10 @@ function AppInner({ session, profile, onLogout }){
           {/* Sign out */}
           {onLogout&&<button onClick={onLogout}
             style={{ display:"flex",alignItems:"center",gap:7,width:"100%",
-              padding:"8px 16px",cursor:"pointer",
+              padding:"7px 16px",cursor:"pointer",
               background:"transparent",border:"none",
-              color:C.muted,fontFamily:F,fontSize:12,fontWeight:500,
-              transition:"color .13s" }}
+              color:C.muted,fontFamily:F,fontSize:12,fontWeight:400,
+              transition:"color 150ms" }}
             onMouseEnter={e=>e.currentTarget.style.color=C.red}
             onMouseLeave={e=>e.currentTarget.style.color=C.muted}>
             <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9"/></svg>
