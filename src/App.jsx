@@ -554,8 +554,375 @@ const TRANSLATIONS = {
     "name@example.com": "ad@ornek.com",
     "INV-001":          "FAT-001",
     "0.00":             "0,00",
+    // Missing — UI strings found at runtime
+    "% Used":           "% Kullanıldı",
+    "AI extracted data — review and correct if needed": "YZ veri çıkardı — gözden geçirin ve düzeltin",
+    "AI extracted — review and edit below": "YZ çıkardı — aşağıdan gözden geçirin ve düzeltin",
+    "AI extracted — review below": "YZ çıkardı — aşağıdan gözden geçirin",
+    "AI extracting data…": "YZ veri çıkarıyor…",
+    "AI: Reading document with AI…": "YZ: Belge YZ ile okunuyor…",
+    "AI will auto-fill fields from your document": "YZ belgenizden alanları otomatik dolduracak",
+    "AI will auto-extract invoice data": "YZ fatura verilerini otomatik çıkaracak",
+    "AI-generated using BuildFlow data. For formal auditing or regulatory submission, please have this reviewed by a licensed accountant.":
+      "BuildFlow verisi kullanılarak YZ tarafından oluşturulmuştur. Resmi denetim veya düzenleyici başvuru için lütfen lisanslı bir muhasebeci tarafından inceletin.",
+    "Accountant's Analysis": "Muhasebe Analizi",
+    "Across all projects": "Tüm projelerde",
+    "Active Projects":  "Aktif Projeler",
+    "Activity":         "Etkinlik",
+    "Add Another Contact": "Başka Kişi Ekle",
+    "Add one or more contacts related to this project. The first contact will be used as the primary client.":
+      "Bu projeyle ilgili bir veya daha fazla kişi ekleyin. İlk kişi birincil müşteri olarak kullanılacak.",
+    "Add Plan / Document": "Plan / Belge Ekle",
+    "Add Task":         "Görev Ekle",
+    "All Clients":      "Tüm Müşteriler",
+    "All categories":   "Tüm kategoriler",
+    "All invoices across every project": "Tüm projelerdeki faturalar",
+    "All payments received": "Alınan tüm ödemeler",
+    "All related invoices, payments, plans, tasks and team assignments for this project will also be removed. This action cannot be undone.":
+      "Bu projenin tüm faturaları, ödemeleri, planları, görevleri ve ekip atamaları da kaldırılacak. Bu işlem geri alınamaz.",
+    "All statuses":     "Tüm durumlar",
+    "Amount is required": "Tutar gerekli",
+    "Approved":         "Onaylandı",
+    "Are you sure you want to apply these changes to": "Bu değişiklikleri uygulamak istediğinizden emin misiniz:",
+    "Are you sure you want to apply these changes to this invoice?": "Bu değişiklikleri bu faturaya uygulamak istediğinizden emin misiniz?",
+    "Are you sure you want to apply these changes to this project?": "Bu değişiklikleri bu projeye uygulamak istediğinizden emin misiniz?",
+    "Are you sure you want to delete invoice": "Bu faturayı silmek istediğinizden emin misiniz",
+    "Are you sure you want to delete this photo? This cannot be undone.": "Bu fotoğrafı silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+    "Are you sure you want to permanently delete": "Kalıcı olarak silmek istediğinizden emin misiniz",
+    "Assigned Member *": "Atanan Üye *",
+    "Assigned Project":  "Atanan Proje",
+    "At risk":          "Risk altında",
+    "Auto number":      "Otomatik numara",
+    "Auto-filled from project": "Projeden otomatik dolduruldu",
+    "Budget":           "Bütçe",
+    "Budget Remaining": "Kalan Bütçe",
+    "Budget vs invoiced vs committed": "Bütçe / Fatura / Taahhüt",
+    "Building PDF…":    "PDF oluşturuluyor…",
+    "Building…":        "Oluşturuluyor…",
+    "Cash Flow":        "Nakit Akışı",
+    "Ccy":              "Dv.",
+    "Choose Widget":    "Widget Seç",
+    "Clear":            "Temizle",
+    "Client / Company": "Müşteri / Şirket",
+    "Client name":      "Müşteri adı",
+    "Closing Position": "Kapanış Pozisyonu",
+    "Collected":        "Tahsil Edildi",
+    "Coming soon…":     "Yakında…",
+    "Committed":        "Taahhüt Edildi",
+    "Committed (pending)": "Taahhüt (beklemede)",
+    "Company":          "Şirket",
+    "Company name":     "Şirket adı",
+    "Company name (optional)": "Şirket adı (isteğe bağlı)",
+    "Confidential Financial Report": "Gizli Mali Rapor",
+    "Contact Name *":   "Kişi Adı *",
+    "Contact name":     "Kişi adı",
+    "Continue →":       "Devam Et →",
+    "Contracts":        "Sözleşmeler",
+    "Cost Breakdown":   "Maliyet Dağılımı",
+    "Could not extract — fill in manually": "Çıkarılamadı — manuel doldurun",
+    "Couldn't extract — fill manually": "Çıkarılamadı — manuel doldurun",
+    "Create Project":   "Proje Oluştur",
+    "Create a project first, then return here to generate your financial report.":
+      "Önce bir proje oluşturun, ardından mali raporunuzu oluşturmak için geri dönün.",
+    "Create one in the Projects tab": "Projeler sekmesinde bir tane oluşturun",
+    "Cumulative":       "Kümülatif",
+    "Cumulative cash position": "Kümülatif nakit pozisyonu",
+    "Customize":        "Özelleştir",
+    "Date is required": "Tarih gerekli",
+    "Delete Photo?":    "Fotoğrafı Sil?",
+    "Delete Project?":  "Projeyi Sil?",
+    "Derived from invoices & payments — no manual input": "Fatura ve ödemelerden türetilmiştir — manuel giriş yok",
+    "Detail":           "Ayrıntı",
+    "Detailed breakdown": "Ayrıntılı döküm",
+    "Document":         "Belge",
+    "Download PDF":     "PDF İndir",
+    "Drop file here or click to browse": "Dosyayı buraya sürükleyin veya gözatmak için tıklayın",
+    "Duration":         "Süre",
+    "Exposure":         "Açıklık",
+    "From":             "Başlangıç",
+    "Full Name":        "Tam Ad",
+    "Full Team":        "Tüm Ekip",
+    "Full address including city, country": "Şehir, ülke dahil tam adres",
+    "Full name":        "Tam ad",
+    "Generate Report & PDF": "Rapor ve PDF Oluştur",
+    "Generated":        "Oluşturuldu",
+    "Good afternoon":   "İyi öğleden sonralar",
+    "Good evening":     "İyi akşamlar",
+    "Good morning":     "Günaydın",
+    "In credit":        "Alacak",
+    "In deficit":       "Borç",
+    "Inflows (payments)": "Girişler (ödemeler)",
+    "Initial Status":   "Başlangıç Durumu",
+    "Invoice # *":      "Fatura # *",
+    "Invoice amount is required": "Fatura tutarı gerekli",
+    "Invoice description": "Fatura açıklaması",
+    "Invoiced":         "Faturalandı",
+    "Invoiced (actual)": "Faturalandı (gerçek)",
+    "Invoiced (paid)":  "Faturalandı (ödendi)",
+    "Item":             "Kalem",
+    "Live financial view — synced from Invoices, Payments & Projects":
+      "Canlı mali görünüm — Fatura, Ödeme ve Projelerden senkronize",
+    "Mark Done":        "Tamamlandı Olarak İşaretle",
+    "Mark as Done?":    "Tamamlandı Olarak İşaretle?",
+    "Monthly burn":     "Aylık harcama",
+    "Monthly detail":   "Aylık ayrıntı",
+    "Name is required": "Ad gerekli",
+    "Needs follow-up":  "Takip gerekiyor",
+    "Negative":         "Negatif",
+    "Net Cash Flow":    "Net Nakit Akışı",
+    "Net cash flow":    "Net nakit akışı",
+    "New Invoice":      "Yeni Fatura",
+    "No active projects": "Aktif proje yok",
+    "No activity yet":  "Henüz etkinlik yok",
+    "No invoices in this period.": "Bu dönemde fatura yok.",
+    "No invoices match your filters": "Filtrelere uyan fatura yok",
+    "No invoices yet":  "Henüz fatura yok",
+    "No payments recorded": "Ödeme kaydedilmedi",
+    "No payments yet":  "Henüz ödeme yok",
+    "No pending tasks": "Bekleyen görev yok",
+    "No projects yet":  "Henüz proje yok",
+    "No upcoming events": "Yaklaşan etkinlik yok",
+    "Official documents": "Resmi belgeler",
+    "Only the assigned member can update task status": "Yalnızca atanan üye görev durumunu güncelleyebilir",
+    "Outflows (paid invoices)": "Çıkışlar (ödenen faturalar)",
+    "Outstanding":      "Ödenmemiş",
+    "Over budget":      "Bütçe aşımı",
+    "PDF · CAD · Images · Word · Excel · Any format": "PDF · CAD · Görseller · Word · Excel · Her Format",
+    "PDF, image, screenshot — optional": "PDF, görsel, ekran görüntüsü — isteğe bağlı",
+    "Partial Payments": "Kısmi Ödemeler",
+    "Payments received": "Alınan ödemeler",
+    "Peak negative":    "En düşük negatif",
+    "Peak positive":    "En yüksek pozitif",
+    "Pending Tasks":    "Bekleyen Görevler",
+    "Phone":            "Telefon",
+    "Phone Number":     "Telefon Numarası",
+    "Phone Number *":   "Telefon Numarası *",
+    "Phone number is required": "Telefon numarası gerekli",
+    "Photos":           "Fotoğraflar",
+    "Plans":            "Planlar",
+    "Please select a project first.": "Lütfen önce bir proje seçin.",
+    "Please select a system user": "Lütfen bir sistem kullanıcısı seçin",
+    "Please select a valid team member": "Lütfen geçerli bir ekip üyesi seçin",
+    "Please upload a file": "Lütfen bir dosya yükleyin",
+    "Positive":         "Pozitif",
+    "Profession / Role *": "Meslek / Rol *",
+    "Project *":        "Proje *",
+    "Project Description": "Proje Açıklaması",
+    "Project address is required": "Proje adresi gerekli",
+    "Project duration": "Proje süresi",
+    "Project is required": "Proje gerekli",
+    "Project name is required": "Proje adı gerekli",
+    "Read-only — edit invoices in the Invoices tab": "Salt okunur — Faturalar sekmesinde düzenleyin",
+    "Read-only — edit payments in the Payments tab": "Salt okunur — Ödemeler sekmesinde düzenleyin",
+    "Reading with AI…": "YZ ile okunuyor…",
+    "Record payments in the Payments tab": "Ödemeleri Ödemeler sekmesinde kaydedin",
+    "Record your first payment above": "İlk ödemenizi yukarıdan kaydedin",
+    "Regenerate":       "Yeniden Oluştur",
+    "Remaining":        "Kalan",
+    "Report Configuration": "Rapor Yapılandırması",
+    "Revenue This Month": "Bu Ay Gelir",
+    "Role":             "Rol",
+    "Role / Relationship": "Rol / İlişki",
+    "Save Changes?":    "Değişiklikler Kaydedilsin mi?",
+    "Save Project Changes?": "Proje Değişiklikleri Kaydedilsin mi?",
+    "Scope or summary of this invoice": "Bu faturanın kapsamı veya özeti",
+    "Select Project":   "Proje Seç",
+    "Select a system user": "Sistem kullanıcısı seç",
+    "Select a user":    "Kullanıcı seç",
+    "Select member":    "Üye seç",
+    "Spend rate":       "Harcama oranı",
+    "Started":          "Başlandı",
+    "Still to Receive": "Alınacak",
+    "Supplier / Company Name": "Tedarikçi / Şirket Adı",
+    "Supplier / Project": "Tedarikçi / Proje",
+    "Supplier name, scope, reference…": "Tedarikçi adı, kapsam, referans…",
+    "System User *":    "Sistem Kullanıcısı *",
+    "Task Title *":     "Görev Başlığı *",
+    "Task title is required": "Görev başlığı gerekli",
+    "This action cannot be undone.": "Bu işlem geri alınamaz.",
+    "This member is already on the project": "Bu üye zaten projede",
+    "To":               "Bitiş",
+    "Total Billed":     "Toplam Faturalandı",
+    "Total Budget":     "Toplam Bütçe",
+    "Total Inflows":    "Toplam Girişler",
+    "Total Invoiced":   "Toplam Faturalandı",
+    "Total Invoices":   "Toplam Faturalar",
+    "Total Outflows":   "Toplam Çıkışlar",
+    "Total inflows":    "Toplam girişler",
+    "Total outflows":   "Toplam çıkışlar",
+    "Try adjusting the status or category filter": "Durum veya kategori filtresini ayarlamayı deneyin",
+    "Try clearing your filters": "Filtrelerinizi temizlemeyi deneyin",
+    "Type":             "Tür",
+    "Update the contacts for this project. The first contact is the primary client.":
+      "Bu projenin kişilerini güncelleyin. İlk kişi birincil müşteri.",
+    "Upload Document *": "Belge Yükle *",
+    "Upload File *":    "Dosya Yükle *",
+    "Upload Invoice PDF or Image": "Fatura PDF veya Görseli Yükle",
+    "Variance":         "Sapma",
+    "Version info, revision notes…": "Sürüm bilgisi, revizyon notları…",
+    "Write a note…":    "Not yaz…",
+    "Year-end balance": "Yıl sonu bakiyesi",
+    "Yes, Delete Project": "Evet, Projeyi Sil",
+    "Yes, Save":        "Evet, Kaydet",
+    "Yes, Save Changes": "Evet, Değişiklikleri Kaydet",
+    "budget exceeded":  "bütçe aşıldı",
+    "categories":       "kategoriler",
+    "category":         "kategori",
+    "contract value − received": "sözleşme değeri − alınan",
+    "cumulative invoiced vs planned": "kümülatif fatura vs planlanan",
+    "document":         "belge",
+    "documents":        "belgeler",
+    "drawing":          "çizim",
+    "e.g. Marcus Webb": "örn. Ahmet Yılmaz",
+    "e.g. Riverside Townhomes Phase 2": "örn. Nehir Kıyısı Evleri Faz 2",
+    "exceeding budget":  "bütçe aşıyor",
+    "exposure / budget": "açıklık / bütçe",
+    "from paid invoices": "ödenen faturalardan",
+    "from payments":    "ödemelerden",
+    "invoice":          "fatura",
+    "invoices":         "faturalar",
+    "invoicing":        "faturalandırma",
+    "left":             "kaldı",
+    "member":           "üye",
+    "members":          "üyeler",
+    "more → View all":  "daha fazla → Tümünü Gör",
+    "optional":         "isteğe bağlı",
+    "optional — AI auto-extracts": "isteğe bağlı — YZ otomatik çıkarır",
+    "overdue":          "gecikmiş",
+    "overdue invoice":  "gecikmiş fatura",
+    "overdue invoices": "gecikmiş faturalar",
+    "paid invoices":    "ödenen faturalar",
+    "payment":          "ödeme",
+    "payments":         "ödemeler",
+    "pending & approved": "beklemede ve onaylandı",
+    "project":          "proje",
+    "project contract": "proje sözleşmesi",
+    "projects":         "projeler",
+    "quoting":          "teklif",
+    "still available":  "hâlâ mevcut",
+    "tasks":            "görevler",
+    "unpaid invoices":  "ödenmemiş faturalar",
+    "will be marked as completed.": "tamamlandı olarak işaretlenecek.",
+    "← Back":           "← Geri",
+    // Widget labels
+    "Project Progress": "Proje İlerlemesi",
+    "Recent Invoices":  "Son Faturalar",
+    "Recent Payments":  "Son Ödemeler",
+    "Upcoming Tasks":   "Yaklaşan Görevler",
+    "Upcoming Events":  "Yaklaşan Etkinlikler",
+    // Team tab
+    "Project Team":     "Proje Ekibi",
+    "Save Member Changes?": "Üye Değişiklikleri Kaydedilsin mi?",
+    "Are you sure you want to apply these changes to this team member?":
+      "Bu değişiklikleri bu ekip üyesine uygulamak istediğinizden emin misiniz?",
+    "Rename to":        "İsim Değiştir:",
+    "Employee":         "Çalışan",
+    "Subcontractor":    "Taşeron",
+    "task(s)": "görev",
+    "No team members yet — click \"+Add Member\" to get started":
+      "Henüz ekip üyesi yok — başlamak için \"+ Üye Ekle\" düğmesine tıklayın",
+    // Misc missing
+    "Click to view and follow up": "Görüntülemek ve takip etmek için tıklayın",
+    "Off":              "İzinde",
   },
 };
+
+// ─── Auto-translate fallback for any remaining untranslated English strings ───
+const TR_WORD_MAP = {
+  // Core actions
+  "add":"ekle","edit":"düzenle","delete":"sil","remove":"kaldır","save":"kaydet",
+  "cancel":"iptal","close":"kapat","view":"görüntüle","upload":"yükle","download":"indir",
+  "create":"oluştur","update":"güncelle","confirm":"onayla","back":"geri","next":"ileri",
+  "select":"seç","search":"ara","clear":"temizle","reset":"sıfırla","send":"gönder",
+  "submit":"gönder","apply":"uygula","generate":"oluştur","export":"dışa aktar",
+  "import":"içe aktar","print":"yazdır","refresh":"yenile","reload":"yeniden yükle",
+  "open":"aç","copy":"kopyala","move":"taşı","share":"paylaş","filter":"filtrele",
+  // Status
+  "active":"aktif","inactive":"pasif","pending":"beklemede","done":"tamamlandı",
+  "completed":"tamamlandı","paid":"ödendi","overdue":"gecikmiş","draft":"taslak",
+  "approved":"onaylandı","rejected":"reddedildi","cancelled":"iptal edildi",
+  "on hold":"beklemede","on site":"sahada","remote":"uzaktan","quoting":"teklif aşamasında",
+  "at risk":"risk altında","over budget":"bütçe aşımı","started":"başlandı",
+  // Entities
+  "project":"proje","projects":"projeler","invoice":"fatura","invoices":"faturalar",
+  "payment":"ödeme","payments":"ödemeler","task":"görev","tasks":"görevler",
+  "team":"ekip","member":"üye","members":"üyeler","client":"müşteri","clients":"müşteriler",
+  "supplier":"tedarikçi","suppliers":"tedarikçiler","contact":"kişi","contacts":"kişiler",
+  "document":"belge","documents":"belgeler","file":"dosya","files":"dosyalar",
+  "photo":"fotoğraf","photos":"fotoğraflar","note":"not","notes":"notlar",
+  "report":"rapor","reports":"raporlar","tender":"ihale","tenders":"ihaleler",
+  "contract":"sözleşme","contracts":"sözleşmeler","offer":"teklif","offers":"teklifler",
+  "plan":"plan","plans":"planlar","user":"kullanıcı","users":"kullanıcılar",
+  "company":"şirket","organisation":"kurum","organization":"kurum",
+  // Finance
+  "budget":"bütçe","amount":"tutar","total":"toplam","cost":"maliyet",
+  "revenue":"gelir","expense":"gider","income":"gelir","profit":"kâr",
+  "loss":"zarar","balance":"bakiye","currency":"para birimi","value":"değer",
+  "price":"fiyat","rate":"oran","tax":"vergi","fee":"ücret","cash":"nakit",
+  "flow":"akış","inflow":"giriş","outflow":"çıkış","collected":"tahsil edildi",
+  "outstanding":"ödenmemiş","remaining":"kalan","committed":"taahhüt edildi",
+  "invoiced":"faturalandı","billed":"faturalandı","paid":"ödendi",
+  "received":"alındı","variance":"sapma","exposure":"açıklık",
+  // Time & labels
+  "date":"tarih","month":"ay","week":"hafta","day":"gün","year":"yıl",
+  "start":"başlangıç","end":"bitiş","due":"vade","from":"başlangıç","to":"bitiş",
+  "period":"dönem","duration":"süre","timeline":"zaman çizelgesi",
+  // Forms
+  "name":"ad","title":"başlık","description":"açıklama","status":"durum",
+  "type":"tür","role":"rol","phone":"telefon","email":"e-posta","address":"adres",
+  "required":"gerekli","optional":"isteğe bağlı","method":"yöntem",
+  "category":"kategori","categories":"kategoriler","priority":"öncelik",
+  // UI / navigation
+  "dashboard":"panel","calendar":"takvim","activity":"etkinlik","log":"günlük",
+  "summary":"özet","detail":"ayrıntı","overview":"genel bakış","settings":"ayarlar",
+  "profile":"profil","account":"hesap","help":"yardım","info":"bilgi",
+  "all":"tümü","none":"yok","other":"diğer","more":"daha fazla",
+  "new":"yeni","loading":"yükleniyor","saving":"kaydediliyor","generating":"oluşturuluyor",
+  "no":"yok","yes":"evet","ok":"tamam","error":"hata","warning":"uyarı",
+  "success":"başarılı","progress":"ilerleme","customize":"özelleştir",
+  "configuration":"yapılandırma","management":"yönetim","analysis":"analiz",
+  // Misc
+  "by":"tarafından","when":"ne zaman","for":"için","in":"içinde","of":"için",
+  "and":"ve","or":"veya","with":"ile","not":"değil","please":"lütfen",
+  "this":"bu","your":"sizin","their":"onların","first":"ilk","last":"son",
+  "primary":"birincil","secondary":"ikincil","main":"ana","full":"tam",
+  "official":"resmi","confidential":"gizli","financial":"mali","monthly":"aylık",
+  "cumulative":"kümülatif","positive":"pozitif","negative":"negatif","net":"net",
+  "peak":"en yüksek","spend":"harcama","burn":"harcama","live":"canlı",
+  "read-only":"salt okunur","auto":"otomatik","manual":"manuel",
+};
+
+function autoTranslateToTurkish(text) {
+  if(!text || typeof text !== "string") return text;
+  // Skip: numbers, symbols-only, single chars, already looks like Turkish (has ş/ğ/ı/ç/ö/ü)
+  if(/^[0-9\s.,:%$€£+\-*/()[\]{}]+$/.test(text)) return text;
+  if(/[şğıçöüŞĞİÇÖÜ]/.test(text)) return text;
+  if(text.length <= 1) return text;
+
+  // 1. Try case-insensitive exact match in existing translations
+  const trMap = TRANSLATIONS.tr;
+  const lowerKey = text.toLowerCase();
+  for(const [k,v] of Object.entries(trMap)){
+    if(k.toLowerCase()===lowerKey) return v;
+  }
+
+  // 2. Try word-by-word substitution
+  const translated = text.replace(/[A-Za-z']+/g, (word) => {
+    const lower = word.toLowerCase();
+    if(TR_WORD_MAP[lower]) {
+      // preserve original capitalisation
+      if(word[0]===word[0].toUpperCase() && word.length>1){
+        const tr = TR_WORD_MAP[lower];
+        return tr.charAt(0).toUpperCase() + tr.slice(1);
+      }
+      return TR_WORD_MAP[lower];
+    }
+    return word; // unknown word kept as-is
+  });
+
+  // Only return if something actually changed
+  return translated !== text ? translated : text;
+}
 
 const LangCtx = React.createContext({ lang:"en", setLang:()=>{}, t:(k)=>k });
 function useLang(){ return React.useContext(LangCtx); }
@@ -565,8 +932,15 @@ function LangProvider({ children }){
   });
   const setLang=(l)=>{ setLangState(l); try{ localStorage.setItem("bf:lang",l); }catch{}; };
   const t=(key)=>{
-    if(lang==="en") return key;
-    return (TRANSLATIONS[lang]&&TRANSLATIONS[lang][key]!=null) ? TRANSLATIONS[lang][key] : key;
+    if(!key || lang==="en") return key;
+    if(TRANSLATIONS[lang]&&TRANSLATIONS[lang][key]!=null) return TRANSLATIONS[lang][key];
+    if(lang==="tr"){
+      const auto = autoTranslateToTurkish(key);
+      if(auto !== key) return auto;
+      if(!window.__missingTrKeys) window.__missingTrKeys=new Set();
+      if(!window.__missingTrKeys.has(key)){ window.__missingTrKeys.add(key); console.warn("[i18n] Missing TR key:",key); }
+    }
+    return key;
   };
   return <LangCtx.Provider value={{ lang, setLang, t }}>{children}</LangCtx.Provider>;
 }
@@ -1608,7 +1982,7 @@ function InvModal({ pending,onConfirm,onCancel }){
                 </div>
                 <div><label style={LBL()}>{t("Description")}</label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={desc} onChange={e=>setDesc(e.target.value)} placeholder={t("Invoice summary or scope")}/></div>
                 <div><label style={LBL()}>{t("Status")}</label>
-                  <div style={{ display:"flex",gap:8 }}>{INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted }}>{s.l}</button>)}</div>
+                  <div style={{ display:"flex",gap:8 }}>{INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted }}>{t(s.l)}</button>)}</div>
                 </div>
               </div>
             </div>
@@ -1757,7 +2131,7 @@ function AddMemberModal({ project,onConfirm,onCancel,allProjects=[],systemUsers=
           )}
           <div><label style={LBL()}>{t("Role *")}</label><select value={role} onChange={e=>setRole(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>{ROLES.map(r=><option key={r} value={r}>{r}</option>)}</select></div>
           <div><label style={LBL()}>{t("Project")}</label><select value={projId||""} onChange={e=>setProjId(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>{(allProjects||[]).map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></div>
-          <div><label style={LBL()}>{t("Status")}</label><div style={{ display:"flex",gap:8 }}>{ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${C.green}`:`1px solid ${C.border}`,background:status===s.v?C.greenDim:"transparent",color:status===s.v?C.green:C.muted }}>{s.l}</button>)}</div></div>
+          <div><label style={LBL()}>{t("Status")}</label><div style={{ display:"flex",gap:8 }}>{ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${C.green}`:`1px solid ${C.border}`,background:status===s.v?C.greenDim:"transparent",color:status===s.v?C.green:C.muted }}>{t(s.l)}</button>)}</div></div>
         </div>
         <div style={{ display:"flex",gap:10,marginTop:22 }}>
           <Btn onClick={submit} disabled={!canSubmit}>{t("Add Member")}</Btn>
@@ -1774,11 +2148,9 @@ function AddTaskModal({ onConfirm,onCancel,allMembers,allProjects=[] }){
   const [member,setMember]=useState(allMembers[0]?.name||"");
   const [projId,setProjId]=useState(allProjects[0]?.id||"");
   const [date,setDate]=useState("");const [err,setErr]=useState("");
-  // Also allow typing a custom member name if not in list
-  const [customMember,setCustomMember]=useState(false);
   const submit=()=>{
     if(!title.trim()){setErr(t("Task title is required"));return;}
-    if(!member.trim()){setErr(t("Team member is required"));return;}
+    if(!member.trim()||!allMembers.find(m=>m.name===member)){setErr(t("Please select a valid team member"));return;}
     if(!date){setErr(t("Date is required"));return;}
     const proj=allProjects.find(p=>p.id===projId);
     onConfirm({ id:`t${Date.now()}`,title:title.trim(),desc:desc.trim(),member:member.trim(),project:proj?.name||"",date,projId,status:"pending" });
@@ -1795,19 +2167,11 @@ function AddTaskModal({ onConfirm,onCancel,allMembers,allProjects=[] }){
           <div><label style={LBL()}>{t("Task Title *")}</label><input style={INP()} placeholder={t("e.g. Site Inspection")} value={title} onChange={e=>{setTitle(e.target.value);setErr("");}}/></div>
           <div><label style={LBL()}>{t("Description")}</label><textarea style={{ ...INP(),resize:"none" }} rows={2} placeholder={t("What needs to be done?")} value={desc} onChange={e=>setDesc(e.target.value)}/></div>
           <div>
-            <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:5 }}>
-              <label style={LBL()}>{t("Assigned Member *")}</label>
-              <button onClick={()=>setCustomMember(!customMember)} style={{ background:"transparent",border:"none",color:C.blue,fontFamily:F,fontSize:11,cursor:"pointer" }}>
-                {customMember?t("Pick from list"):t("Type manually")}
-              </button>
-            </div>
-            {customMember
-              ? <input style={INP()} placeholder={t("Enter name manually")} value={member} onChange={e=>setMember(e.target.value)}/>
-              : <select value={member} onChange={e=>setMember(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
-                  <option value="">— {t("Select member")} —</option>
-                  {allMembers.map(m=><option key={m.id||m.name} value={m.name}>{m.name}{m.role?` — ${m.role}`:""}</option>)}
-                </select>
-            }
+            <label style={LBL()}>{t("Assigned Member *")}</label>
+            <select value={member} onChange={e=>{setMember(e.target.value);setErr("");}} style={{ ...INP(),cursor:"pointer" }}>
+              <option value="">— {t("Select member")} —</option>
+              {allMembers.map(m=><option key={m.id||m.name} value={m.name}>{m.name}{m.role?` — ${m.role}`:""}</option>)}
+            </select>
           </div>
           <div><label style={LBL()}>{t("Project")}</label>
             <select value={projId} onChange={e=>setProjId(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
@@ -1916,7 +2280,7 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
             {/* Status */}
             <div><label style={LBL()}>{t("Status")}</label>
               <div style={{ display:"flex",gap:8 }}>
-                {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{s.l}</button>)}
+                {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{t(s.l)}</button>)}
               </div>
             </div>
             {/* Document upload */}
@@ -2168,7 +2532,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
       </select>
     </div>
     <div><label style={LBL()}>{t("Status")}</label>
-      <div style={{ display:"flex",gap:7 }}>{INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"8px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted }}>{s.l}</button>)}</div>
+      <div style={{ display:"flex",gap:7 }}>{INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"8px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted }}>{t(s.l)}</button>)}</div>
     </div>
     <div>
       <label style={LBL()}>{t("Document")} <span style={{color:C.muted,fontWeight:400}}>({t("optional — AI auto-extracts")})</span></label>
@@ -2210,7 +2574,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
                 <td style={TD({color:C.text,maxWidth:120,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"})}>{row.supplier||row.desc||"—"}</td>
                 <td style={TD({color:C.text,fontWeight:700,whiteSpace:"nowrap"})}>{row.amount?`$${Number(row.amount).toLocaleString()}`:"—"}</td>
                 <td style={TD({color:row.st==="overdue"?C.red:C.muted,fontSize:11,whiteSpace:"nowrap"})}>{row.dd||"—"}</td>
-                <td style={TD({padding:"10px 12px"})}><button onClick={()=>cycle(row)} style={{ background:st.c+"22",color:st.c,border:`1px solid ${st.c}55`,padding:"3px 9px",borderRadius:5,fontFamily:F,fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap" }}>{st.l}</button></td>
+                <td style={TD({padding:"10px 12px"})}><button onClick={()=>cycle(row)} style={{ background:st.c+"22",color:st.c,border:`1px solid ${st.c}55`,padding:"3px 9px",borderRadius:5,fontFamily:F,fontSize:11,fontWeight:700,cursor:"pointer",whiteSpace:"nowrap" }}>{t(st.l)}</button></td>
                 <td style={TD_ACT()}>
                   <RowActions align="center">
                     {(row.url||row.dataUrl)&&<RowBtn type="view" onClick={()=>onPreviewFile&&onPreviewFile(row)}>{t("View")}</RowBtn>}
@@ -2596,7 +2960,7 @@ function EditMemberModal({ member, allProjects, onConfirm, onCancel }){
             <label style={LBL()}>{t("Status")}</label>
             <div style={{ display:"flex",gap:8 }}>
               {ST.map(s=>(
-                <button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${C.green}`:`1px solid ${C.border}`,background:status===s.v?C.greenDim:"transparent",color:status===s.v?C.green:C.muted,transition:"all .15s" }}>{s.l}</button>
+                <button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${C.green}`:`1px solid ${C.border}`,background:status===s.v?C.greenDim:"transparent",color:status===s.v?C.green:C.muted,transition:"all .15s" }}>{t(s.l)}</button>
               ))}
             </div>
           </div>
@@ -2606,7 +2970,7 @@ function EditMemberModal({ member, allProjects, onConfirm, onCancel }){
             <label style={LBL()}>{t("Type")}</label>
             <div style={{ display:"flex",gap:8 }}>
               {TY.map(ty=>(
-                <button key={ty.v} onClick={()=>setType(ty.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:type===ty.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:type===ty.v?C.blueDim:"transparent",color:type===ty.v?C.blue:C.muted,transition:"all .15s" }}>{ty.l}</button>
+                <button key={ty.v} onClick={()=>setType(ty.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:type===ty.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:type===ty.v?C.blueDim:"transparent",color:type===ty.v?C.blue:C.muted,transition:"all .15s" }}>{t(ty.l)}</button>
               ))}
             </div>
           </div>
@@ -2659,6 +3023,7 @@ function DeleteConfirmModal({ member, taskCount, onConfirm, onCancel }){
 }
 
 function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
+  const { t }=useLang();
   const { members,ready,addMember,removeMember,updateMember }=useTeam(project.id);
   const { allProjects }=useProjects();
   const { members: systemUsers }=useAllMembers();
@@ -2704,9 +3069,9 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
           onCancel={()=>setEditing(null)}/>}
       {confirmEditData&&(
         <ConfirmDialog
-          title="Save Member Changes?"
-          message="Are you sure you want to apply these changes to this team member?"
-          confirmLabel="Yes, Save" variant="edit"
+          title={t("Save Member Changes?")}
+          message={t("Are you sure you want to apply these changes to this team member?")}
+          confirmLabel={t("Yes, Save")} variant="edit"
           onConfirm={()=>handleEditConfirm(confirmEditData.patch)}
           onCancel={()=>setConfirmEditData(null)}>
           <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:9,padding:"10px 14px",display:"flex",alignItems:"center",gap:10 }}>
@@ -2717,9 +3082,9 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
       )}
       {deleting && (
         <ConfirmDialog
-          title="Remove Team Member?"
-          message={`Are you sure you want to remove ${deleting.name} (${deleting.role}) from this project? This action cannot be undone.${taskCountFor(deleting.name)>0?" They have "+taskCountFor(deleting.name)+" assigned task(s) that will be unassigned.":""}`}
-          confirmLabel="Yes, Remove" variant="delete"
+          title={t("Remove Team Member?")}
+          message={`${t("You are about to remove")} ${deleting.name} (${deleting.role}) ${t("from this project.")} ${t("This action cannot be undone.")}${taskCountFor(deleting.name)>0?" "+t("They have")+" "+taskCountFor(deleting.name)+" "+t("assigned task")+", "+t("that will be unassigned."):""}`}
+          confirmLabel={t("Yes, Remove")} variant="delete"
           onConfirm={handleDeleteConfirm}
           onCancel={()=>setDeleting(null)}>
           <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,padding:"12px 16px",display:"flex",alignItems:"center",gap:12 }}>
@@ -2731,11 +3096,11 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
 
       {/* Breadcrumb */}
       <div style={{ display:"flex",alignItems:"center",gap:8,marginBottom:22 }}>
-        <button onClick={()=>onBack("projects")} style={{ background:"transparent",border:`1px solid ${C.border}`,color:C.muted,padding:"6px 14px",borderRadius:7,fontFamily:F,fontSize:12,cursor:"pointer" }}>Projects</button>
+        <button onClick={()=>onBack("projects")} style={{ background:"transparent",border:`1px solid ${C.border}`,color:C.muted,padding:"6px 14px",borderRadius:7,fontFamily:F,fontSize:12,cursor:"pointer" }}>{t("Projects")}</button>
         <span style={{ color:C.border,fontSize:14 }}>›</span>
         <button onClick={()=>onBack("detail")} style={{ background:"transparent",border:`1px solid ${C.border}`,color:C.muted,padding:"6px 14px",borderRadius:7,fontFamily:F,fontSize:12,cursor:"pointer" }}>{project.name}</button>
         <span style={{ color:C.border,fontSize:14 }}>›</span>
-        <span style={{ color:C.accent,fontFamily:F,fontSize:13,fontWeight:700 }}>Team</span>
+        <span style={{ color:C.accent,fontFamily:F,fontSize:13,fontWeight:700 }}>{t("Team")}</span>
       </div>
 
       {/* Project header */}
@@ -2749,14 +3114,14 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
             </div>
             <div style={{ color:C.muted,fontFamily:F,fontSize:13,marginLeft:14 }}>{project.address}</div>
           </div>
-          <Btn onClick={()=>setShowAdd(true)}>+ Add Member</Btn>
+          <Btn onClick={()=>setShowAdd(true)}>{t("+ Add Member")}</Btn>
 
         </div>
       </div>
 
       {/* Stats row */}
       <div style={{ display:"flex",gap:12,marginBottom:20,flexWrap:"wrap" }}>
-        {[["Total",members.length,C.blue],["On Site",members.filter(m=>m.status==="on-site").length,C.green],["Remote",members.filter(m=>m.status==="remote").length,C.accent]].map(([l,v,c])=>(
+        {[[t("Total"),members.length,C.blue],[t("On Site"),members.filter(m=>m.status==="on-site").length,C.green],[t("Remote"),members.filter(m=>m.status==="remote").length,C.accent]].map(([l,v,c])=>(
           <div key={l} style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:"16px 20px",flex:1,minWidth:100 }}>
             <div style={{ color:C.muted,fontFamily:F,fontSize:11,marginBottom:5 }}>{l}</div>
             <div style={{ color:c,fontFamily:F,fontWeight:700,fontSize:28,lineHeight:1 }}>{v}</div>
@@ -2767,15 +3132,15 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
       {/* Members list */}
       <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:14,padding:"20px 24px" }}>
         <div style={{ display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:18 }}>
-          <span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:16 }}>Project Team</span>
-          <span style={{ background:C.greenDim,color:C.green,padding:"3px 10px",borderRadius:99,fontSize:12,fontWeight:700,fontFamily:F }}>{members.length} members</span>
+          <span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:16 }}>{t("Project Team")}</span>
+          <span style={{ background:C.greenDim,color:C.green,padding:"3px 10px",borderRadius:99,fontSize:12,fontWeight:700,fontFamily:F }}>{members.length} {t("members")}</span>
         </div>
 
-        {!ready&&<div style={{ color:C.muted,fontFamily:F,fontSize:13,padding:"24px 0",textAlign:"center" }}>Loading…</div>}
+        {!ready&&<div style={{ color:C.muted,fontFamily:F,fontSize:13,padding:"24px 0",textAlign:"center" }}>{t("Loading…")}</div>}
 
         {ready&&members.length===0&&(
           <div style={{ border:`2px dashed ${C.border}`,borderRadius:10,padding:"40px 20px",textAlign:"center",color:C.muted,fontFamily:F,fontSize:13 }}>
-            <div style={{ fontSize:36,marginBottom:10 }}></div>No team members yet — click "+ Add Member" to get started
+            <div style={{ fontSize:36,marginBottom:10 }}></div>{t("No team members yet")}
           </div>
         )}
 
@@ -2798,7 +3163,7 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
                       <span>{m.role}</span>
                       {m.phone&&<span>{m.phone}</span>}
                       {m.email&&<span>{m.email}</span>}
-                      {tc>0&&<span style={{ color:C.blue }}>{tc} task{tc!==1?"s":""}</span>}
+                      {tc>0&&<span style={{ color:C.blue }}>{tc} {t(tc!==1?"tasks":"task")}</span>}
                     </div>
                   </div>
 
@@ -2813,12 +3178,12 @@ function TeamPage({ project,onBack,onAddToLog,tasks=[],updateTask }){
                     <button onClick={()=>setEditing(m)} style={{ background:C.blueDim,color:C.blue,border:`1px solid ${C.blue}44`,padding:"7px 14px",borderRadius:8,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"background 150ms,color 150ms" }}
                       onMouseEnter={e=>{e.currentTarget.style.background=C.blue;e.currentTarget.style.color="#fff";}}
                       onMouseLeave={e=>{e.currentTarget.style.background=C.blueDim;e.currentTarget.style.color=C.blue;}}>
-                      Edit
+                      {t("Edit")}
                     </button>
                     <button onClick={()=>setDeleting(m)} style={{ background:C.redDim,color:C.red,border:`1px solid ${C.red}44`,padding:"7px 14px",borderRadius:8,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer",display:"flex",alignItems:"center",gap:5,transition:"background 150ms,color 150ms" }}
                       onMouseEnter={e=>{e.currentTarget.style.background=C.red;e.currentTarget.style.color="#fff";}}
                       onMouseLeave={e=>{e.currentTarget.style.background=C.redDim;e.currentTarget.style.color=C.red;}}>
-                      Delete
+                      {t("Delete")}
                     </button>
                   </div>
                 </div>
@@ -2897,7 +3262,7 @@ function TasksPage({ tasks,addTask,updateTask,removeTask,allProjects=[],profile=
             <div key={member} style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:12,overflow:"hidden" }}>
               <div style={{ padding:"14px 20px",background:col+"0d",borderBottom:`1px solid ${C.border}`,display:"flex",alignItems:"center",gap:12 }}>
                 <div style={{ width:36,height:36,borderRadius:"50%",background:col+"22",border:`2px solid ${col}55`,display:"flex",alignItems:"center",justifyContent:"center",color:col,fontFamily:F,fontWeight:700,fontSize:13,flexShrink:0 }}>{init}</div>
-                <div><div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>{member}</div><div style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{mInfo?.role||""} · {mtasks.length} task{mtasks.length!==1?"s":""}</div></div>
+                <div><div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>{member}</div><div style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{mInfo?.role||""} · {mtasks.length} {t(mtasks.length!==1?"tasks":"task")}</div></div>
               </div>
               <div style={{ padding:"12px 16px",display:"flex",flexDirection:"column",gap:8 }}>
                 {mtasks.map(tk=>{ const isAssigned=!!(currentUserName&&tk.member===currentUserName); return(
@@ -4118,7 +4483,9 @@ function ReportPage({ tasks, allProjects, allInvoices }){
 
 // ─── Calendar Page ─────────────────────────────────────────────────────────────
 function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[],allProjects=[] }){
-  const { t }=useLang();
+  const { t,lang }=useLang();
+  const locale=lang==="tr"?"tr-TR":"en-US";
+  const DAYS_I18N=useMemo(()=>Array.from({length:7},(_,i)=>new Date(2025,0,5+i).toLocaleString(lang==="tr"?"tr-TR":"en-US",{weekday:"short"})),[lang]);
   const today=new Date();
   const [year,setYear]=useState(today.getFullYear());const [month,setMonth]=useState(today.getMonth());
   const [view,setView]=useState("month");const [filter,setFilter]=useState("all");const [sel,setSel]=useState(null);
@@ -4190,7 +4557,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
         </div>
         {view!=="day"&&<div style={{ display:"flex",alignItems:"center",gap:10,marginLeft:"auto" }}>
           <button onClick={view==="week"?()=>setWeekOffset(o=>o-1):prevM} style={{ background:C.surface,border:`1px solid ${C.border}`,color:C.text,width:32,height:32,borderRadius:7,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center" }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15,minWidth:160,textAlign:"center" }}>{view==="week"?`${weekDays[0].toLocaleDateString("en-US",{month:"short",day:"numeric"})} – ${weekDays[6].toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"})}`:`${MONTHS[month]} ${year}`}</span>
+          <span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15,minWidth:160,textAlign:"center" }}>{view==="week"?`${weekDays[0].toLocaleDateString(locale,{month:"short",day:"numeric"})} – ${weekDays[6].toLocaleDateString(locale,{month:"short",day:"numeric",year:"numeric"})}`:`${new Date(year,month).toLocaleString(locale,{month:"long"})} ${year}`}</span>
           <button onClick={view==="week"?()=>setWeekOffset(o=>o+1):nextM} style={{ background:C.surface,border:`1px solid ${C.border}`,color:C.text,width:32,height:32,borderRadius:7,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center" }}><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
         </div>}
       </div>
@@ -4198,7 +4565,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
       {view==="month"&&(
         <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:14,overflow:"hidden" }}>
           <div style={{ display:"grid",gridTemplateColumns:"repeat(7,1fr)",borderBottom:`1px solid ${C.border}` }}>
-            {DAYS_SHORT.map(d=><div key={d} style={{ padding:"10px 0",textAlign:"center",color:C.muted,fontFamily:F,fontSize:11,fontWeight:700 }}>{d}</div>)}
+            {DAYS_I18N.map(d=><div key={d} style={{ padding:"10px 0",textAlign:"center",color:C.muted,fontFamily:F,fontSize:11,fontWeight:700 }}>{d}</div>)}
           </div>
           <div style={{ display:"grid",gridTemplateColumns:"repeat(7,1fr)" }}>
             {grid.map((day,i)=>{ const ds=day?fmt(day):null;const evs=ds?eventsOn(ds):[];const isToday=ds===todayStr; return(
@@ -4217,7 +4584,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
           <div style={{ display:"grid",gridTemplateColumns:"repeat(7,1fr)",borderBottom:`1px solid ${C.border}` }}>
             {weekDays.map((d,i)=>{ const ds=fmtDate(d);const isToday=ds===todayStr; return(
               <div key={i} style={{ padding:"12px 8px",textAlign:"center",borderRight:i<6?`1px solid ${C.border}22`:"none" }}>
-                <div style={{ color:C.muted,fontFamily:F,fontSize:11,fontWeight:700 }}>{DAYS_SHORT[d.getDay()]}</div>
+                <div style={{ color:C.muted,fontFamily:F,fontSize:11,fontWeight:700 }}>{DAYS_I18N[d.getDay()]}</div>
                 <div style={{ width:30,height:30,borderRadius:"50%",background:isToday?C.accent:"transparent",display:"flex",alignItems:"center",justifyContent:"center",color:isToday?"#000":C.text,fontFamily:F,fontSize:14,fontWeight:700,margin:"4px auto 0" }}>{d.getDate()}</div>
               </div>
             );})}
@@ -4236,7 +4603,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
         <div>
           <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:16 }}>
             <input type="date" value={dayDate} onChange={e=>setDayDate(e.target.value)} style={{ ...INP(),width:"auto",colorScheme:"dark" }}/>
-            {dayDate&&<span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15 }}>{new Date(dayDate+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</span>}
+            {dayDate&&<span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15 }}>{new Date(dayDate+"T12:00:00").toLocaleDateString(locale,{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</span>}
           </div>
           <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:14,padding:"20px 24px" }}>
             {eventsOn(dayDate).length===0?<div style={{ textAlign:"center",padding:"40px 0",color:C.muted,fontFamily:F,fontSize:13 }}>{t("No events on this day")}</div>:
@@ -5433,7 +5800,7 @@ const WIDGET_TYPES = [
 ];
 
 function DashWidget({ widgetId, type, allProjects, allInvoices, payments, tasks, globalLog, onSelect, onChangeType }){
-  const { t }=useLang();
+  const { t,lang }=useLang();
   const [showPicker,setShowPicker]=useState(false);
   const [logDetail,setLogDetail]=useState(null);
   const wt=WIDGET_TYPES.find(w=>w.id===type)||WIDGET_TYPES[0];
@@ -5500,7 +5867,7 @@ function DashWidget({ widgetId, type, allProjects, allInvoices, payments, tasks,
                 </div>
                 <div style={{ textAlign:"right",flexShrink:0,marginLeft:8 }}>
                   <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:13 }}>${Number(inv.amount||0).toLocaleString()}</div>
-                  <span style={{ background:st.c+"22",color:st.c,padding:"2px 7px",borderRadius:4,fontSize:10,fontWeight:700,fontFamily:F }}>{st.l}</span>
+                  <span style={{ background:st.c+"22",color:st.c,padding:"2px 7px",borderRadius:4,fontSize:10,fontWeight:700,fontFamily:F }}>{t(st.l)}</span>
                 </div>
               </div>
             );
@@ -5586,8 +5953,9 @@ function DashWidget({ widgetId, type, allProjects, allInvoices, payments, tasks,
       return(
         <div style={{ display:"flex",flexDirection:"column",gap:8 }}>
           {upcoming.map(ev=>{
-            const mon=ev.date.toLocaleDateString("en-US",{month:"short"});
-            const day=ev.date.toLocaleDateString("en-US",{day:"numeric"});
+            const _loc=lang==="tr"?"tr-TR":"en-US";
+            const mon=ev.date.toLocaleDateString(_loc,{month:"short"});
+            const day=ev.date.toLocaleDateString(_loc,{day:"numeric"});
             const isPast=ev.date<now;
             return(
               <div key={ev.id} style={{ display:"flex",alignItems:"center",gap:10,padding:"8px 10px",borderRadius:9,background:C.surface,border:`1px solid ${C.border}` }}>
@@ -5663,7 +6031,7 @@ function DashWidget({ widgetId, type, allProjects, allInvoices, payments, tasks,
 }
 
 function Dashboard({ onSelect, allProjects=[], allInvoices=[], payments=[], tasks=[], globalLog=[] }){
-  const { t }=useLang();
+  const { t,lang }=useLang();
   const [widget1,setWidget1]=useState(()=>{ try{ return localStorage.getItem("bf_w1")||"projects"; }catch{ return "projects"; } });
   const [widget2,setWidget2]=useState(()=>{ try{ return localStorage.getItem("bf_w2")||"invoices"; }catch{ return "invoices"; } });
   const { members:teamMembers } = useAllMembers(allProjects);
@@ -5689,7 +6057,7 @@ function Dashboard({ onSelect, allProjects=[], allInvoices=[], payments=[], task
 
   const h=now.getHours();
   const gr=h<12?t("Good morning"):h<17?t("Good afternoon"):t("Good evening");
-  const dayName=now.toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"});
+  const dayName=now.toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{weekday:"long",month:"long",day:"numeric"});
 
   return(
     <div>
@@ -5803,7 +6171,7 @@ function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
           </div>
           <div><label style={LBL()}>{t("Status")}</label>
             <div style={{ display:"flex",gap:8 }}>
-              {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{s.l}</button>)}
+              {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{t(s.l)}</button>)}
             </div>
           </div>
         </div>
@@ -5954,7 +6322,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
             {/* Status */}
             <div><label style={LBL()}>{t("Status")}</label>
               <div style={{ display:"flex",gap:8 }}>
-                {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{s.l}</button>)}
+                {INV_ST.map(s=><button key={s.v} onClick={()=>setStatus(s.v)} style={{ flex:1,padding:"9px 0",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:status===s.v?`2px solid ${s.c}`:`1px solid ${C.border}`,background:status===s.v?s.c+"22":"transparent",color:status===s.v?s.c:C.muted,transition:"all .15s" }}>{t(s.l)}</button>)}
               </div>
             </div>
           </div>
@@ -6081,7 +6449,7 @@ function InvoicingPage({ allProjects=[], allInvoices=[], addInvoice, updateInvoi
                   <td style={TD({color:C.text,fontWeight:700})}>${Number(inv.amount||0).toLocaleString()}</td>
                   <td style={TD({color:(inv.status||inv.invoiceStatus)==="overdue"?C.red:C.muted})}>{inv.dueFmt||inv.dueDate||"—"}</td>
                   <td style={TD()}>
-                    <button onClick={()=>cycleStatus(inv)} title="Click to cycle status" style={{ background:st.c+"22",color:st.c,border:`1px solid ${st.c}55`,padding:"4px 10px",borderRadius:5,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer" }}>{st.l}</button>
+                    <button onClick={()=>cycleStatus(inv)} title="Click to cycle status" style={{ background:st.c+"22",color:st.c,border:`1px solid ${st.c}55`,padding:"4px 10px",borderRadius:5,fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer" }}>{t(st.l)}</button>
                   </td>
                   <td style={TD_ACT()}>
                     <RowActions align="right">
@@ -6272,7 +6640,7 @@ function TeamGlobal({ allProjects=[], onLog }){
                           {t.date&&<span style={{ color:C.muted,fontFamily:F,fontSize:10,flexShrink:0 }}>{t.date}</span>}
                         </div>
                       ))}
-                      {activeTasks.length>3&&<span style={{ color:C.muted,fontFamily:F,fontSize:10,paddingLeft:13 }}>+{activeTasks.length-3} more tasks</span>}
+                      {activeTasks.length>3&&<span style={{ color:C.muted,fontFamily:F,fontSize:10,paddingLeft:13 }}>+{activeTasks.length-3} {t("more → View all")}</span>}
                     </div>
                   )}
                 </div>
@@ -7000,7 +7368,7 @@ async function generatePdfBlob(metrics, report){
 
 // ─── Accountant Page ──────────────────────────────────────────────────────────
 function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
-  const { t }=useLang();
+  const { t,lang }=useLang();
   const { currency:gCur, setCurrency:setGCur } = useCurrencyCtx();
   const [projId,setProjId]    = useState(()=>allProjects[0]?.id||null);
   const [subPage,setSubPage]  = useState("cashflow"); // cashflow|costs|invoices|payments
@@ -7067,10 +7435,7 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
     const year=new Date().getFullYear();
     return Array.from({length:12},(_,i)=>`${year}-${String(i+1).padStart(2,'0')}`);
   },[]);
-  const MONTH_LBLS = useMemo(()=>MONTHS.map(m=>{
-    const [y,mo]=m.split('-');
-    return new Date(parseInt(y),parseInt(mo)-1,1).toLocaleString('en-US',{month:'short'});
-  }),[MONTHS]);
+  const MONTH_LBLS = useMemo(()=>Array.from({length:12},(_,i)=>new Date(2024,i,1).toLocaleString(lang==="tr"?"tr-TR":"en-US",{month:"short"})),[lang]);
 
   const Q_RANGE = {all:[0,11],q1:[0,2],q2:[3,5],q3:[6,8],q4:[9,11]};
 
