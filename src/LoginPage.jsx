@@ -4,6 +4,10 @@ import { supabase } from './supabaseClient'
 
 const F = `'Inter','Segoe UI',sans-serif`
 
+// Primary blue — matches dark theme C.accent (#3b82f6)
+const ACCENT = '#3b82f6'
+const ACCENT_DIM = '#1e3a6e'
+
 export default function LoginPage({ onLogin }) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -67,12 +71,10 @@ export default function LoginPage({ onLogin }) {
       <div style={{ position:'relative', zIndex:1, width:'100%', maxWidth:420, padding:'0 20px' }}>
         {/* Logo */}
         <div style={{ textAlign:'center', marginBottom:40 }}>
-          <div style={{ width:56, height:56, background:'#f59e0b', borderRadius:14, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 16px' }}>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#000" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M2 20h20M6 20V10l6-7 6 7v10M10 20v-5h4v5"/>
-            </svg>
+          <div style={{ width:56, height:56, background:ACCENT, borderRadius:14, display:'flex', alignItems:'center', justifyContent:'center', margin:'0 auto 16px', boxShadow:`0 4px 20px ${ACCENT}44` }}>
+            <span style={{ color:'#fff', fontFamily:F, fontWeight:800, fontSize:22, letterSpacing:'-1px' }}>S</span>
           </div>
-          <div style={{ color:'#e8eaf0', fontSize:26, fontWeight:800, letterSpacing:-0.5 }}>BuildFlow</div>
+          <div style={{ color:'#e8eaf0', fontSize:26, fontWeight:800, letterSpacing:-0.5 }}>Structsoft</div>
           <div style={{ color:'#7a849e', fontSize:13, marginTop:6 }}>Construction Management Platform</div>
         </div>
 
@@ -100,10 +102,10 @@ export default function LoginPage({ onLogin }) {
           </div>
 
           <button onClick={handleLogin} disabled={loading}
-            style={{ width:'100%', background:'#f59e0b', color:'#000', border:'none', borderRadius:9, padding:'13px 0', fontFamily:F, fontWeight:700, fontSize:15, cursor:loading?'not-allowed':'pointer', opacity:loading?0.7:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
+            style={{ width:'100%', background:ACCENT, color:'#fff', border:'none', borderRadius:9, padding:'13px 0', fontFamily:F, fontWeight:700, fontSize:15, cursor:loading?'not-allowed':'pointer', opacity:loading?0.7:1, display:'flex', alignItems:'center', justifyContent:'center', gap:8 }}>
             {loading ? (
               <>
-                <div style={{ width:16, height:16, border:'2px solid #00000044', borderTopColor:'#000', borderRadius:'50%', animation:'spin .7s linear infinite' }}/>
+                <div style={{ width:16, height:16, border:'2px solid #ffffff44', borderTopColor:'#fff', borderRadius:'50%', animation:'spin .7s linear infinite' }}/>
                 Signing in...
               </>
             ) : 'Sign In'}
@@ -115,7 +117,7 @@ export default function LoginPage({ onLogin }) {
         </div>
 
         <div style={{ textAlign:'center', marginTop:24, color:'#3a4055', fontSize:12 }}>
-          © 2025 BuildFlow · All rights reserved
+          © 2025 Structsoft · All rights reserved
         </div>
       </div>
 

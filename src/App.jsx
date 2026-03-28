@@ -824,6 +824,21 @@ const TRANSLATIONS = {
     // Misc missing
     "Click to view and follow up": "Görüntülemek ve takip etmek için tıklayın",
     "Off":              "İzinde",
+    // Plan categories
+    "Drawing":          "Çizim",
+    "Electrical":       "Elektrik",
+    "Plumbing":         "Sıhhi Tesisat",
+    "Structural":       "Yapısal",
+    "CAD File":         "CAD Dosyası",
+    "Permit / Legal":   "İzin / Hukuki",
+    "Permit":           "İzin",
+    // Contracts panel
+    "Description or notes (optional)": "Açıklama veya notlar (isteğe bağlı)",
+    "Uploading…":       "Yükleniyor…",
+    "Upload Contract":  "Sözleşme Yükle",
+    "PDF, images, or Word documents · Max 10MB": "PDF, resimler veya Word belgeleri · Maks 10MB",
+    "No contracts uploaded yet": "Henüz sözleşme yüklenmedi",
+    "Delete Contract?": "Sözleşme Silinsin mi?",
   },
 };
 
@@ -1039,9 +1054,9 @@ const fmtBytes = (bytes) => {
 };
 
 /** Format ISO date string as "Jan 1, 2025" — safe, never throws */
-const fmtDate = (iso) => {
+const fmtDate = (iso, locale='en-US') => {
   if (!iso) return '—';
-  try { return new Date(iso + 'T12:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }); }
+  try { return new Date(iso + 'T12:00:00').toLocaleDateString(locale, { month:'short', day:'numeric', year:'numeric' }); }
   catch { return iso; }
 };
 
@@ -1099,29 +1114,37 @@ function useFiles(key) {
       const { data, error } = await dbFiles.getByProject(projectId, type);
       if (!alive) return;
       if (!error && data) {
-        setFiles(data.map(r => ({
-          id: r.id,
-          name: r.name,
-          size: r.size,
-          url: r.url,
-          storagePath: r.storage_path,
-          uploadedAt: r.uploaded_at ? new Date(r.uploaded_at).toLocaleDateString() : '',
-        })));
+        setFiles(data.map(r => {
+          let parsedDesc = {};
+          try { if(r.description) parsedDesc = JSON.parse(r.description); } catch(_) {}
+          return {
+            id: r.id,
+            name: r.name,
+            size: r.size,
+            url: r.url,
+            storagePath: r.storage_path,
+            uploadedAt: r.created_at ? new Date(r.created_at).toLocaleDateString() : '',
+            displayTitle: r.title || r.name,
+            notes: parsedDesc.notes || '',
+            icon: parsedDesc.icon || 'DOC',
+            badgeStatus: parsedDesc.badgeStatus || '',
+          };
+        }));
       }
       setReady(true);
     })();
     return () => { alive = false; };
   }, [cid, projectId, type, version]);
 
-  const add = async (file, fileBlob) => {
+  const add = async (file, fileBlob, meta={}) => {
     if (!cid || !projectId) return;
     // Upload to Supabase Storage
     const ext = file.name.split('.').pop();
     const path = `${cid}/${type}/${projectId}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
     const { data, error } = await supabaseStorage.upload('buildflow-files', path, fileBlob);
-    if (error) { console.error('Upload failed:', error); return; }
+    if (error) { console.error('Upload failed:', error); throw new Error(error.message || 'Upload failed'); }
     // Save metadata to project_files table
-    await dbFiles.add({
+    const { error: dbErr } = await dbFiles.add({
       company_id: cid,
       project_id: projectId,
       type,
@@ -1129,7 +1152,10 @@ function useFiles(key) {
       size: file.size,
       url: data.publicUrl,
       storage_path: path,
+      title: meta.title || file.name,
+      description: meta.description || '',
     });
+    if (dbErr) { console.error('DB save failed:', dbErr); throw new Error(dbErr.message || 'DB save failed'); }
     bump(v => v + 1);
   };
 
@@ -1212,9 +1238,9 @@ function usePayments(){
   useEffect(()=>{ load(); const t=setInterval(load,POLL_MS); return()=>clearInterval(t); },[load]);
   return{
     payments:payments||[], ready:payments!==null,
-    addPayment:   async(p)=>{ await dbPayments.add(p); load(); },
-    removePayment:async(id)=>{ await dbPayments.delete(id); load(); },
-    updatePayment:async(id,patch)=>{ await dbPayments.update(id,patch); load(); },
+    addPayment:   async(p)=>{ const r=await dbPayments.add(p); if(r?.error) throw new Error(r.error.message||JSON.stringify(r.error)); load(); },
+    removePayment:async(id)=>{ const r=await dbPayments.delete(id); if(r?.error) throw new Error(r.error.message||JSON.stringify(r.error)); load(); },
+    updatePayment:async(id,patch)=>{ const r=await dbPayments.update(id,patch); if(r?.error) throw new Error(r.error.message||JSON.stringify(r.error)); load(); },
   };
 }
 
@@ -2192,7 +2218,7 @@ function AddTaskModal({ onConfirm,onCancel,allMembers,allProjects=[] }){
 
 // ─── Add Invoice Form Modal (form-first, doc upload inside) ───────────────────
 function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   // Sequential numbering from the live global invoice list
   const nextId=()=>nextInvId(allInvoices);
   const [supplier,setSupplier]=useState("");const [invNum,setInvNum]=useState("");
@@ -2227,7 +2253,8 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
 
   const submit=async()=>{
     if(!amount||isNaN(parseFloat(amount))){setErr(t("Invoice amount is required"));return;}
-    const fmt=dueDate?new Date(dueDate+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+    const _locale=lang==="tr"?"tr-TR":"en-US";
+    const fmt=dueDate?new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}):"—";
     const id=invNum.trim()||nextId();
     // Upload file to Supabase Storage if we have one
     let fileUrl = docFile?.dataUrl || null;
@@ -2329,7 +2356,7 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
 
 // ─── Module Panels ─────────────────────────────────────────────────────────────
 function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobalInvoice, onUpdateGlobalInvoice, allInvoices=[], onPreviewFile }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const cid = useCompany();
   // ─── SINGLE SOURCE OF TRUTH: global store only (no useFiles for invoices) ───
   const [mode,setMode]           = useState("list"); // "list" | "add" | "edit"
@@ -2414,8 +2441,9 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
     if(saving) return;
     if(!amount||isNaN(parseFloat(amount))){ setFormErr(t("Invoice amount is required")); return; }
     setSaving(true);
+    const _locale=lang==="tr"?"tr-TR":"en-US";
     try{
-      const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "—";
+      const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}) : "—";
       const invId = invNum.trim() || nextInvId(allInvoices);
       // Upload file to storage if attached
       let fileUrl = docFile?.url||docFile?.dataUrl||null;
@@ -2452,7 +2480,8 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
     if(!amount||isNaN(parseFloat(amount))){ setFormErr(t("Amount is required")); return; }
     setSaving(true);
     try{
-      const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}) : "—";
+      const _locale=lang==="tr"?"tr-TR":"en-US";
+      const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}) : "—";
       const displayId = invNum.trim()||editTarget.invId||editTarget.id;
       // Upload new file if one was attached
       let fileUrl = docFile?.url||docFile?.dataUrl||null;
@@ -2688,7 +2717,7 @@ function AddPlanFormModal({ project, onConfirm, onCancel }){
             <div><label style={LBL()}>{t("Document Type")}</label>
               <div style={{ display:"flex",gap:8,flexWrap:"wrap" }}>
                 {PLAN_CATS.map(c=>(
-                  <button key={c.v} onClick={()=>setCat(c.v)} style={{ padding:"7px 14px",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:cat===c.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:cat===c.v?C.blueDim:"transparent",color:cat===c.v?C.blue:C.muted,transition:"all .15s",display:"flex",alignItems:"center",gap:5 }}>{c.icon} {c.l}</button>
+                  <button key={c.v} onClick={()=>setCat(c.v)} style={{ padding:"7px 14px",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:12,fontWeight:700,border:cat===c.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:cat===c.v?C.blueDim:"transparent",color:cat===c.v?C.blue:C.muted,transition:"all .15s",display:"flex",alignItems:"center",gap:5 }}>{c.icon} {t(c.l)}</button>
                 ))}
               </div>
             </div>
@@ -2723,16 +2752,23 @@ function PlansPanel({ project,onActivity }){
   const handlePlanFile=async(raw)=>{
     if(!raw)return;
     const du=raw.size<6*1024*1024?await new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(raw);}):null;
-    setPlanFile({name:raw.name,size:raw.size,dataUrl:du});
+    setPlanFile({name:raw.name,size:raw.size,dataUrl:du,_raw:raw});
     if(!planTitle)setPlanTitle(raw.name.replace(/\.[^.]+$/,"").replace(/[_-]/g," "));
     setPlanErr("");
   };
 
   const submitPlan=async()=>{
     if(!planFile){setPlanErr(t("Please upload a file"));return;}
+    if(!planFile._raw){setPlanErr(t("File missing — please re-select"));return;}
     const chosenCat=PLAN_CATS.find(c=>c.v===planCat)||PLAN_CATS[0];
-    await add({ id:`${Date.now()}-${Math.random().toString(36).slice(2)}`,name:planFile.name,displayTitle:planTitle||planFile.name,size:planFile.size,dataUrl:planFile.dataUrl,icon:chosenCat.icon,badgeStatus:planCat,notes:planNotes.trim(),uploadedAt:new Date().toLocaleDateString() });
-    onActivity("Plan uploaded","📐"); setShowAdd(false);
+    try{
+      await add(
+        planFile,
+        planFile._raw,
+        { title: planTitle||planFile.name, description: JSON.stringify({notes:planNotes.trim(),icon:chosenCat.icon,badgeStatus:planCat}) }
+      );
+      onActivity("Plan uploaded","📐"); setShowAdd(false);
+    } catch(e){ setPlanErr("Upload failed: "+e.message); }
   };
 
   if(!ready)return <div style={{ color:C.muted,fontFamily:F,fontSize:12,padding:"16px 0",textAlign:"center" }}>Loading…</div>;
@@ -2786,7 +2822,7 @@ function PlansPanel({ project,onActivity }){
             <div><label style={LBL()}>{t("Document Title")}</label><input style={INP()} value={planTitle} onChange={e=>setPlanTitle(e.target.value)} placeholder={t("e.g. Foundation Layout v3")}/></div>
             <div><label style={LBL()}>{t("Document Type")}</label>
               <div style={{ display:"flex",gap:7,flexWrap:"wrap" }}>
-                {PLAN_CATS.map(c=><button key={c.v} onClick={()=>setPlanCat(c.v)} style={{ padding:"7px 12px",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:11,fontWeight:700,border:planCat===c.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:planCat===c.v?C.blueDim:"transparent",color:planCat===c.v?C.blue:C.muted,display:"flex",alignItems:"center",gap:4 }}>{c.icon} {c.l}</button>)}
+                {PLAN_CATS.map(c=><button key={c.v} onClick={()=>setPlanCat(c.v)} style={{ padding:"7px 12px",borderRadius:7,cursor:"pointer",fontFamily:F,fontSize:11,fontWeight:700,border:planCat===c.v?`2px solid ${C.blue}`:`1px solid ${C.border}`,background:planCat===c.v?C.blueDim:"transparent",color:planCat===c.v?C.blue:C.muted,display:"flex",alignItems:"center",gap:4 }}>{c.icon} {t(c.l)}</button>)}
               </div>
             </div>
             <div><label style={LBL()}>{t("Notes")} <span style={{color:C.muted,fontWeight:400}}>({t("optional")})</span></label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={planNotes} onChange={e=>setPlanNotes(e.target.value)} placeholder={t("Version info, revision notes…")}/></div>
@@ -3682,6 +3718,7 @@ function TendersPage({ allProjects=[] }){
 const PAYMENT_METHODS = ["Bank Transfer","Cash","Cheque","Card","Online Transfer","Other"];
 
 function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
+  const { t, lang } = useLang();
   const { currency:gCur } = useCurrencyCtx();
   const [projId,setProjId]  = useState(allProjects[0]?.id||null);
   const [amount,setAmount]  = useState("");
@@ -3723,7 +3760,7 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
       const uploaded = await uploadFile(receipt._rawFile, 'receipts', cid);
       if(uploaded) receiptData = { name:receipt.name, size:receipt.size, url:uploaded.url, path:uploaded.path };
     }
-    const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+    const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"});
     onConfirm({
       id:`pay-${Date.now()}`,
       projId, project:proj?.name||"",
@@ -3822,7 +3859,8 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
 
 // ─── EditPaymentModal ─────────────────────────────────────────────────────────
 function EditPaymentModal({ payment, allProjects, allInvoices, onConfirm, onCancel }){
-  const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+  const { lang } = useLang();
+  const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
   const { currency:gCur } = useCurrencyCtx();
   const [projId,setProjId]  = useState(payment.projId||allProjects[0]?.id||null);
   const [amount,setAmount]  = useState(String(payment.amount||""));
@@ -3952,6 +3990,7 @@ function PayReceiptBtn({ receipt }){
 // Payments panel inside project detail
 // ─── Contracts Panel ──────────────────────────────────────────────────────────
 function ContractsPanel({ project, onActivity }){
+  const { t } = useLang();
   const cid = useCompany();
   const { files, ready, add, remove } = useFiles(`contracts:${project.id}`);
   const [preview, setPreview] = useState(null);
@@ -3973,8 +4012,8 @@ function ContractsPanel({ project, onActivity }){
     <div>
       {preview&&<FilePreviewModal file={preview} onClose={()=>setPreview(null)}/>}
       {confirmDel&&(
-        <ConfirmDialog title="Delete Contract?" message={`Delete "${confirmDel.name}"? This cannot be undone.`}
-          confirmLabel="Yes, Delete" variant="delete"
+        <ConfirmDialog title={t("Delete Contract?")} message={`${t("Delete")} "${confirmDel.name}"? ${t("This cannot be undone.")}`}
+          confirmLabel={t("Yes, Delete")} variant="delete"
           onConfirm={()=>{ remove(confirmDel.id); if(onActivity) onActivity('Contract deleted: '+confirmDel.name,'🗑️'); setConfirmDel(null); }}
           onCancel={()=>setConfirmDel(null)}/>
       )}
@@ -3982,23 +4021,23 @@ function ContractsPanel({ project, onActivity }){
       {/* Upload area */}
       <div style={{ marginBottom:16 }}>
         <div style={{ display:'flex',gap:10,marginBottom:8 }}>
-          <input value={note} onChange={e=>setNote(e.target.value)} placeholder="Description or notes (optional)"
+          <input value={note} onChange={e=>setNote(e.target.value)} placeholder={t("Description or notes (optional)")}
             style={{ ...INP(),flex:1,fontSize:12,padding:'8px 12px' }}/>
           <button onClick={()=>fileRef.current?.click()} disabled={uploading}
             style={{ background:C.purple,color:'#fff',border:'none',padding:'8px 18px',borderRadius:8,fontFamily:F,fontWeight:700,fontSize:12,cursor:'pointer',flexShrink:0,display:'flex',alignItems:'center',gap:6,opacity:uploading?0.6:1 }}>
-            {uploading ? <><div style={{ width:12,height:12,border:'2px solid #ffffff44',borderTopColor:'#fff',borderRadius:'50%',animation:'spin .7s linear infinite' }}/>Uploading…</> : <>Upload Contract</>}
+            {uploading ? <><div style={{ width:12,height:12,border:'2px solid #ffffff44',borderTopColor:'#fff',borderRadius:'50%',animation:'spin .7s linear infinite' }}/>{t("Uploading…")}</> : <>{t("Upload Contract")}</>}
           </button>
         </div>
         <input ref={fileRef} type="file" accept=".pdf,.png,.jpg,.jpeg,.doc,.docx" style={{ display:'none' }}
           onChange={e=>{ const f=e.target.files[0]; if(f) handleUpload(f); e.target.value=''; }}/>
-        <div style={{ color:C.muted,fontFamily:F,fontSize:11 }}>PDF, images, or Word documents · Max 10MB</div>
+        <div style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{t("PDF, images, or Word documents · Max 10MB")}</div>
       </div>
 
       {/* File list */}
-      {!ready&&<div style={{ color:C.muted,fontFamily:F,fontSize:12,textAlign:'center',padding:'20px 0' }}>Loading…</div>}
+      {!ready&&<div style={{ color:C.muted,fontFamily:F,fontSize:12,textAlign:'center',padding:'20px 0' }}>{t("Loading…")}</div>}
       {ready&&files.length===0&&(
         <div style={{ border:`2px dashed ${C.border}`,borderRadius:10,padding:'32px 20px',textAlign:'center',color:C.muted,fontFamily:F,fontSize:13 }}>
-          <div style={{ fontSize:32,marginBottom:8 }}></div>No contracts uploaded yet
+          <div style={{ fontSize:32,marginBottom:8 }}></div>{t("No contracts uploaded yet")}
         </div>
       )}
       {ready&&files.length>0&&(
@@ -4034,6 +4073,7 @@ function ContractsPanel({ project, onActivity }){
 
 
 function PaymentsPanel({ project, payments, addPayment, updatePayment, removePayment, allProjects, allInvoices, onActivity, onPreviewFile }){
+  const { t, lang } = useLang();
   const cid = useCompany();
   const [showAdd,setShowAdd]=useState(false);
   const [editingPayment,setEditingPayment]=useState(null);
@@ -4054,7 +4094,7 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
   const handlePayFile=async(raw)=>{
     if(raw.size>5*1024*1024){setPayErr("File too large (max 5MB)");return;}
     const du=await new Promise(r=>{const rd=new FileReader();rd.onload=e=>r(e.target.result);rd.readAsDataURL(raw);});
-    setPayReceipt({name:raw.name,size:raw.size,dataUrl:du});
+    setPayReceipt({name:raw.name,size:raw.size,dataUrl:du,_rawFile:raw});
   };
 
   const [paySaving,setPaySaving]=useState(false);
@@ -4064,7 +4104,7 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
     if(!payDate){setPayErr("Payment date is required");return;}
     setPaySaving(true);
     try{
-      const fmtD=d=>new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"});
+      const fmtD=d=>new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"});
       // Upload receipt to storage if attached
       let receiptData = payReceipt ? { name:payReceipt.name, size:payReceipt.size, url:payReceipt.dataUrl } : null;
       if(payReceipt?._rawFile && cid){
@@ -4279,7 +4319,7 @@ function PaymentsPage({ payments, allProjects, addPayment, allInvoices, removePa
 
 // ─── REPORT GENERATOR ─────────────────────────────────────────────────────────
 function ReportPage({ tasks, allProjects, allInvoices }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const [projId,setProjId]=useState(null);
   const [from,setFrom]=useState("2025-01-01");
   const [to,setTo]=useState("2025-12-31");
@@ -4290,7 +4330,7 @@ function ReportPage({ tasks, allProjects, allInvoices }){
   // Set default project once list loads
   useEffect(()=>{ if(!projId && allProjects?.length) setProjId(allProjects[0].id); },[allProjects]);
 
-  const fmtD=(d)=>{ try{ return new Date(d+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return d;} };
+  const fmtD=(d)=>{ try{ return new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return d;} };
 
   const generate=()=>{
     setGen(true);
@@ -4630,7 +4670,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
 
 // ─── Project Detail ────────────────────────────────────────────────────────────
 // ─── Module Order hook ────────────────────────────────────────────────────────
-const DEFAULT_MODULE_ORDER = ["invoices","payments","plans","team"];
+const DEFAULT_MODULE_ORDER = ["invoices","payments","plans","contracts","team"];
 
 function useModuleOrder(projectId){
   const key = `moduleorder:${projectId}`;
@@ -4880,7 +4920,7 @@ function PhotoCard({ photo, comments, onOpen, onDelete }){
 
 // ─── Project Detail Page ───────────────────────────────────────────────────────
 function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPayment,updatePayment,removePayment,allProjects=[],allInvoices=[],addInvoice,removeGlobalInvoice,updateGlobalInvoice,onUpdateProject,onLog,profile }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const [contactOpen,setContactOpen] = useState(false);
   const [previewFile,setPreviewFile]  = useState(null);  // hoisted above DraggableModCard to escape transform stacking context
   const [logDetail,setLogDetail]       = useState(null);  // activity log detail popup
@@ -4925,7 +4965,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
     }
   };
   const projectPayments = useMemo(()=>payments.filter(p=>p.projId===project.id||p.project===project.name),[payments,project]);
-  const handleAddPayment= async(p)=>{ addPayment&&addPayment(p); pushLog(`Payment $${p.amount.toLocaleString()} recorded`,"PAY"); };
+  const handleAddPayment= async(p)=>{ if(addPayment) await addPayment(p); pushLog(`Payment $${p.amount.toLocaleString()} recorded`,"PAY"); };
 
   // Drag handlers
   const handleDragStart = id => { dragItem.current=id; };
@@ -5088,7 +5128,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
                     <>
                       <div style={{ display:"flex",justifyContent:"space-between",marginBottom:8,flexWrap:"wrap",gap:8 }}>
                         <div style={{ display:"flex",gap:22,flexWrap:"wrap" }}>
-                          {[[t("Started"),fmtDate(project.startDateISO||project.startDate)||"—"],[t("Due"),project.dueFmt||fmtDate(project.due)||"—"]].map(([k,v])=>(
+                          {[[t("Started"),fmtDate(project.startDateISO||project.startDate,lang==="tr"?"tr-TR":"en-US")||"—"],[t("Due"),project.dueFmt||fmtDate(project.due,lang==="tr"?"tr-TR":"en-US")||"—"]].map(([k,v])=>(
                             <div key={k}><div style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase" }}>{k}</div><div style={{ color:C.text2||C.text,fontFamily:F,fontSize:13,fontWeight:600,marginTop:2 }}>{v}</div></div>
                           ))}
                           {days!==null&&(
@@ -5182,7 +5222,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
               <div style={{ display:"flex",alignItems:"center",gap:8 }}>
                 <span style={{ color:C.muted,fontFamily:F,fontSize:10 }}>{t("Click a photo to comment")}</span>
                 <button onClick={()=>photoRef.current.click()} style={{ background:C.accentDim,color:C.accent,border:`1px solid ${C.accentMid}`,padding:"7px 14px",borderRadius:6,fontFamily:F,fontWeight:700,fontSize:12,cursor:"pointer",display:"flex",alignItems:"center",gap:5 }}>{t("Upload")}</button>
-                <input ref={photoRef} type="file" accept="image/*" multiple style={{ display:"none" }} onChange={e=>uploadPhotos(e.target.files)}/>
+                <input ref={photoRef} type="file" accept="image/*,.pdf" multiple style={{ display:"none" }} onChange={e=>uploadPhotos(e.target.files)}/>
               </div>
             </div>
             {/* CSS for photo action buttons hover */}
@@ -5257,7 +5297,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
 
 // ─── Edit Project Modal ────────────────────────────────────────────────────────
 function EditProjectModal({ project, onConfirm, onCancel }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const [name,setName]         = useState(project.name||"");
   const [address,setAddress]   = useState(project.address||"");
   const [desc,setDesc]         = useState(project.desc||"");
@@ -5273,7 +5313,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
   const updateContact=(id,field,val)=>setContacts(cs=>cs.map(c=>c.id===id?{...c,[field]:val}:c));
   const addContact=()=>setContacts(cs=>[...cs,emptyContact()]);
   const removeContact=(id)=>setContacts(cs=>cs.filter(c=>c.id!==id));
-  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
+  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
 
   const goNext=()=>{
     if(step===1){
@@ -5444,7 +5484,7 @@ const CONTACT_ROLES=["Client","Site Manager","Project Manager","Architect","Stru
 const emptyContact=()=>({ id:`c${Date.now()}-${Math.random().toString(36).slice(2)}`, name:"", company:"", phone:"", email:"", role:"Client" });
 
 function NewProjectModal({ onConfirm, onCancel }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const [name,setName]=useState("");
   const [address,setAddress]=useState("");
   const [desc,setDesc]=useState("");
@@ -5461,7 +5501,7 @@ function NewProjectModal({ onConfirm, onCancel }){
   const addContact=()=>setContacts(cs=>[...cs,emptyContact()]);
   const removeContact=(id)=>setContacts(cs=>cs.filter(c=>c.id!==id));
 
-  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
+  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
 
   const goNext=()=>{
     if(step===1){
@@ -6130,7 +6170,7 @@ function useGlobalInvoices(){
 }
 
 function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const [project,setProject]   = useState(invoice.project||"");
   const [client,setClient]     = useState(invoice.client||"");
   const [desc,setDesc]         = useState(invoice.desc||"");
@@ -6141,7 +6181,7 @@ function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
 
   const submit=()=>{
     if(!amount||isNaN(parseFloat(amount))){ setErr(t("Amount is required")); return; }
-    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
     onConfirm({ project, client, desc, amount:parseFloat(amount), due, dueFmt:fmt, status, invoiceStatus:status });
   };
 
@@ -6185,7 +6225,7 @@ function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
 }
 
 function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCancel }){
-  const { t }=useLang();
+  const { t, lang }=useLang();
   const { currency:gCur } = useCurrencyCtx();
   const [project,setProject]    = useState(allProjects[0]?.name||"");
   const [client,setClient]      = useState("");
@@ -6230,7 +6270,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
   const submit=()=>{
     if(!project){ setErr(t("Project is required")); return; }
     if(!amount||isNaN(parseFloat(amount))){ setErr(t("Amount is required")); return; }
-    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
     const id=invNum||nextInvId(allInvoices);
     const proj=allProjects.find(p=>p.name===project);
     onConfirm({ id, invId:id, project, client:client||supplier||"", supplier:supplier||client||"",
@@ -8275,16 +8315,16 @@ function AppInner({ session, profile, onLogout }){
 
   // Wrapped addPayment that also logs to global log
   const handleAddPayment=async(p)=>{
-    addPayment(p);
+    await addPayment(p);
     await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount).toLocaleString()} recorded`,detail:p.project,user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"pay" });
   };
   const handleUpdatePayment=async(id,patch)=>{
-    updatePayment(id,patch);
+    await updatePayment(id,patch);
     await pushGlobal({ id:Date.now(),action:`Payment $${Number(patch.amount||0).toLocaleString()} updated`,detail:patch.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"✏️" });
   };
   const handleRemovePayment=async(id)=>{
     const p=payments.find(x=>x.id===id);
-    removePayment(id);
+    await removePayment(id);
     if(p) await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount||0).toLocaleString()} deleted`,detail:p.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"🗑️" });
   };
   // Wrapped addInvoice that also logs to global log
@@ -8387,10 +8427,10 @@ function AppInner({ session, profile, onLogout }){
         <div style={{ padding:"18px 20px 16px",borderBottom:`1px solid ${C.border}` }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
             <div style={{ width:32,height:32,background:C.accent,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,boxShadow:`0 1px 3px ${C.accent}55` }}>
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 20h20M6 20V10l6-7 6 7v10M10 20v-5h4v5"/></svg>
+              <span style={{ color:"#fff",fontFamily:F,fontWeight:800,fontSize:15,letterSpacing:"-0.5px" }}>S</span>
             </div>
             <div>
-              <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14,letterSpacing:"-.2px" }}>BuildFlow</div>
+              <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14,letterSpacing:"-.2px" }}>Structsoft</div>
               <div style={{ color:C.muted,fontFamily:F,fontSize:11,marginTop:1 }}>{profile?.companies?.name||"Construction"}</div>
             </div>
           </div>

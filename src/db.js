@@ -321,7 +321,9 @@ export const mapPayment = (row) => ({
   currency: row.currency     || 'AED',
   method:   row.method       || '',
   date:     row.date         || '',
-  dateFmt:  row.date ? new Date(row.date + 'T12:00:00').toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '—',
+  dateFmt:  row.date ? new Date(row.date + 'T12:00:00').toLocaleDateString(
+    (typeof localStorage !== 'undefined' && localStorage.getItem('bf:lang') === 'tr') ? 'tr-TR' : 'en-US',
+    { month:'short', day:'numeric', year:'numeric' }) : '—',
   invRef:   row.invoice_ref  || '',
   invoice:  row.invoice_ref  || '',
   notes:    row.notes        || '',
