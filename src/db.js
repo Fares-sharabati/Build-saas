@@ -322,7 +322,7 @@ export const mapPayment = (row) => ({
   method:   row.method       || '',
   date:     row.date         || '',
   dateFmt:  row.date ? new Date(row.date + 'T12:00:00').toLocaleDateString(
-    (typeof localStorage !== 'undefined' && localStorage.getItem('bf:lang') === 'tr') ? 'tr-TR' : 'en-US',
+    (()=>{ const l=typeof localStorage!=='undefined'&&localStorage.getItem('bf:lang'); return l==='tr'?'tr-TR':l==='ar'?'ar-SA':'en-US'; })(),
     { month:'short', day:'numeric', year:'numeric' }) : '—',
   invRef:   row.invoice_ref  || '',
   invoice:  row.invoice_ref  || '',
@@ -391,7 +391,7 @@ export const mapLog = (row) => ({
   userId:    row.user_id    || null,
   icon:      row.icon       || '●',
   // Short display time (used in log rows)
-  time:      new Date(row.created_at).toLocaleString('en-US', { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }),
+  time:      new Date(row.created_at).toLocaleString((()=>{ const l=typeof localStorage!=='undefined'&&localStorage.getItem('bf:lang'); return l==='tr'?'tr-TR':l==='ar'?'ar-SA':'en-US'; })(), { month:'short', day:'numeric', hour:'numeric', minute:'2-digit' }),
   // Full timestamp for the modal
   createdAt: row.created_at || null,
 })

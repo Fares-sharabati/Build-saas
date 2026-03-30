@@ -1,8 +1,8 @@
 // @ts-nocheck
 // ─── Supabase Client (no npm package — pure fetch) ────────────────────────────
 
-const SUPABASE_URL = 'https://mghwscmrosxiymtdqvaa.supabase.co'
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1naHdzY21yb3N4aXltdGRxdmFhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyNjE0MzUsImV4cCI6MjA4ODgzNzQzNX0.zq7SAYsAWvO338CCQncnewOR2n2UloKP3AqZaWefaNg'
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
 const getToken        = () => { try { return localStorage.getItem('bf_token') } catch { return null } }
 const getRefreshToken = () => { try { return localStorage.getItem('bf_refresh') } catch { return null } }

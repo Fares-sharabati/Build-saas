@@ -14,7 +14,8 @@
       "Bash(find /Users/fares/Desktop/saas-app -name button* -o -name tailwind.config*)",
       "Bash(xargs ls:*)",
       "Bash(curl -s http://localhost:5173)",
-      "Bash(ls -la /Users/fares/Desktop/saas-app/.env*)"
+      "Bash(ls -la /Users/fares/Desktop/saas-app/.env*)",
+      "Bash(ls /Users/fares/Desktop/saas-app/.env*)"
     ]
   }
 }

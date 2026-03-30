@@ -216,6 +216,7 @@ function ThemeProvider({ children }){
 const LANGUAGES = [
   { code:"en", label:"English" },
   { code:"tr", label:"Türkçe" },
+  { code:"ar", label:"العربية" },
 ];
 
 const TRANSLATIONS = {
@@ -867,6 +868,345 @@ const TRANSLATIONS = {
     "File":             "Dosya",
     "Uploaded":         "Yüklendi",
     "No documents yet — add your first plan or file": "Henüz belge yok — ilk planı veya dosyayı ekleyin",
+    // Price Tracking page
+    "Price Tracking":   "Fiyat Takibi",
+    "Rising":           "Yükseliyor",
+    "Declining":        "Düşüyor",
+    "up today":         "bugün yukarı",
+    "Cards":            "Kartlar",
+    "Table":            "Tablo",
+    "Refresh":          "Yenile",
+    "GCC construction material prices · Updated": "BAE inşaat malzeme fiyatları · Güncellendi",
+    // User management
+    "Job Title":        "Unvan",
+    "Avatar Color":     "Avatar Rengi",
+    "— Select —":       "— Seç —",
+  },
+  ar: {
+    // Navigation
+    "Dashboard":"لوحة التحكم","Projects":"المشاريع","Invoices":"الفواتير","Payments":"المدفوعات",
+    "Team":"الفريق","Calendar":"التقويم","Tasks":"المهام","Accountant":"المحاسب",
+    "User Management":"إدارة المستخدمين",
+    // Sidebar
+    "Workspace":"مساحة العمل","Finance":"المالية","Tools":"الأدوات",
+    "Light mode":"الوضع الفاتح","Dark mode":"الوضع الداكن","Sign out":"تسجيل الخروج","Language":"اللغة",
+    // Common actions
+    "Add Invoice":"إضافة فاتورة","Cancel":"إلغاء","Back":"رجوع","Save":"حفظ",
+    "Save Changes":"حفظ التغييرات","Save Invoice":"حفظ الفاتورة","Save Document":"حفظ المستند",
+    "Save Offer":"حفظ العرض","Save Payment":"حفظ الدفعة","Save Note":"حفظ الملاحظة",
+    "Edit":"تعديل","Delete":"حذف","Remove":"إزالة","View":"عرض","Add":"إضافة",
+    "Upload":"رفع","Close":"إغلاق","Download":"تنزيل","Download to Open":"تنزيل للفتح",
+    "Call":"اتصال","Email":"البريد الإلكتروني","Extract with AI":"استخراج بالذكاء الاصطناعي",
+    "Extracting…":"جارٍ الاستخراج…","Saving…":"جارٍ الحفظ…","Uploading…":"جارٍ الرفع…",
+    "Loading…":"جارٍ التحميل…","Generating…":"جارٍ الإنشاء…","Next →":"التالي →",
+    "Keep Member":"الإبقاء على العضو","Yes, Remove":"نعم، إزالة","Yes, Delete":"نعم، حذف",
+    "Upload Contract":"رفع عقد","Browse Files":"تصفح الملفات","Add Comment":"إضافة تعليق",
+    "Upload Another":"رفع آخر","Add Member":"إضافة عضو","Full Team →":"الفريق الكامل →",
+    "Edit Project":"تعديل المشروع","New Project":"مشروع جديد","Generate Report":"إنشاء تقرير",
+    "Contact":"جهة الاتصال","Confirm":"تأكيد",
+    // Modal titles
+    "Add Document":"إضافة مستند","Add Team Member":"إضافة عضو فريق","Assign Task":"تعيين مهمة",
+    "Client Contact":"جهة اتصال العميل","Upload Supplier Offer":"رفع عرض مورد",
+    "Add Material":"إضافة مادة","Edit Team Member":"تعديل عضو الفريق",
+    "Delete Contract?":"حذف العقد؟","Delete Invoice?":"حذف الفاتورة؟","Delete Tender?":"حذف المناقصة؟",
+    "Delete Document?":"حذف المستند؟","Delete Payment?":"حذف الدفعة؟",
+    "Edit Payment":"تعديل الدفعة","Record Payment":"تسجيل دفعة",
+    // Page headers
+    "Task Management":"إدارة المهام","Assign and track work across your team":"تعيين العمل وتتبعه عبر الفريق",
+    "Track all client payments across projects":"تتبع جميع مدفوعات العملاء عبر المشاريع",
+    "Total Received":"إجمالي المستلم","This Month":"هذا الشهر",
+    "Project deadlines, invoices & team tasks":"مواعيد المشاريع والفواتير ومهام الفريق",
+    "Tenders":"المناقصات","Procurement offers for materials & goods":"عروض المشتريات للمواد والبضائع",
+    "Report Generator":"منشئ التقارير",
+    "Generate a financial summary for any project and time period":"إنشاء ملخص مالي لأي مشروع وفترة زمنية",
+    "No report generated yet":"لم يتم إنشاء تقرير بعد",
+    "Select a project and date range, then click Generate Report":"اختر مشروعاً ونطاقاً زمنياً، ثم انقر فوق إنشاء تقرير",
+    "Project Report":"تقرير المشروع","Reporting Period":"فترة التقرير","Activity Log":"سجل النشاط",
+    "Project Modules":"وحدات المشروع","Notes & Updates":"الملاحظات والتحديثات",
+    "Project Contacts":"جهات اتصال المشروع","Timeline Progress":"تقدم الجدول الزمني",
+    // Form labels
+    "Full Name *":"الاسم الكامل *","Role *":"الدور *","Phone *":"الهاتف *",
+    "Email (optional)":"البريد الإلكتروني (اختياري)","Status":"الحالة",
+    "Supplier / Company":"المورد / الشركة","Invoice #":"رقم الفاتورة",
+    "Invoice Date":"تاريخ الفاتورة","Due Date":"تاريخ الاستحقاق","Total Amount":"المبلغ الإجمالي",
+    "Currency":"العملة","Description":"الوصف","Amount *":"المبلغ *","Payment Date *":"تاريخ الدفع *",
+    "Payment Method":"طريقة الدفع","Related Invoice":"الفاتورة المرتبطة","Notes":"الملاحظات",
+    "Notes (optional)":"الملاحظات (اختياري)","Document Title":"عنوان المستند",
+    "Document Type":"نوع المستند","Material / Good Name *":"اسم المادة / السلعة *",
+    "Associated Project":"المشروع المرتبط","Starting Date":"تاريخ البدء",
+    "Expected Finish Date":"تاريخ الإنجاز المتوقع","Project Timeline":"الجدول الزمني للمشروع",
+    "Project Name *":"اسم المشروع *","Project Address *":"عنوان المشروع *",
+    "Project Description (optional)":"وصف المشروع (اختياري)",
+    "Contract Value (optional)":"قيمة العقد (اختياري)","Project Type":"نوع المشروع",
+    "Project Status":"حالة المشروع","Company / Organisation":"الشركة / المؤسسة",
+    "Primary Contact":"جهة الاتصال الرئيسية","Primary":"رئيسي",
+    "Supplier / Company Name *":"اسم المورد / الشركة *","Quantity":"الكمية",
+    "Unit Price":"سعر الوحدة","Total Price *":"السعر الإجمالي *","Delivery Time":"وقت التسليم",
+    "Offer Validity":"صلاحية العرض","Quality / Specifications":"الجودة / المواصفات",
+    "Attach Receipt / Document":"إرفاق إيصال / مستند","Attach Document":"إرفاق مستند",
+    "Project Info":"معلومات المشروع","Timeline & Type":"الجدول الزمني والنوع",
+    "Contacts":"جهات الاتصال","Fill in the details to create your project":"أدخل التفاصيل لإنشاء مشروعك",
+    // Placeholders
+    "e.g. John Smith":"مثال: محمد العمري","e.g. Gulf Steel Co.":"مثال: شركة الخليج للصلب",
+    "e.g. Site Inspection":"مثال: تفتيش الموقع","What needs to be done?":"ما الذي يجب القيام به؟",
+    "Invoice summary or scope":"ملخص الفاتورة أو نطاقها","Specifications, quantity…":"المواصفات، الكمية…",
+    "Brief overview of scope, objectives, or special requirements…":"نظرة موجزة على النطاق والأهداف أو المتطلبات الخاصة…",
+    "Version info, revision notes, instructions…":"معلومات الإصدار، ملاحظات المراجعة، التعليمات…",
+    "Conditions, inclusions, exclusions…":"الشروط، المشمولات، الاستثناءات…",
+    "e.g. Foundation Layout v3":"مثال: مخطط الأساسات v3","e.g. 500 tonnes":"مثال: 500 طن",
+    "e.g. 10 days":"مثال: 10 أيام","e.g. 30 days":"مثال: 30 يوم",
+    "e.g. High – ISO certified":"مثال: عالية – معتمدة ISO",
+    "Drop file or click to browse":"اسحب الملف أو انقر للتصفح",
+    "Drop receipt or click to browse":"اسحب الإيصال أو انقر للتصفح",
+    "Drop document or click to browse":"اسحب المستند أو انقر للتصفح",
+    "PDF · Images · Screenshots · Any format":"PDF · صور · لقطات شاشة · أي تنسيق",
+    "PDF · Images · Screenshots · Word docs · Any format":"PDF · صور · لقطات شاشة · Word · أي تنسيق",
+    "PDF · CAD (.dwg .dxf) · Images · Word · Excel · Any format":"PDF · CAD · صور · Word · Excel · أي تنسيق",
+    "File uploaded":"تم رفع الملف","File ready":"الملف جاهز","File attached":"تم إرفاق الملف",
+    // Selects
+    "— Select member —":"— اختر عضواً —","— No project —":"— لا يوجد مشروع —","— None —":"— لا شيء —",
+    "For a company or organization":"لشركة أو مؤسسة","For an individual client":"لعميل فردي",
+    "Business":"شركة","Customer":"عميل فردي","+ Add Another Contact":"+ إضافة جهة اتصال أخرى",
+    // Table headers
+    "Supplier":"المورد","Amount":"المبلغ","Actions":"الإجراءات","Date":"التاريخ","Method":"الطريقة",
+    "Invoice":"الفاتورة","Receipt":"الإيصال","Rank":"الترتيب","Qty":"الكمية","Total":"الإجمالي",
+    "Quality":"الجودة","Delivery":"التسليم","AI Score":"نقاط الذكاء الاصطناعي","Project":"المشروع",
+    "Transactions":"المعاملات","Invoice Ref":"مرجع الفاتورة","Progress":"التقدم",
+    "Contract Value":"قيمة العقد","Client":"العميل","Due":"الاستحقاق",
+    "Invoices in Period":"فواتير الفترة","Tasks in Period":"مهام الفترة",
+    // Status
+    "Active":"نشط","Completed":"مكتمل","On Hold":"معلق","Quoting":"في مرحلة التسعير",
+    "On Site":"في الموقع","Remote":"عن بُعد","Pending":"معلق","Done":"منجز",
+    "Paid":"مدفوع","Overdue":"متأخر","Draft":"مسودة","Plan":"خطة","Contract":"عقد",
+    // Filters
+    "All":"الكل","All Projects":"جميع المشاريع","Month":"الشهر","Week":"الأسبوع","Day":"اليوم",
+    "Invoice Due":"استحقاق الفاتورة","Team Task":"مهمة الفريق","Done Task":"مهمة منجزة",
+    "Project Start":"بدء المشروع","Project Due":"استحقاق المشروع","Payment Received":"تم استلام الدفعة",
+    // Empty states
+    "Nothing here yet":"لا يوجد شيء هنا بعد",
+    "No invoices yet — add your first one below.":"لا توجد فواتير بعد — أضف الأولى أدناه.",
+    "No documents yet — add your first plan or file":"لا توجد مستندات بعد — أضف أول خطة أو ملف",
+    "No team members yet":"لا يوجد أعضاء فريق بعد","No tenders yet":"لا توجد مناقصات بعد",
+    "Add a material to start collecting supplier offers":"أضف مادة لبدء جمع عروض الموردين",
+    "No payments recorded yet":"لم يتم تسجيل أي مدفوعات بعد",
+    "No tasks match your filters":"لا توجد مهام تطابق الفلاتر",
+    "No events on this day":"لا توجد أحداث في هذا اليوم",
+    "No comments yet — add the first one below":"لا توجد تعليقات بعد — أضف الأول أدناه",
+    "No photos yet — click to upload":"لا توجد صور بعد — انقر للرفع",
+    "No notes yet":"لا توجد ملاحظات بعد","No contracts uploaded yet":"لم يتم رفع أي عقود بعد",
+    "No events yet":"لا توجد أحداث بعد","No notes recorded yet":"لم يتم تسجيل أي ملاحظات بعد",
+    "No results":"لا توجد نتائج","No offers yet":"لا توجد عروض بعد",
+    // AI messages
+    "AI Invoice Extraction":"استخراج الفاتورة بالذكاء الاصطناعي",
+    "Click below to automatically extract supplier name, invoice number, dates, amount, and description from your file.":
+      "انقر أدناه لاستخراج اسم المورد ورقم الفاتورة والتواريخ والمبلغ والوصف تلقائياً من ملفك.",
+    "OK AI extracted data from your file — please review and correct if needed.":
+      "استخرج الذكاء الاصطناعي البيانات من ملفك — يرجى المراجعة والتصحيح إذا لزم الأمر.",
+    "Could not extract data automatically. Please fill in the fields manually.":
+      "تعذر استخراج البيانات تلقائياً. يرجى ملء الحقول يدوياً.",
+    "Analysing document…":"جارٍ تحليل المستند…",
+    "Extracting supplier, price, delivery & specs":"استخراج المورد والسعر والتسليم والمواصفات",
+    "Scored on price, quality & delivery":"مقيّم على السعر والجودة والتسليم",
+    "Summary":"الملخص","Rankings":"التصنيفات","Best Pick":"الخيار الأفضل","Recommendation":"التوصية",
+    "AI Analysis":"تحليل الذكاء الاصطناعي",
+    "AI will auto-extract invoice data from your file":"سيستخرج الذكاء الاصطناعي بيانات الفاتورة تلقائياً من ملفك",
+    "Note: AI could not extract data — please fill in fields manually":"ملاحظة: تعذر على الذكاء الاصطناعي استخراج البيانات — يرجى ملء الحقول يدوياً",
+    // Stats
+    "total":"الإجمالي","all tasks":"جميع المهام","in progress":"قيد التنفيذ","done":"منجز",
+    "transactions":"معاملة","current month":"الشهر الحالي","all time":"كل الأوقات",
+    // Misc UI
+    "Upload any document, image or screenshot":"ارفع أي مستند أو صورة أو لقطة شاشة",
+    "Record a payment received from the client":"سجّل دفعة مستلمة من العميل",
+    "Update payment information":"تحديث معلومات الدفعة","Update information for":"تحديث المعلومات لـ:",
+    "Remove Team Member?":"إزالة عضو الفريق؟","You are about to remove":"أنت على وشك إزالة:",
+    "from this project.":"من هذا المشروع.","They have":"لديهم:","assigned task":"مهمة مسندة",
+    "assigned tasks":"مهام مسندة","that will be unassigned.":"سيتم إلغاء إسنادها.",
+    "Fill in the details to create your project":"أدخل التفاصيل لإنشاء مشروعك",
+    "Duration:":"المدة:","days":"أيام","weeks":"أسابيع",
+    "End date must be after start date":"يجب أن يكون تاريخ الانتهاء بعد تاريخ البدء",
+    "d overdue":"يوم متأخر","d left":"يوم متبقٍ",
+    "Click a photo to comment":"انقر على صورة للتعليق","Comments":"التعليقات",
+    "comment":"تعليق","comments":"تعليقات",
+    "Write a comment… (Enter to send)":"اكتب تعليقاً… (Enter للإرسال)",
+    "Uploaded":"مرفوع","File too large (max 5MB)":"الملف كبير جداً (الحد الأقصى 5MB)",
+    "PDF, images, or Word documents · Max 10MB":"PDF أو صور أو مستندات Word · الحد الأقصى 10MB",
+    "Activity detail":"تفاصيل النشاط","Note":"ملاحظة","Total received:":"إجمالي المستلم:",
+    "— drag to reorder":"— اسحب لإعادة الترتيب","Supported formats":"الصيغ المدعومة",
+    "+ more":"+ المزيد","By":"بواسطة","When":"عندما","1st":"الأول","2nd":"الثاني","3rd":"الثالث",
+    "+ Add Task":"+ إضافة مهمة","+ Record Payment":"+ تسجيل دفعة","+ Add Document":"+ إضافة مستند",
+    "+ Add Member":"+ إضافة عضو","+ Add Offer":"+ إضافة عرض","+ Add Material":"+ إضافة مادة",
+    "+ Add Photograph":"+ إضافة صورة","Add Photo":"إضافة صورة","on-hold":"معلق",
+    "Review & Save":"مراجعة وحفظ","Cash":"نقداً","Bank Transfer":"تحويل بنكي",
+    "Cheque":"شيك","Credit Card":"بطاقة ائتمان","Other":"أخرى",
+    "Project Address":"عنوان المشروع","Start Date":"تاريخ البدء","End Date":"تاريخ الانتهاء",
+    "address":"العنوان","0.00":"0.00","% Used":"% مستخدم",
+    "AI extracted data — review and correct if needed":"استخرج الذكاء الاصطناعي البيانات — راجع وصحح إذا لزم",
+    "AI extracted — review and edit below":"استخرج الذكاء الاصطناعي — راجع وعدّل أدناه",
+    "AI extracted — review below":"استخرج الذكاء الاصطناعي — راجع أدناه",
+    "AI extracting data…":"يستخرج الذكاء الاصطناعي البيانات…",
+    "AI: Reading document with AI…":"الذكاء الاصطناعي: يقرأ المستند…",
+    "AI will auto-fill fields from your document":"سيملأ الذكاء الاصطناعي الحقول تلقائياً من مستندك",
+    "AI will auto-extract invoice data":"سيستخرج الذكاء الاصطناعي بيانات الفاتورة تلقائياً",
+    "AI-generated using BuildFlow data. For formal auditing or regulatory submission, please have this reviewed by a licensed accountant.":
+      "تم إنشاؤه بالذكاء الاصطناعي. للتدقيق الرسمي أو التقديم التنظيمي، يرجى مراجعته من قِبل محاسب مرخص.",
+    "Accountant's Analysis":"تحليل المحاسب","Across all projects":"عبر جميع المشاريع",
+    "Active Projects":"المشاريع النشطة","Activity":"النشاط",
+    "Add Another Contact":"إضافة جهة اتصال أخرى",
+    "Add one or more contacts related to this project. The first contact will be used as the primary client.":
+      "أضف جهة اتصال واحدة أو أكثر مرتبطة بهذا المشروع. ستُستخدم جهة الاتصال الأولى كعميل رئيسي.",
+    "Add Plan / Document":"إضافة خطة / مستند","Add Task":"إضافة مهمة",
+    "All Clients":"جميع العملاء","All categories":"جميع الفئات",
+    "All invoices across every project":"جميع الفواتير عبر كل المشاريع",
+    "All payments received":"جميع المدفوعات المستلمة",
+    "All related invoices, payments, plans, tasks and team assignments for this project will also be removed. This action cannot be undone.":
+      "ستتم إزالة جميع الفواتير والمدفوعات والخطط والمهام وتعيينات الفريق المرتبطة بهذا المشروع. لا يمكن التراجع عن هذا الإجراء.",
+    "All statuses":"جميع الحالات","Amount is required":"المبلغ مطلوب","Approved":"معتمد",
+    "Are you sure you want to apply these changes to":"هل أنت متأكد من تطبيق هذه التغييرات على:",
+    "Are you sure you want to apply these changes to this invoice?":"هل أنت متأكد من تطبيق هذه التغييرات على هذه الفاتورة؟",
+    "Are you sure you want to apply these changes to this project?":"هل أنت متأكد من تطبيق هذه التغييرات على هذا المشروع؟",
+    "Are you sure you want to delete invoice":"هل أنت متأكد من حذف الفاتورة",
+    "Are you sure you want to delete this photo? This cannot be undone.":"هل أنت متأكد من حذف هذه الصورة؟ لا يمكن التراجع عن هذا.",
+    "Are you sure you want to permanently delete":"هل أنت متأكد من الحذف الدائم",
+    "Assigned Member *":"العضو المُعيَّن *","Assigned Project":"المشروع المُعيَّن",
+    "At risk":"في خطر","Auto number":"ترقيم تلقائي","Auto-filled from project":"مملوء تلقائياً من المشروع",
+    "Budget":"الميزانية","Budget Remaining":"الميزانية المتبقية",
+    "Budget vs invoiced vs committed":"الميزانية مقابل الفواتير مقابل الالتزامات",
+    "Building PDF…":"جارٍ بناء PDF…","Building…":"جارٍ البناء…","Cash Flow":"التدفق النقدي",
+    "Ccy":"عملة","Choose Widget":"اختر عنصراً","Clear":"مسح",
+    "Client / Company":"العميل / الشركة","Client name":"اسم العميل","Closing Position":"المركز الختامي",
+    "Collected":"تم التحصيل","Coming soon…":"قريباً…","Committed":"ملتزم",
+    "Committed (pending)":"ملتزم (معلق)","Company":"الشركة","Company name":"اسم الشركة",
+    "Company name (optional)":"اسم الشركة (اختياري)","Confidential Financial Report":"تقرير مالي سري",
+    "Contact Name *":"اسم جهة الاتصال *","Contact name":"اسم جهة الاتصال","Continue →":"متابعة →",
+    "Contracts":"العقود","Cost Breakdown":"تفصيل التكاليف",
+    "Could not extract — fill in manually":"تعذر الاستخراج — أدخل يدوياً",
+    "Couldn't extract — fill manually":"تعذر الاستخراج — أدخل يدوياً","Create Project":"إنشاء مشروع",
+    "Create a project first, then return here to generate your financial report.":
+      "أنشئ مشروعاً أولاً، ثم عد هنا لإنشاء تقريرك المالي.",
+    "Create one in the Projects tab":"أنشئ مشروعاً في تبويب المشاريع",
+    "Cumulative":"تراكمي","Cumulative cash position":"المركز النقدي التراكمي","Customize":"تخصيص",
+    "Date is required":"التاريخ مطلوب","Delete Photo?":"حذف الصورة؟","Delete Project?":"حذف المشروع؟",
+    "Derived from invoices & payments — no manual input":"مستمد من الفواتير والمدفوعات — بدون إدخال يدوي",
+    "Detail":"التفاصيل","Detailed breakdown":"تفصيل مفصّل","Document":"المستند","Download PDF":"تنزيل PDF",
+    "Drop file here or click to browse":"اسحب الملف هنا أو انقر للتصفح","Duration":"المدة",
+    "Exposure":"الانكشاف","From":"من","Full Name":"الاسم الكامل","Full Team":"الفريق الكامل",
+    "Full address including city, country":"العنوان الكامل بما في ذلك المدينة والدولة",
+    "Full name":"الاسم الكامل","Generate Report & PDF":"إنشاء تقرير وPDF","Generated":"تم الإنشاء",
+    "Good afternoon":"مساء الخير","Good evening":"مساء النور","Good morning":"صباح الخير",
+    "In credit":"في رصيد","In deficit":"في عجز","Inflows (payments)":"التدفقات الداخلة (المدفوعات)",
+    "Initial Status":"الحالة الأولية","Invoice # *":"رقم الفاتورة *",
+    "Invoice amount is required":"مبلغ الفاتورة مطلوب","Invoice description":"وصف الفاتورة",
+    "Invoiced":"مُفوتَر","Invoiced (actual)":"مُفوتَر (فعلي)","Invoiced (paid)":"مُفوتَر (مدفوع)","Item":"بند",
+    "Live financial view — synced from Invoices, Payments & Projects":
+      "عرض مالي حي — متزامن من الفواتير والمدفوعات والمشاريع",
+    "Mark Done":"وضع علامة منجز","Mark as Done?":"وضع علامة منجز؟",
+    "Monthly burn":"الإنفاق الشهري","Monthly detail":"التفاصيل الشهرية",
+    "Name is required":"الاسم مطلوب","Needs follow-up":"يحتاج متابعة","Negative":"سالب",
+    "Net Cash Flow":"صافي التدفق النقدي","Net cash flow":"صافي التدفق النقدي","New Invoice":"فاتورة جديدة",
+    "No active projects":"لا توجد مشاريع نشطة","No activity yet":"لا يوجد نشاط بعد",
+    "No invoices in this period.":"لا توجد فواتير في هذه الفترة.",
+    "No invoices match your filters":"لا توجد فواتير تطابق الفلاتر","No invoices yet":"لا توجد فواتير بعد",
+    "No payments recorded":"لم تُسجَّل أي مدفوعات","No payments yet":"لا توجد مدفوعات بعد",
+    "No pending tasks":"لا توجد مهام معلقة","No projects yet":"لا توجد مشاريع بعد",
+    "No upcoming events":"لا توجد أحداث قادمة","Official documents":"الوثائق الرسمية",
+    "Only the assigned member can update task status":"فقط العضو المُعيَّن يمكنه تحديث حالة المهمة",
+    "Outflows (paid invoices)":"التدفقات الخارجة (الفواتير المدفوعة)","Outstanding":"مستحق",
+    "Over budget":"تجاوز الميزانية",
+    "PDF · CAD · Images · Word · Excel · Any format":"PDF · CAD · صور · Word · Excel · أي تنسيق",
+    "PDF, image, screenshot — optional":"PDF أو صورة أو لقطة شاشة — اختياري",
+    "Partial Payments":"مدفوعات جزئية","Payments received":"المدفوعات المستلمة",
+    "Peak negative":"أدنى سالب","Peak positive":"أعلى موجب","Pending Tasks":"المهام المعلقة",
+    "Phone":"الهاتف","Phone Number":"رقم الهاتف","Phone Number *":"رقم الهاتف *",
+    "Phone number is required":"رقم الهاتف مطلوب","Photos":"الصور","Plans":"الخطط",
+    "Please select a project first.":"يرجى اختيار مشروع أولاً.",
+    "Please select a system user":"يرجى اختيار مستخدم من النظام",
+    "Please select a valid team member":"يرجى اختيار عضو فريق صالح",
+    "Please upload a file":"يرجى رفع ملف","Positive":"موجب","Profession / Role *":"المهنة / الدور *",
+    "Project *":"المشروع *","Project Description":"وصف المشروع",
+    "Project address is required":"عنوان المشروع مطلوب","Project duration":"مدة المشروع",
+    "Project is required":"المشروع مطلوب","Project name is required":"اسم المشروع مطلوب",
+    "Read-only — edit invoices in the Invoices tab":"للقراءة فقط — عدّل الفواتير في تبويب الفواتير",
+    "Read-only — edit payments in the Payments tab":"للقراءة فقط — عدّل المدفوعات في تبويب المدفوعات",
+    "Reading with AI…":"يقرأ الذكاء الاصطناعي…",
+    "Record payments in the Payments tab":"سجّل المدفوعات في تبويب المدفوعات",
+    "Record your first payment above":"سجّل أول دفعة أعلاه","Regenerate":"إعادة الإنشاء",
+    "Remaining":"المتبقي","Report Configuration":"إعداد التقرير","Revenue This Month":"إيرادات هذا الشهر",
+    "Role":"الدور","Role / Relationship":"الدور / العلاقة","Save Changes?":"حفظ التغييرات؟",
+    "Save Project Changes?":"حفظ تغييرات المشروع؟",
+    "Scope or summary of this invoice":"نطاق هذه الفاتورة أو ملخصها",
+    "Select Project":"اختر مشروعاً","Select a system user":"اختر مستخدماً من النظام",
+    "Select a user":"اختر مستخدماً","Select member":"اختر عضواً","Spend rate":"معدل الإنفاق",
+    "Started":"بدأ","Still to Receive":"لا يزال منتظراً",
+    "Supplier / Company Name":"اسم المورد / الشركة","Supplier / Project":"المورد / المشروع",
+    "Supplier name, scope, reference…":"اسم المورد، النطاق، المرجع…","System User *":"مستخدم النظام *",
+    "Task Title *":"عنوان المهمة *","Task title is required":"عنوان المهمة مطلوب",
+    "This action cannot be undone.":"لا يمكن التراجع عن هذا الإجراء.",
+    "This member is already on the project":"هذا العضو موجود بالفعل في المشروع",
+    "To":"إلى","Total Billed":"إجمالي الفواتير","Total Budget":"الميزانية الإجمالية",
+    "Total Inflows":"إجمالي التدفقات الداخلة","Total Invoiced":"إجمالي الفواتير",
+    "Total Invoices":"إجمالي الفواتير","Total Outflows":"إجمالي التدفقات الخارجة",
+    "Total inflows":"إجمالي التدفقات الداخلة","Total outflows":"إجمالي التدفقات الخارجة",
+    "Try adjusting the status or category filter":"جرّب ضبط فلتر الحالة أو الفئة",
+    "Try clearing your filters":"جرّب مسح الفلاتر","Type":"النوع",
+    "Update the contacts for this project. The first contact is the primary client.":
+      "حدّث جهات الاتصال لهذا المشروع. جهة الاتصال الأولى هي العميل الرئيسي.",
+    "Upload Document *":"رفع مستند *","Upload File *":"رفع ملف *",
+    "Upload Invoice PDF or Image":"رفع PDF أو صورة الفاتورة","Variance":"الفرق",
+    "Version info, revision notes…":"معلومات الإصدار، ملاحظات المراجعة…",
+    "Write a note…":"اكتب ملاحظة…","Year-end balance":"الرصيد في نهاية العام",
+    "Yes, Delete Project":"نعم، حذف المشروع","Yes, Save":"نعم، حفظ",
+    "Yes, Save Changes":"نعم، حفظ التغييرات","budget exceeded":"تجاوزت الميزانية",
+    "categories":"الفئات","category":"الفئة","contract value − received":"قيمة العقد − المستلم",
+    "cumulative invoiced vs planned":"الفواتير التراكمية مقابل المخطط","document":"مستند",
+    "documents":"مستندات","drawing":"رسم","e.g. Marcus Webb":"مثال: محمد العمري",
+    "e.g. Riverside Townhomes Phase 2":"مثال: مشروع النهر المرحلة 2",
+    "exceeding budget":"يتجاوز الميزانية","exposure / budget":"الانكشاف / الميزانية",
+    "from paid invoices":"من الفواتير المدفوعة","from payments":"من المدفوعات",
+    "invoice":"فاتورة","invoices":"فواتير","invoicing":"الفوترة","left":"متبقٍ",
+    "member":"عضو","members":"أعضاء","more → View all":"المزيد → عرض الكل","optional":"اختياري",
+    "optional — AI auto-extracts":"اختياري — الذكاء الاصطناعي يستخرج تلقائياً",
+    "overdue":"متأخر","overdue invoice":"فاتورة متأخرة","overdue invoices":"فواتير متأخرة",
+    "paid invoices":"الفواتير المدفوعة","payment":"دفعة","payments":"مدفوعات",
+    "pending & approved":"معلق ومعتمد","project":"مشروع","project contract":"عقد المشروع",
+    "projects":"مشاريع","quoting":"تسعير","still available":"لا يزال متاحاً","tasks":"مهام",
+    "unpaid invoices":"الفواتير غير المدفوعة","will be marked as completed.":"سيتم وضع علامة مكتمل.",
+    "← Back":"→ رجوع",
+    // Widgets
+    "Project Progress":"تقدم المشروع","Recent Invoices":"الفواتير الأخيرة",
+    "Recent Payments":"المدفوعات الأخيرة","Upcoming Tasks":"المهام القادمة","Upcoming Events":"الأحداث القادمة",
+    // Team
+    "Project Team":"فريق المشروع","Save Member Changes?":"حفظ تغييرات العضو؟",
+    "Are you sure you want to apply these changes to this team member?":
+      "هل أنت متأكد من تطبيق هذه التغييرات على عضو الفريق هذا؟",
+    "Rename to":"تغيير الاسم إلى:","Employee":"موظف","Subcontractor":"مقاول من الباطن",
+    "task(s)":"مهمة",
+    "No team members yet — click \"+Add Member\" to get started":
+      "لا يوجد أعضاء فريق بعد — انقر فوق \"+ إضافة عضو\" للبدء",
+    "Click to view and follow up":"انقر للعرض والمتابعة","Off":"إجازة",
+    // Plan categories
+    "Drawing":"رسم","Electrical":"كهرباء","Plumbing":"سباكة","Structural":"إنشائي",
+    "CAD File":"ملف CAD","Permit / Legal":"تصريح / قانوني","Permit":"تصريح",
+    // Contracts
+    "Description or notes (optional)":"الوصف أو الملاحظات (اختياري)",
+    "Delete Contract?":"حذف العقد؟",
+    // Payment modal
+    "Reference number, comments…":"رقم المرجع، التعليقات…","Receipt / Document":"إيصال / مستند",
+    "optional — replace existing":"اختياري — استبدل الموجود",
+    "Payment amount is required":"مبلغ الدفعة مطلوب","Payment date is required":"تاريخ الدفعة مطلوب",
+    "Save Payment Changes?":"حفظ تغييرات الدفعة؟",
+    "Are you sure you want to apply these changes to this payment?":"هل أنت متأكد من تطبيق هذه التغييرات على هذه الدفعة؟",
+    // Charts
+    "Inflows":"التدفقات الداخلة","Outflows":"التدفقات الخارجة",
+    // Plans table
+    "File":"الملف",
+    "Are you sure you want to delete this payment of":"هل أنت متأكد من حذف هذه الدفعة بمبلغ",
+    "This action cannot be undone.":"لا يمكن التراجع عن هذا الإجراء.",
+    // Price Tracking page
+    "Price Tracking":"تتبع الأسعار","Rising":"صاعد","Declining":"هابط",
+    "up today":"صعود اليوم","Cards":"بطاقات","Table":"جدول","Refresh":"تحديث",
+    "GCC construction material prices · Updated":"أسعار مواد البناء في الخليج · محدّث",
+    // User management
+    "Job Title":"المسمى الوظيفي","Avatar Color":"لون الصورة الرمزية","— Select —":"— اختر —",
   },
 };
 
@@ -967,13 +1307,18 @@ function autoTranslateToTurkish(text) {
   return translated !== text ? translated : text;
 }
 
-const LangCtx = React.createContext({ lang:"en", setLang:()=>{}, t:(k)=>k });
+const LangCtx = React.createContext({ lang:"en", setLang:()=>{}, t:(k)=>k, isRTL:false });
 function useLang(){ return React.useContext(LangCtx); }
 function LangProvider({ children }){
   const [lang,setLangState] = React.useState(()=>{
     try{ const s=localStorage.getItem("bf:lang"); return (s&&LANGUAGES.some(l=>l.code===s))?s:"en"; }catch{ return "en"; }
   });
   const setLang=(l)=>{ setLangState(l); try{ localStorage.setItem("bf:lang",l); }catch{}; };
+  const isRTL = lang === "ar";
+  React.useEffect(()=>{
+    document.documentElement.dir = isRTL ? "rtl" : "ltr";
+    document.documentElement.lang = lang;
+  },[lang]);
   const t=(key)=>{
     if(!key || lang==="en") return key;
     if(TRANSLATIONS[lang]&&TRANSLATIONS[lang][key]!=null) return TRANSLATIONS[lang][key];
@@ -985,7 +1330,7 @@ function LangProvider({ children }){
     }
     return key;
   };
-  return <LangCtx.Provider value={{ lang, setLang, t }}>{children}</LangCtx.Provider>;
+  return <LangCtx.Provider value={{ lang, setLang, t, isRTL }}>{children}</LangCtx.Provider>;
 }
 
 // ─── Global Currency System ───────────────────────────────────────────────────
@@ -1087,6 +1432,8 @@ const fmtDate = (iso, locale='en-US') => {
   try { return new Date(iso + 'T12:00:00').toLocaleDateString(locale, { month:'short', day:'numeric', year:'numeric' }); }
   catch { return iso; }
 };
+// Maps lang code → BCP-47 locale string for date/number formatting
+const langLocale = (lang) => lang === "tr" ? "tr-TR" : lang === "ar" ? "ar-SA" : "en-US";
 
 /** How many days remain until project.due (null if no due date) */
 const daysRemaining = (project) => {
@@ -2298,7 +2645,7 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
 
   const submit=async()=>{
     if(!amount||isNaN(parseFloat(amount))){setErr(t("Invoice amount is required"));return;}
-    const _locale=lang==="tr"?"tr-TR":"en-US";
+    const _locale=langLocale(lang);
     const fmt=dueDate?new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}):"—";
     const id=invNum.trim()||nextId();
     // Upload file to Supabase Storage if we have one
@@ -2486,7 +2833,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
     if(saving) return;
     if(!amount||isNaN(parseFloat(amount))){ setFormErr(t("Invoice amount is required")); return; }
     setSaving(true);
-    const _locale=lang==="tr"?"tr-TR":"en-US";
+    const _locale=langLocale(lang);
     try{
       const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}) : "—";
       const invId = invNum.trim() || nextInvId(allInvoices);
@@ -2525,7 +2872,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
     if(!amount||isNaN(parseFloat(amount))){ setFormErr(t("Amount is required")); return; }
     setSaving(true);
     try{
-      const _locale=lang==="tr"?"tr-TR":"en-US";
+      const _locale=langLocale(lang);
       const fmt = dueDate ? new Date(dueDate+"T12:00:00").toLocaleDateString(_locale,{month:"short",day:"numeric",year:"numeric"}) : "—";
       const displayId = invNum.trim()||editTarget.invId||editTarget.id;
       // Upload new file if one was attached
@@ -3824,7 +4171,7 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
       const uploaded = await uploadFile(receipt._rawFile, 'receipts', cid);
       if(uploaded) receiptData = { name:receipt.name, size:receipt.size, url:uploaded.url, path:uploaded.path };
     }
-    const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"});
+    const fmtDate=d=>new Date(d+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"});
     onConfirm({
       id:`pay-${Date.now()}`,
       projId, project:proj?.name||"",
@@ -3924,7 +4271,7 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
 // ─── EditPaymentModal ─────────────────────────────────────────────────────────
 function EditPaymentModal({ payment, allProjects, allInvoices, onConfirm, onCancel }){
   const { t, lang } = useLang();
-  const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+  const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}):"—";
   const { currency:gCur } = useCurrencyCtx();
   const [projId,setProjId]  = useState(payment.projId||allProjects[0]?.id||null);
   const [amount,setAmount]  = useState(String(payment.amount||""));
@@ -4168,7 +4515,7 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
     if(!payDate){setPayErr("Payment date is required");return;}
     setPaySaving(true);
     try{
-      const fmtD=d=>new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"});
+      const fmtD=d=>new Date(d+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"});
       // Upload receipt to storage if attached
       let receiptData = payReceipt ? { name:payReceipt.name, size:payReceipt.size, url:payReceipt.dataUrl } : null;
       if(payReceipt?._rawFile && cid){
@@ -4394,7 +4741,7 @@ function ReportPage({ tasks, allProjects, allInvoices }){
   // Set default project once list loads
   useEffect(()=>{ if(!projId && allProjects?.length) setProjId(allProjects[0].id); },[allProjects]);
 
-  const fmtD=(d)=>{ try{ return new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return d;} };
+  const fmtD=(d)=>{ try{ return new Date(d+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}); }catch{return d;} };
 
   const generate=()=>{
     setGen(true);
@@ -4588,8 +4935,8 @@ function ReportPage({ tasks, allProjects, allInvoices }){
 // ─── Calendar Page ─────────────────────────────────────────────────────────────
 function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[],allProjects=[] }){
   const { t,lang }=useLang();
-  const locale=lang==="tr"?"tr-TR":"en-US";
-  const DAYS_I18N=useMemo(()=>Array.from({length:7},(_,i)=>new Date(2025,0,5+i).toLocaleString(lang==="tr"?"tr-TR":"en-US",{weekday:"short"})),[lang]);
+  const locale=langLocale(lang);
+  const DAYS_I18N=useMemo(()=>Array.from({length:7},(_,i)=>new Date(2025,0,5+i).toLocaleString(langLocale(lang),{weekday:"short"})),[lang]);
   const today=new Date();
   const [year,setYear]=useState(today.getFullYear());const [month,setMonth]=useState(today.getMonth());
   const [view,setView]=useState("month");const [filter,setFilter]=useState("all");const [sel,setSel]=useState(null);
@@ -4831,7 +5178,7 @@ function usePhotoComments(projectId){
   useEffect(()=>{ let alive=true; (async()=>{ const r=await storage.get(key); if(alive)setMap(r?JSON.parse(r.value):{}); })(); return()=>{alive=false;}; },[key]);
   const save=async(next)=>{ setMap(next); await storage.set(key,JSON.stringify(next)); };
   const addComment=(photoId,text,author)=>{
-    const c={ id:`c${Date.now()}`,text:text.trim(),author:author||"You",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}) };
+    const c={ id:`c${Date.now()}`,text:text.trim(),author:author||"You",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}) };
     const next={...(map||{}),[photoId]:[...((map||{})[photoId]||[]),c]};
     save(next);
   };
@@ -5015,7 +5362,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
   const [dragOverId,setDragOverId] = useState(null);
 
   const pushLog  = (action,icon,proj)=>{
-    const entry={ id:Date.now(),action,detail:proj||project.name,user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon };
+    const entry={ id:Date.now(),action,detail:proj||project.name,user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon };
     setLog(prev=>[entry,...prev]);
     if(onLog) onLog(entry);
   };
@@ -5192,7 +5539,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
                     <>
                       <div style={{ display:"flex",justifyContent:"space-between",marginBottom:8,flexWrap:"wrap",gap:8 }}>
                         <div style={{ display:"flex",gap:22,flexWrap:"wrap" }}>
-                          {[[t("Started"),fmtDate(project.startDateISO||project.startDate,lang==="tr"?"tr-TR":"en-US")||"—"],[t("Due"),project.dueFmt||fmtDate(project.due,lang==="tr"?"tr-TR":"en-US")||"—"]].map(([k,v])=>(
+                          {[[t("Started"),fmtDate(project.startDateISO||project.startDate,langLocale(lang))||"—"],[t("Due"),project.dueFmt||fmtDate(project.due,langLocale(lang))||"—"]].map(([k,v])=>(
                             <div key={k}><div style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase" }}>{k}</div><div style={{ color:C.text2||C.text,fontFamily:F,fontSize:13,fontWeight:600,marginTop:2 }}>{v}</div></div>
                           ))}
                           {days!==null&&(
@@ -5377,7 +5724,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
   const updateContact=(id,field,val)=>setContacts(cs=>cs.map(c=>c.id===id?{...c,[field]:val}:c));
   const addContact=()=>setContacts(cs=>[...cs,emptyContact()]);
   const removeContact=(id)=>setContacts(cs=>cs.filter(c=>c.id!==id));
-  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
+  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
 
   const goNext=()=>{
     if(step===1){
@@ -5565,7 +5912,7 @@ function NewProjectModal({ onConfirm, onCancel }){
   const addContact=()=>setContacts(cs=>[...cs,emptyContact()]);
   const removeContact=(id)=>setContacts(cs=>cs.filter(c=>c.id!==id));
 
-  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
+  const fmtD=(iso)=>{ if(!iso)return"—"; try{ return new Date(iso+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}); }catch{return iso;} };
 
   const goNext=()=>{
     if(step===1){
@@ -6057,7 +6404,7 @@ function DashWidget({ widgetId, type, allProjects, allInvoices, payments, tasks,
       return(
         <div style={{ display:"flex",flexDirection:"column",gap:8 }}>
           {upcoming.map(ev=>{
-            const _loc=lang==="tr"?"tr-TR":"en-US";
+            const _loc=langLocale(lang);
             const mon=ev.date.toLocaleDateString(_loc,{month:"short"});
             const day=ev.date.toLocaleDateString(_loc,{day:"numeric"});
             const isPast=ev.date<now;
@@ -6161,7 +6508,7 @@ function Dashboard({ onSelect, allProjects=[], allInvoices=[], payments=[], task
 
   const h=now.getHours();
   const gr=h<12?t("Good morning"):h<17?t("Good afternoon"):t("Good evening");
-  const dayName=now.toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{weekday:"long",month:"long",day:"numeric"});
+  const dayName=now.toLocaleDateString(langLocale(lang),{weekday:"long",month:"long",day:"numeric"});
 
   return(
     <div>
@@ -6245,7 +6592,7 @@ function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
 
   const submit=()=>{
     if(!amount||isNaN(parseFloat(amount))){ setErr(t("Amount is required")); return; }
-    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}):"—";
     onConfirm({ project, client, desc, amount:parseFloat(amount), due, dueFmt:fmt, status, invoiceStatus:status });
   };
 
@@ -6334,7 +6681,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
   const submit=()=>{
     if(!project){ setErr(t("Project is required")); return; }
     if(!amount||isNaN(parseFloat(amount))){ setErr(t("Amount is required")); return; }
-    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
+    const fmt=due?new Date(due+"T12:00:00").toLocaleDateString(langLocale(lang),{month:"short",day:"numeric",year:"numeric"}):"—";
     const id=invNum||nextInvId(allInvoices);
     const proj=allProjects.find(p=>p.name===project);
     onConfirm({ id, invId:id, project, client:client||supplier||"", supplier:supplier||client||"",
@@ -6758,29 +7105,30 @@ function TeamGlobal({ allProjects=[], onLog }){
 }
 
 function EditUserForm({ user, onSave, onCancel, COLORS }){
+  const { t } = useLang();
   const [jobTitle,setJobTitle] = useState(user.role||'');
   const [phone,   setPhone]    = useState(user.phone||'');
   const [status,  setStatus]   = useState(user.status||'on-site');
   const [color,   setColor]    = useState(user.color||COLORS[0]);
   return(
     <div style={{ display:'flex',flexDirection:'column',gap:14 }}>
-      <div><label style={LBL()}>Job Title</label>
+      <div><label style={LBL()}>{t("Job Title")}</label>
         <select value={jobTitle} onChange={e=>setJobTitle(e.target.value)} style={{ ...INP(),cursor:'pointer' }}>
-          <option value="">— Select —</option>
+          <option value="">{t("— Select —")}</option>
           {ROLES.map(r=><option key={r}>{r}</option>)}
         </select>
       </div>
-      <div><label style={LBL()}>Phone</label>
+      <div><label style={LBL()}>{t("Phone")}</label>
         <input style={INP()} value={phone} onChange={e=>setPhone(e.target.value)} placeholder="+971 50 000 0000"/>
       </div>
-      <div><label style={LBL()}>Status</label>
+      <div><label style={LBL()}>{t("Status")}</label>
         <div style={{ display:'flex',gap:8 }}>
           {[['on-site','On Site',C.green],['remote','Remote',C.purple]].map(([v,l,c])=>(
-            <button key={v} onClick={()=>setStatus(v)} style={{ flex:1,padding:'9px 0',borderRadius:7,cursor:'pointer',fontFamily:F,fontSize:12,fontWeight:700,border:status===v?`2px solid ${c}`:`1px solid ${C.border}`,background:status===v?c+'22':'transparent',color:status===v?c:C.muted }}>{l}</button>
+            <button key={v} onClick={()=>setStatus(v)} style={{ flex:1,padding:'9px 0',borderRadius:7,cursor:'pointer',fontFamily:F,fontSize:12,fontWeight:700,border:status===v?`2px solid ${c}`:`1px solid ${C.border}`,background:status===v?c+'22':'transparent',color:status===v?c:C.muted }}>{t(l)}</button>
           ))}
         </div>
       </div>
-      <div><label style={LBL()}>Avatar Color</label>
+      <div><label style={LBL()}>{t("Avatar Color")}</label>
         <div style={{ display:'flex',gap:8,flexWrap:'wrap' }}>
           {COLORS.map(c=>(
             <button key={c} onClick={()=>setColor(c)} style={{ width:32,height:32,borderRadius:'50%',background:c,border:color===c?`3px solid ${C.text}`:'3px solid transparent',cursor:'pointer' }}/>
@@ -6788,8 +7136,8 @@ function EditUserForm({ user, onSave, onCancel, COLORS }){
         </div>
       </div>
       <div style={{ display:'flex',gap:10,marginTop:8 }}>
-        <button onClick={()=>onSave({ job_title:jobTitle,phone,status,color })} style={{ flex:1,background:C.accent,color:'#000',border:'none',padding:'11px 0',borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:'pointer' }}>Save Changes</button>
-        <button onClick={onCancel} style={{ background:'transparent',color:C.muted,border:`1px solid ${C.border}`,padding:'11px 16px',borderRadius:8,fontFamily:F,fontSize:13,cursor:'pointer' }}>Cancel</button>
+        <button onClick={()=>onSave({ job_title:jobTitle,phone,status,color })} style={{ flex:1,background:C.accent,color:'#000',border:'none',padding:'11px 0',borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:'pointer' }}>{t("Save Changes")}</button>
+        <button onClick={onCancel} style={{ background:'transparent',color:C.muted,border:`1px solid ${C.border}`,padding:'11px 16px',borderRadius:8,fontFamily:F,fontSize:13,cursor:'pointer' }}>{t("Cancel")}</button>
       </div>
     </div>
   );
@@ -6869,7 +7217,7 @@ function PriceCard({ mat, history, aiAnalysis, onAnalyse, analysing }){
           <div style={{ color:"#7a849e",fontFamily:F,fontSize:11,marginTop:2 }}>{mat.desc}</div>
         </div>
         <div style={{ textAlign:"right",flexShrink:0 }}>
-          <div style={{ color:"#e8eaf0",fontFamily:F,fontWeight:700,fontSize:20,lineHeight:1 }}>${latest.toLocaleString("en-US",{minimumFractionDigits:latest<100?2:0,maximumFractionDigits:latest<100?2:0})}</div>
+          <div style={{ color:"#e8eaf0",fontFamily:F,fontWeight:700,fontSize:20,lineHeight:1 }}>${latest.toLocaleString(langLocale(lang),{minimumFractionDigits:latest<100?2:0,maximumFractionDigits:latest<100?2:0})}</div>
           <div style={{ color:"#7a849e",fontFamily:F,fontSize:10,marginTop:2 }}>{mat.unit}</div>
         </div>
       </div>
@@ -6894,8 +7242,8 @@ function PriceCard({ mat, history, aiAnalysis, onAnalyse, analysing }){
         return(
           <div>
             <div style={{ display:"flex",justifyContent:"space-between",marginBottom:4 }}>
-              <span style={{ color:"#7a849e",fontFamily:F,fontSize:10 }}>30d Low ${mn.toLocaleString("en-US",{maximumFractionDigits:latest<100?2:0})}</span>
-              <span style={{ color:"#7a849e",fontFamily:F,fontSize:10 }}>30d High ${mx.toLocaleString("en-US",{maximumFractionDigits:latest<100?2:0})}</span>
+              <span style={{ color:"#7a849e",fontFamily:F,fontSize:10 }}>30d Low ${mn.toLocaleString(langLocale(lang),{maximumFractionDigits:latest<100?2:0})}</span>
+              <span style={{ color:"#7a849e",fontFamily:F,fontSize:10 }}>30d High ${mx.toLocaleString(langLocale(lang),{maximumFractionDigits:latest<100?2:0})}</span>
             </div>
             <div style={{ height:4,background:"#2a3045",borderRadius:4,overflow:"hidden" }}>
               <div style={{ width:`${pct}%`,height:"100%",background:`linear-gradient(90deg,${mat.color}99,${mat.color})`,borderRadius:4 }}/>
@@ -6921,12 +7269,13 @@ function PriceCard({ mat, history, aiAnalysis, onAnalyse, analysing }){
       </div>
 
       {/* Last updated */}
-      <div style={{ color:"#7a849e",fontFamily:F,fontSize:10,marginTop:-8 }}>Updated {new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</div>
+      <div style={{ color:"#7a849e",fontFamily:F,fontSize:10,marginTop:-8 }}>Updated {new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"})}</div>
     </div>
   );
 }
 
 function PriceTrackingPage(){
+  const { t, lang } = useLang();
   const [histories] = useState(()=>{ const h={}; MATERIALS.forEach(m=>{ h[m.id]=genHistory(m,30); }); return h; });
   const [analyses,setAnalyses] = useState({});
   const [analysing,setAnalysing] = useState({});
@@ -6971,23 +7320,23 @@ Provide: 1) Market trend assessment, 2) Whether to buy now / wait / stockpile, 3
     <div>
       <PageHeader
         icon={<Ic.Prices size={20} color={C.blue}/>}
-        title="Price Tracking"
-        subtitle={`GCC construction material prices · Updated ${lastRefresh.toLocaleTimeString("en-US",{hour:"numeric",minute:"2-digit"})}`}
+        title={t("Price Tracking")}
+        subtitle={`${t("GCC construction material prices · Updated")} ${lastRefresh.toLocaleTimeString(langLocale(lang),{hour:"numeric",minute:"2-digit"})}`}
         action={
           <div style={{ display:"flex",gap:8,alignItems:"center",flexWrap:"wrap" }}>
           {/* Market sentiment pill */}
           <div style={{ background:bullCount>=3?C.greenDim:C.redDim,border:`1px solid ${bullCount>=3?C.green+"44":C.red+"44"}`,borderRadius:8,padding:"8px 14px",display:"flex",alignItems:"center",gap:7 }}>
-            <span style={{ color:bullCount>=3?C.green:C.red,fontFamily:F,fontWeight:700,fontSize:12 }}>{bullCount>=3?"Rising":"Declining"}</span>
-            <span style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{bullCount}/{MATERIALS.length} up today</span>
+            <span style={{ color:bullCount>=3?C.green:C.red,fontFamily:F,fontWeight:700,fontSize:12 }}>{bullCount>=3?t("Rising"):t("Declining")}</span>
+            <span style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{bullCount}/{MATERIALS.length} {t("up today")}</span>
           </div>
           {/* View toggle */}
           <div style={{ display:"flex",background:C.surface,border:`1px solid ${C.border}`,borderRadius:7,padding:3,gap:2 }}>
             {[["grid","Cards"],["table","Table"]].map(([v,l])=>(
-              <button key={v} onClick={()=>setSelectedView(v)} style={{ background:selectedView===v?"#f59e0b1a":"transparent",color:selectedView===v?C.accent:C.muted,border:selectedView===v?`1px solid ${C.accent}44`:"1px solid transparent",borderRadius:5,padding:"6px 14px",fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer" }}>{l}</button>
+              <button key={v} onClick={()=>setSelectedView(v)} style={{ background:selectedView===v?"#f59e0b1a":"transparent",color:selectedView===v?C.accent:C.muted,border:selectedView===v?`1px solid ${C.accent}44`:"1px solid transparent",borderRadius:5,padding:"6px 14px",fontFamily:F,fontSize:12,fontWeight:700,cursor:"pointer" }}>{t(l)}</button>
             ))}
           </div>
           <button onClick={()=>setLastRefresh(new Date())} style={{ background:"transparent",color:C.muted,border:`1px solid ${C.border}`,borderRadius:7,padding:"7px 14px",fontFamily:F,fontSize:12,cursor:"pointer",display:"flex",alignItems:"center",gap:5 }} onMouseEnter={e=>{e.currentTarget.style.color=C.text;e.currentTarget.style.borderColor=C.accent+"44";}} onMouseLeave={e=>{e.currentTarget.style.color=C.muted;e.currentTarget.style.borderColor=C.border;}}>
-            Refresh
+            {t("Refresh")}
           </button>
         </div>
         }
@@ -7000,7 +7349,7 @@ Provide: 1) Market trend assessment, 2) Whether to buy now / wait / stockpile, 3
           return(
             <div key={m.id} style={{ flex:1,minWidth:100,background:"#1e2333",border:`1px solid ${chg>=0?"#22c55e22":"#ef444422"}`,borderRadius:9,padding:"10px 14px" }}>
               <div style={{ display:"flex",alignItems:"center",gap:5,marginBottom:4 }}><span style={{ fontSize:14 }}>{m.icon}</span><span style={{ color:C.muted,fontFamily:F,fontSize:10,fontWeight:700 }}>{m.name.split(" ")[0].toUpperCase()}</span></div>
-              <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>${l.toLocaleString("en-US",{maximumFractionDigits:l<100?2:0})}</div>
+              <div style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:14 }}>${l.toLocaleString(langLocale(lang),{maximumFractionDigits:l<100?2:0})}</div>
               <div style={{ color:chg>=0?C.green:C.red,fontFamily:F,fontSize:11,fontWeight:700,marginTop:2 }}>{chg>=0?"▲":"▼"}{Math.abs(chg).toFixed(2)}%</div>
             </div>
           );
@@ -7040,11 +7389,11 @@ Provide: 1) Market trend assessment, 2) Whether to buy now / wait / stockpile, 3
                         </div>
                       </div>
                     </td>
-                    <td style={TD({color:C.text,fontWeight:700,fontSize:14})}>${l.toLocaleString("en-US",{minimumFractionDigits:l<100?2:0,maximumFractionDigits:l<100?2:0})}</td>
+                    <td style={TD({color:C.text,fontWeight:700,fontSize:14})}>${l.toLocaleString(langLocale(lang),{minimumFractionDigits:l<100?2:0,maximumFractionDigits:l<100?2:0})}</td>
                     <td style={TD({color:d1>=0?C.green:C.red,fontWeight:700})}>{d1>=0?"▲":"▼"}{Math.abs(d1).toFixed(2)}%</td>
                     <td style={TD({color:d7>=0?C.green:C.red,fontWeight:700})}>{d7>=0?"▲":"▼"}{Math.abs(d7).toFixed(2)}%</td>
-                    <td style={TD({color:C.muted})}>${mn.toLocaleString("en-US",{maximumFractionDigits:l<100?2:0})}</td>
-                    <td style={TD({color:C.muted})}>${mx.toLocaleString("en-US",{maximumFractionDigits:l<100?2:0})}</td>
+                    <td style={TD({color:C.muted})}>${mn.toLocaleString(langLocale(lang),{maximumFractionDigits:l<100?2:0})}</td>
+                    <td style={TD({color:C.muted})}>${mx.toLocaleString(langLocale(lang),{maximumFractionDigits:l<100?2:0})}</td>
                     <td style={TD({minWidth:160})}><SparkLine data={h.slice(-14)} color={m.color} width={140} height={36}/></td>
                     <td style={TD()}>
                       <button onClick={()=>{ requestAnalysis(m.id); }} disabled={!!analysing[m.id]} style={{ background:"#a78bfa1a",color:C.purple,border:"1px solid #a78bfa33",borderRadius:6,padding:"5px 12px",fontFamily:F,fontSize:11,fontWeight:700,cursor:analysing[m.id]?"not-allowed":"pointer",whiteSpace:"nowrap" }}>
@@ -7539,7 +7888,7 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
     const year=new Date().getFullYear();
     return Array.from({length:12},(_,i)=>`${year}-${String(i+1).padStart(2,'0')}`);
   },[]);
-  const MONTH_LBLS = useMemo(()=>Array.from({length:12},(_,i)=>new Date(2024,i,1).toLocaleString(lang==="tr"?"tr-TR":"en-US",{month:"short"})),[lang]);
+  const MONTH_LBLS = useMemo(()=>Array.from({length:12},(_,i)=>new Date(2024,i,1).toLocaleString(langLocale(lang),{month:"short"})),[lang]);
 
   const Q_RANGE = {all:[0,11],q1:[0,2],q2:[3,5],q3:[6,8],q4:[9,11]};
 
@@ -7732,7 +8081,7 @@ Address the contractor as "the Company". Flag overdue amounts if any.`;
       const data = await res.json();
       const narrative = data.content?.filter(b=>b.type==="text").map(b=>b.text).join("")||"Could not generate report.";
       const paragraphs = narrative.split(/\n\n+/).filter(p=>p.trim().length>0);
-      const now = new Date().toLocaleString("en-US",{month:"long",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
+      const now = new Date().toLocaleString(langLocale(lang),{month:"long",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
       const rpt = { narrative, paragraphs, generatedAt:now };
       setReport(rpt);
       setPdfB(true);
@@ -8345,7 +8694,7 @@ export default function App({ session, profile, onLogout }){
 }
 
 function AppInner({ session, profile, onLogout }){
-  const { lang, setLang, t } = useLang();
+  const { lang, setLang, t, isRTL } = useLang();
   const { theme, isDark, toggleTheme } = useTheme();
   ThemeRef.current = theme;
   const [tab,setTab]=useState("projects");
@@ -8372,7 +8721,7 @@ function AppInner({ session, profile, onLogout }){
   const detailBack =()=>{ setSubView("list"); setProject(null); };
   const switchTab  =id=>{ setTab(id); if(id!=="projects"){setProject(null);setSubView("list");} };
   const handleTeamLog=(action,icon,projName)=>{
-    const entry={ id:Date.now(),action,detail:projName||action,user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon };
+    const entry={ id:Date.now(),action,detail:projName||action,user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon };
     setTeamLog(prev=>[entry,...prev]);
     pushGlobal(entry);
   };
@@ -8380,43 +8729,43 @@ function AppInner({ session, profile, onLogout }){
   // Wrapped addPayment that also logs to global log
   const handleAddPayment=async(p)=>{
     await addPayment(p);
-    await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount).toLocaleString()} recorded`,detail:p.project,user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"pay" });
+    await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount).toLocaleString()} recorded`,detail:p.project,user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"pay" });
   };
   const handleUpdatePayment=async(id,patch)=>{
     await updatePayment(id,patch);
-    await pushGlobal({ id:Date.now(),action:`Payment $${Number(patch.amount||0).toLocaleString()} updated`,detail:patch.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"✏️" });
+    await pushGlobal({ id:Date.now(),action:`Payment $${Number(patch.amount||0).toLocaleString()} updated`,detail:patch.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"✏️" });
   };
   const handleRemovePayment=async(id)=>{
     const p=payments.find(x=>x.id===id);
     await removePayment(id);
-    if(p) await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount||0).toLocaleString()} deleted`,detail:p.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"🗑️" });
+    if(p) await pushGlobal({ id:Date.now(),action:`Payment $${Number(p.amount||0).toLocaleString()} deleted`,detail:p.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"🗑️" });
   };
   // Wrapped addInvoice that also logs to global log
   const handleAddInvoice=async(inv)=>{
     await addInvoice(inv);
-    await pushGlobal({ id:Date.now(),action:`Invoice ${inv.invId||inv.id} added`,detail:`${inv.project||""} · $${Number(inv.amount||0).toLocaleString()}`,user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"inv" });
+    await pushGlobal({ id:Date.now(),action:`Invoice ${inv.invId||inv.id} added`,detail:`${inv.project||""} · $${Number(inv.amount||0).toLocaleString()}`,user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"inv" });
   };
   const handleUpdateInvoice=async(id,patch)=>{
     await updateInvoice(id,patch);
-    await pushGlobal({ id:Date.now(),action:`Invoice ${id} edited`,detail:patch.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"✏️" });
+    await pushGlobal({ id:Date.now(),action:`Invoice ${id} edited`,detail:patch.project||"",user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"✏️" });
   };
   const handleRemoveInvoice=async(id)=>{
     await removeInvoice(id);
-    await pushGlobal({ id:Date.now(),action:`Invoice ${id} deleted`,detail:"",user:profile?.full_name||"User",time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"🗑️" });
+    await pushGlobal({ id:Date.now(),action:`Invoice ${id} deleted`,detail:"",user:profile?.full_name||"User",time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}),icon:"🗑️" });
   };
 
   const handleAddProject=async(proj)=>{
     await addProject(proj);
-    try{ await pushGlobal({ id:Date.now(), action:`Project "${proj.name}" created`, detail:proj.name, user:profile?.full_name||"User", time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}), icon:"proj" }); }catch(_){}
+    try{ await pushGlobal({ id:Date.now(), action:`Project "${proj.name}" created`, detail:proj.name, user:profile?.full_name||"User", time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}), icon:"proj" }); }catch(_){}
   };
   const handleUpdateProject=async(id,patch)=>{
     // updateProject now awaits load() — allProjects is fresh when this returns
     await updateProject(id,patch);
-    try{ await pushGlobal({ id:Date.now(), action:`Project updated`, detail:"", user:profile?.full_name||"User", time:new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}), icon:"✏️" }); }catch(_){}
+    try{ await pushGlobal({ id:Date.now(), action:`Project updated`, detail:"", user:profile?.full_name||"User", time:new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"}), icon:"✏️" }); }catch(_){}
   };
 
   const handleDeleteProject=async(proj)=>{
-    const ts=new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+    const ts=new Date().toLocaleString(langLocale(lang),{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
     // 1. Remove all payments linked to this project
     const linkedPayments=payments.filter(p=>p.projId===proj.id||p.project===proj.name);
     for(const p of linkedPayments){ await removePayment(p.id); }
@@ -8473,8 +8822,9 @@ function AppInner({ session, profile, onLogout }){
   return(
     <div style={{ display:"flex",height:"100vh",background:C.bg,fontFamily:F,overflow:"hidden" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&family=Cairo:wght@400;500;600;700&display=swap');
         *{box-sizing:border-box;margin:0;padding:0}
+        [dir="rtl"]{font-family:'Cairo',sans-serif}
         ::-webkit-scrollbar{width:5px;height:5px}
         ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:${isDark?"#2a3045":"#c8cdd8"};border-radius:3px}
@@ -8487,7 +8837,7 @@ function AppInner({ session, profile, onLogout }){
       `}</style>
 
       {/* Sidebar */}
-      <div style={{ width:220,background:C.surface,borderRight:`1px solid ${C.border}`,display:"flex",flexDirection:"column",flexShrink:0,boxShadow:C.sh1||"1px 0 3px rgba(0,0,0,.04)" }}>
+      <div style={{ width:220,background:C.surface,...(isRTL?{borderLeft:`1px solid ${C.border}`,boxShadow:"-1px 0 3px rgba(0,0,0,.04)"}:{borderRight:`1px solid ${C.border}`,boxShadow:C.sh1||"1px 0 3px rgba(0,0,0,.04)"}),display:"flex",flexDirection:"column",flexShrink:0 }}>
         <div style={{ padding:"18px 20px 16px",borderBottom:`1px solid ${C.border}` }}>
           <div style={{ display:"flex",alignItems:"center",gap:10 }}>
             <div style={{ width:32,height:32,background:C.accent,borderRadius:10,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,boxShadow:`0 1px 3px ${C.accent}55` }}>
