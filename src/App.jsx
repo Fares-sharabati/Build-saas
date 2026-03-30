@@ -839,6 +839,34 @@ const TRANSLATIONS = {
     "PDF, images, or Word documents · Max 10MB": "PDF, resimler veya Word belgeleri · Maks 10MB",
     "No contracts uploaded yet": "Henüz sözleşme yüklenmedi",
     "Delete Contract?": "Sözleşme Silinsin mi?",
+    // Payment modal labels
+    "Record Payment":   "Ödeme Kaydet",
+    "Record a payment received from the client": "Müşteriden alınan ödemeyi kaydedin",
+    "Edit Payment":     "Ödemeyi Düzenle",
+    "Update payment information": "Ödeme bilgilerini güncelleyin",
+    "Payment Date *":   "Ödeme Tarihi *",
+    "Payment Method":   "Ödeme Yöntemi",
+    "Related Invoice":  "İlgili Fatura",
+    "— None —":         "— Yok —",
+    "Reference number, comments…": "Referans numarası, yorumlar…",
+    "Receipt / Document": "Makbuz / Belge",
+    "optional — replace existing": "isteğe bağlı — mevcut olanı değiştir",
+    "Payment amount is required": "Ödeme tutarı gereklidir",
+    "Payment date is required": "Ödeme tarihi gereklidir",
+    "Save Payment Changes?": "Ödeme Değişiklikleri Kaydedilsin mi?",
+    "Are you sure you want to apply these changes to this payment?": "Bu değişiklikleri bu ödemeye uygulamak istediğinizden emin misiniz?",
+    "Delete Payment?":  "Ödeme Silinsin mi?",
+    "Yes, Save":        "Evet, Kaydet",
+    "Yes, Delete":      "Evet, Sil",
+    // Chart labels
+    "Inflows":          "Girişler",
+    "Outflows":         "Çıkışlar",
+    "Cumulative":       "Kümülatif",
+    // Plans table view
+    "Type":             "Tür",
+    "File":             "Dosya",
+    "Uploaded":         "Yüklendi",
+    "No documents yet — add your first plan or file": "Henüz belge yok — ilk planı veya dosyayı ekleyin",
   },
 };
 
@@ -1492,6 +1520,23 @@ function RowBtn({ type, onClick, children }){
   );
 }
 
+/** Date input with a visible calendar icon overlay — clicking icon or input opens the native picker */
+function DateInput({ value, onChange, style={}, id }){
+  const ref = useRef();
+  return(
+    <div style={{ position:'relative', display:'flex', alignItems:'center' }}>
+      <input ref={ref} id={id} type="date" value={value} onChange={onChange}
+        style={{ ...style, paddingRight:34, cursor:'pointer', colorScheme:'dark', width:'100%' }}/>
+      <span onClick={()=>{ try{ ref.current?.showPicker(); }catch{ ref.current?.focus(); } }}
+        style={{ position:'absolute', right:9, pointerEvents:'auto', cursor:'pointer', display:'flex', alignItems:'center', color:C.muted }}>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </span>
+    </div>
+  );
+}
+
 /** Wrapper div that spaces a group of RowBtns consistently */
 function RowActions({ children, align="left" }){
   const justify = align==="right"?"flex-end":align==="center"?"center":"flex-start";
@@ -1995,8 +2040,8 @@ function InvModal({ pending,onConfirm,onCancel }){
                   <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice #")}</label><input style={INP()} value={invNum} onChange={e=>setInvNum(e.target.value)} placeholder="INV-001"/></div>
                 </div>
                 <div style={{ display:"flex",gap:12 }}>
-                  <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
-                  <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
+                  <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><DateInput style={INP()} value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
+                  <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><DateInput style={INP()} value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
                 </div>
                 <div style={{ display:"flex",gap:12 }}>
                   <div style={{ flex:2 }}><label style={LBL()}>{t("Total Amount")}</label><input style={INP()} type="number" value={amount} onChange={e=>setAmount(e.target.value)} placeholder="0.00"/></div>
@@ -2205,7 +2250,7 @@ function AddTaskModal({ onConfirm,onCancel,allMembers,allProjects=[] }){
               {allProjects.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
           </div>
-          <div><label style={LBL()}>{t("Due Date *")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
+          <div><label style={LBL()}>{t("Due Date *")}</label><DateInput style={INP()} value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
         </div>
         <div style={{ display:"flex",gap:10,marginTop:22 }}>
           <Btn onClick={submit}>{t("Assign Task")}</Btn>
@@ -2290,8 +2335,8 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
             </div>
             {/* Dates */}
             <div style={{ display:"flex",gap:14 }}>
-              <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
-              <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><DateInput style={INP()} value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><DateInput style={INP()} value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
             </div>
             {/* Amount + Currency */}
             <div style={{ display:"flex",gap:14 }}>
@@ -2548,8 +2593,8 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
       <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice #")}</label><input style={INP()} value={invNum} onChange={e=>setInvNum(e.target.value)} placeholder="INV-001"/></div>
     </div>
     <div style={{ display:"flex",gap:12 }}>
-      <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><input style={{...INP(),colorScheme:"dark"}} type="date" value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
-      <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><input style={{...INP(),colorScheme:"dark"}} type="date" value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
+      <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><DateInput style={INP()} value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
+      <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><DateInput style={INP()} value={dueDate} onChange={e=>setDueDate(e.target.value)}/></div>
     </div>
     <div style={{ display:"flex",gap:12 }}>
       <div style={{ flex:2 }}><label style={LBL()}>{t("Amount *")}</label><input style={INP()} type="number" value={amount} onChange={e=>{setAmount(e.target.value);setFormErr("");}} onWheel={e=>e.target.blur()} placeholder="0.00"/></div>
@@ -2790,15 +2835,34 @@ function PlansPanel({ project,onActivity }){
       )}
       {!showAdd&&files.length===0&&<div style={{ color:C.muted,fontFamily:F,fontSize:12,padding:"10px 0",marginBottom:12 }}>{t("No documents yet — add your first plan or file")}</div>}
       {!showAdd&&files.length>0&&(
-        <div style={{ display:"flex",flexDirection:"column",gap:7,marginBottom:14 }}>{files.map(f=>(
-          <div key={f.id} style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:7,padding:"10px 14px",display:"flex",alignItems:"center",gap:10 }}>
-            {f.dataUrl?.startsWith("data:image")?<img src={f.dataUrl} alt="" style={{ width:40,height:40,objectFit:"cover",borderRadius:5,border:`1px solid ${C.border}`,flexShrink:0 }}/>:<div style={{ width:40,height:40,background:C.card,borderRadius:5,display:"flex",alignItems:"center",justifyContent:"center",fontSize:20,flexShrink:0 }}>{<Ic.Attach size={16} color={C.muted}/>}</div>}
-            <div style={{ flex:1,minWidth:0 }}><div style={{ color:C.text,fontFamily:F,fontWeight:600,fontSize:12,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{f.displayTitle||f.name}</div><div style={{ color:C.muted,fontFamily:F,fontSize:10,marginTop:2 }}>{fmtBytes(f.size)} · {f.uploadedAt}{f.notes&&<span> · {f.notes.slice(0,40)}</span>}</div></div>
-            <Badge status={f.badgeStatus}/>
-            <RowBtn type="view" onClick={()=>setPreview(f)}>{t("View")}</RowBtn>
-            <RowBtn type="delete" onClick={()=>setConfirmDelete(f)}>{t("Delete")}</RowBtn>
-          </div>
-        ))}</div>
+        <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:10,overflow:"hidden",marginBottom:14 }}>
+          <table style={TABLE_STYLE}>
+            <thead><tr style={{ background:C.card }}>
+              {[t("Document"),t("Type"),t("Size"),t("Uploaded"),t("Actions")].map((h,i)=><th key={h} style={i===4?TH_ACT():TH()}>{h}</th>)}
+            </tr></thead>
+            <tbody>{files.map((f,idx)=>(
+              <tr key={f.id} style={{ background:idx%2===0?"transparent":C.card+"55", borderBottom:`1px solid ${C.border}` }}>
+                <td style={TD({color:C.text,fontWeight:600,maxWidth:220,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"})}>
+                  <div style={{ display:"flex",alignItems:"center",gap:8 }}>
+                    {f.dataUrl?.startsWith("data:image")
+                      ?<img src={f.dataUrl} alt="" style={{ width:28,height:28,objectFit:"cover",borderRadius:4,border:`1px solid ${C.border}`,flexShrink:0 }}/>
+                      :<span style={{ fontSize:10,fontWeight:700,color:C.accent,background:C.accentDim,padding:"2px 5px",borderRadius:4,flexShrink:0 }}>{f.icon||"DOC"}</span>}
+                    <span style={{ overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap" }}>{f.displayTitle||f.name}</span>
+                  </div>
+                </td>
+                <td style={TD({color:C.muted})}><Badge status={f.badgeStatus}/></td>
+                <td style={TD({color:C.muted,whiteSpace:"nowrap"})}>{fmtBytes(f.size)}</td>
+                <td style={TD({color:C.muted,whiteSpace:"nowrap",fontSize:11})}>{f.uploadedAt}</td>
+                <td style={TD_ACT()}>
+                  <div style={{ display:"flex",gap:6,justifyContent:"center" }}>
+                    <RowBtn type="view" onClick={()=>setPreview(f)}>{t("View")}</RowBtn>
+                    <RowBtn type="delete" onClick={()=>setConfirmDelete(f)}>{t("Delete")}</RowBtn>
+                  </div>
+                </td>
+              </tr>
+            ))}</tbody>
+          </table>
+        </div>
       )}
       {showAdd
         ?<InlineFormShell header={t("Add Plan / Document")} accent={C.blue} saveLabel={t("Save Document")} onSave={submitPlan} onCancel={()=>setShowAdd(false)} err={planErr}>
@@ -3779,42 +3843,42 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
       <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:16,width:600,maxHeight:"93vh",display:"flex",flexDirection:"column",overflow:"hidden",boxShadow:C.sh3||"0 20px 40px rgba(0,0,0,.15)" }}>
         <div style={{ padding:"22px 28px 18px",borderBottom:`1px solid ${C.border}`,flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center" }}>
           <div>
-            <div style={{ color:C.text,fontFamily:F,fontWeight:600,fontSize:16 }}>Record Payment</div>
-            <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:2 }}>Record a payment received from the client</div>
+            <div style={{ color:C.text,fontFamily:F,fontWeight:600,fontSize:16 }}>{t("Record Payment")}</div>
+            <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:2 }}>{t("Record a payment received from the client")}</div>
           </div>
           <button onClick={onCancel} style={{ background:"transparent",border:`1px solid ${C.border}`,borderRadius:6,color:C.muted,width:28,height:28,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}><Ic.X size={12} color={C.muted}/></button>
         </div>
         <div style={{ flex:1,overflowY:"auto",padding:"22px 28px" }}>
         <ErrorBanner>{err}</ErrorBanner>
         <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
-          <div><label style={LBL()}>Project</label>
+          <div><label style={LBL()}>{t("Project")}</label>
             <select value={projId} onChange={e=>setProjId(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
               {allProjects.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}
             </select>
           </div>
           <div style={{ display:"flex",gap:12 }}>
-            <div style={{ flex:1 }}><label style={LBL()}>Amount *</label><input style={INP()} type="number" placeholder="0.00" value={amount} onWheel={e=>e.target.blur()} onChange={e=>{setAmount(e.target.value);setErr("");}}/></div>
+            <div style={{ flex:1 }}><label style={LBL()}>{t("Amount *")}</label><input style={INP()} type="number" placeholder="0.00" value={amount} onWheel={e=>e.target.blur()} onChange={e=>{setAmount(e.target.value);setErr("");}}/></div>
             <div style={{ width:110 }}>
-              <label style={LBL()}>Currency</label>
+              <label style={LBL()}>{t("Currency")}</label>
               <select value={currency} onChange={e=>setCurrency(e.target.value)} style={{...INP(),cursor:"pointer",color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
                 {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
               </select>
             </div>
-            <div style={{ flex:1 }}><label style={LBL()}>Payment Date *</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
+            <div style={{ flex:1 }}><label style={LBL()}>{t("Payment Date *")}</label><DateInput style={INP()} value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
           </div>
-          <div><label style={LBL()}>Payment Method</label>
+          <div><label style={LBL()}>{t("Payment Method")}</label>
             <select value={method} onChange={e=>setMethod(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
               {PAYMENT_METHODS.map(m=><option key={m} value={m}>{m}</option>)}
             </select>
           </div>
-          <div><label style={LBL()}>Related Invoice <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
+          <div><label style={LBL()}>{t("Related Invoice")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label>
             <select value={invRef} onChange={e=>setInvRef(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
-              <option value="">— None —</option>
+              <option value="">{t("— None —")}</option>
               {projInvoices.map(i=><option key={i.id||i.invId} value={fmtInvId(i)}>{fmtInvId(i)} · ${Number(i.amount).toLocaleString()}</option>)}
             </select>
           </div>
-          <div><label style={LBL()}>Notes <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
-            <textarea style={{ ...INP(),resize:"none" }} rows={2} value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Reference number, comments…"/>
+          <div><label style={LBL()}>{t("Notes")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label>
+            <textarea style={{ ...INP(),resize:"none" }} rows={2} value={notes} onChange={e=>setNotes(e.target.value)} placeholder={t("Reference number, comments…")}/>
           </div>
           {/* Receipt / document upload */}
           <div>
@@ -3859,7 +3923,7 @@ function AddPaymentModal({ allProjects, allInvoices, onConfirm, onCancel }){
 
 // ─── EditPaymentModal ─────────────────────────────────────────────────────────
 function EditPaymentModal({ payment, allProjects, allInvoices, onConfirm, onCancel }){
-  const { lang } = useLang();
+  const { t, lang } = useLang();
   const fmtDate=d=>d?new Date(d+"T12:00:00").toLocaleDateString(lang==="tr"?"tr-TR":"en-US",{month:"short",day:"numeric",year:"numeric"}):"—";
   const { currency:gCur } = useCurrencyCtx();
   const [projId,setProjId]  = useState(payment.projId||allProjects[0]?.id||null);
@@ -3898,45 +3962,45 @@ function EditPaymentModal({ payment, allProjects, allInvoices, onConfirm, onCanc
       <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:16,width:600,maxHeight:"93vh",display:"flex",flexDirection:"column",overflow:"hidden",boxShadow:C.sh3||"0 20px 40px rgba(0,0,0,.15)" }}>
         <div style={{ padding:"22px 28px 18px",borderBottom:`1px solid ${C.border}`,flexShrink:0,display:"flex",justifyContent:"space-between",alignItems:"center" }}>
           <div>
-            <div style={{ color:C.text,fontFamily:F,fontWeight:600,fontSize:16 }}>Edit Payment</div>
-            <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:2 }}>Update payment information</div>
+            <div style={{ color:C.text,fontFamily:F,fontWeight:600,fontSize:16 }}>{t("Edit Payment")}</div>
+            <div style={{ color:C.muted,fontFamily:F,fontSize:12,marginTop:2 }}>{t("Update payment information")}</div>
           </div>
           <button onClick={onCancel} style={{ background:"transparent",border:`1px solid ${C.border}`,borderRadius:6,color:C.muted,width:28,height:28,cursor:"pointer",display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}><Ic.X size={12} color={C.muted}/></button>
         </div>
         <div style={{ flex:1,overflowY:"auto",padding:"22px 28px" }}>
           <ErrorBanner>{err}</ErrorBanner>
           <div style={{ display:"flex",flexDirection:"column",gap:14 }}>
-            <div><label style={LBL()}>Project</label>
+            <div><label style={LBL()}>{t("Project")}</label>
               <select value={projId} onChange={e=>setProjId(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
                 {allProjects.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}
               </select>
             </div>
             <div style={{ display:"flex",gap:12 }}>
-              <div style={{ flex:1 }}><label style={LBL()}>Amount *</label><input style={INP()} type="number" placeholder="0.00" value={amount} onWheel={e=>e.target.blur()} onChange={e=>{setAmount(e.target.value);setErr("");}}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Amount *")}</label><input style={INP()} type="number" placeholder="0.00" value={amount} onWheel={e=>e.target.blur()} onChange={e=>{setAmount(e.target.value);setErr("");}}/></div>
               <div style={{ width:110 }}>
-                <label style={LBL()}>Currency</label>
+                <label style={LBL()}>{t("Currency")}</label>
                 <select value={currency} onChange={e=>setCurrency(e.target.value)} style={{...INP(),cursor:"pointer",color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
                   {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
-              <div style={{ flex:1 }}><label style={LBL()}>Payment Date *</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Payment Date *")}</label><DateInput style={INP()} value={date} onChange={e=>{setDate(e.target.value);setErr("");}}/></div>
             </div>
-            <div><label style={LBL()}>Payment Method</label>
+            <div><label style={LBL()}>{t("Payment Method")}</label>
               <select value={method} onChange={e=>setMethod(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
                 {PAYMENT_METHODS.map(m=><option key={m} value={m}>{m}</option>)}
               </select>
             </div>
-            <div><label style={LBL()}>Related Invoice <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
+            <div><label style={LBL()}>{t("Related Invoice")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label>
               <select value={invRef} onChange={e=>setInvRef(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
-                <option value="">— None —</option>
+                <option value="">{t("— None —")}</option>
                 {projInvoices.map(i=><option key={i.id||i.invId} value={fmtInvId(i)}>{fmtInvId(i)} · ${Number(i.amount).toLocaleString()}</option>)}
               </select>
             </div>
-            <div><label style={LBL()}>Notes <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
-              <textarea style={{ ...INP(),resize:"none" }} rows={2} value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Reference number, comments…"/>
+            <div><label style={LBL()}>{t("Notes")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label>
+              <textarea style={{ ...INP(),resize:"none" }} rows={2} value={notes} onChange={e=>setNotes(e.target.value)} placeholder={t("Reference number, comments…")}/>
             </div>
             <div>
-              <label style={LBL()}>Receipt / Document <span style={{fontWeight:400,color:C.muted}}>(optional — replace existing)</span></label>
+              <label style={LBL()}>{t("Receipt / Document")} <span style={{fontWeight:400,color:C.muted}}>({t("optional — replace existing")})</span></label>
               {receipt
                 ?<div style={{ background:C.surface,border:`1px solid ${C.green}44`,borderRadius:10,padding:"14px 16px" }}>
                     <div style={{ display:"flex",alignItems:"center",gap:10 }}>
@@ -4133,14 +4197,14 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
           onCancel={()=>setEditingPayment(null)}/>
       )}
       {confirmEditPay&&(
-        <ConfirmDialog title="Save Payment Changes?" message="Are you sure you want to apply these changes to this payment?"
-          confirmLabel="Yes, Save" variant="edit"
+        <ConfirmDialog title={t("Save Payment Changes?")} message={t("Are you sure you want to apply these changes to this payment?")}
+          confirmLabel={t("Yes, Save")} variant="edit"
           onConfirm={()=>{ updatePayment&&updatePayment(confirmEditPay.id,confirmEditPay.patch); onActivity&&onActivity(`Payment $${confirmEditPay.patch.amount?.toLocaleString()} updated`,"✏️"); setConfirmEditPay(null); }}
           onCancel={()=>setConfirmEditPay(null)}/>
       )}
       {confirmDeletePay&&(
-        <ConfirmDialog title="Delete Payment?" message={`Are you sure you want to delete this payment of $${Number(confirmDeletePay.amount||0).toLocaleString()}? This action cannot be undone.`}
-          confirmLabel="Yes, Delete" variant="delete"
+        <ConfirmDialog title={t("Delete Payment?")} message={`${t("Are you sure you want to delete this payment of")} $${Number(confirmDeletePay.amount||0).toLocaleString()}? ${t("This action cannot be undone.")}`}
+          confirmLabel={t("Yes, Delete")} variant="delete"
           onConfirm={()=>{ removePayment&&removePayment(confirmDeletePay.id); onActivity&&onActivity(`Payment $${confirmDeletePay.amount?.toLocaleString()} deleted`,"🗑️"); setConfirmDeletePay(null); }}
           onCancel={()=>setConfirmDeletePay(null)}>
           <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:9,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center" }}>
@@ -4153,7 +4217,7 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
         <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:8,overflow:"hidden",overflowX:"auto",marginBottom:14 }}>
           <table style={TABLE_STYLE}>
             <thead><tr>
-              {["Date","Amount","Method","Invoice","Notes","Actions"].map((h,i)=><th key={h} style={i===5?TH_ACT():TH()}>{h}</th>)}
+              {[t("Date"),t("Amount"),t("Method"),t("Related Invoice"),t("Notes"),t("Actions")].map((h,i)=><th key={h} style={i===5?TH_ACT():TH()}>{h}</th>)}
             </tr></thead>
             <tbody>{projPayments.map((p,i)=>(
               <tr key={p.id} style={{ borderBottom:i<projPayments.length-1?`1px solid ${C.border}22`:"none",transition:"background .12s" }}
@@ -4166,45 +4230,45 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
                 <td style={TD({color:C.muted,maxWidth:120,overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"})}>{p.notes||"—"}</td>
                 <td style={TD_ACT()}>
                   <RowActions align="center">
-                    {p.receipt&&<RowBtn type="view" onClick={()=>onPreviewFile&&onPreviewFile({...p.receipt,dataUrl:p.receipt.url||p.receipt.dataUrl})}>View</RowBtn>}
-                    <RowBtn type="edit" onClick={()=>setEditingPayment(p)}>Edit</RowBtn>
-                    <RowBtn type="delete" onClick={()=>setConfirmDeletePay(p)}>Delete</RowBtn>
+                    {p.receipt&&<RowBtn type="view" onClick={()=>onPreviewFile&&onPreviewFile({...p.receipt,dataUrl:p.receipt.url||p.receipt.dataUrl})}>{t("View")}</RowBtn>}
+                    <RowBtn type="edit" onClick={()=>setEditingPayment(p)}>{t("Edit")}</RowBtn>
+                    <RowBtn type="delete" onClick={()=>setConfirmDeletePay(p)}>{t("Delete")}</RowBtn>
                   </RowActions>
                 </td>
               </tr>
             ))}</tbody>
           </table>
           <div style={{ padding:"8px 14px",borderTop:`1px solid ${C.border}22`,display:"flex",justifyContent:"flex-end",gap:4 }}>
-            <span style={{ color:C.muted,fontFamily:F,fontSize:11 }}>Total received:</span>
+            <span style={{ color:C.muted,fontFamily:F,fontSize:11 }}>{t("Total Received")}:</span>
             <span style={{ color:C.green,fontFamily:F,fontWeight:700,fontSize:12 }}>${total.toLocaleString()}</span>
           </div>
         </div>
       )}
-      {projPayments.length===0&&!showAdd&&<div style={{ color:C.muted,fontFamily:F,fontSize:12,padding:"10px 0",marginBottom:12 }}>No payments recorded yet</div>}
+      {projPayments.length===0&&!showAdd&&<div style={{ color:C.muted,fontFamily:F,fontSize:12,padding:"10px 0",marginBottom:12 }}>{t("No payments recorded yet")}</div>}
       {showAdd
-        ?<InlineFormShell header="Record Payment" accent={C.green} saveLabel="Save Payment" onSave={submitPay} onCancel={()=>setShowAdd(false)} err={payErr} saving={paySaving}>
+        ?<InlineFormShell header={t("Record Payment")} accent={C.green} saveLabel={t("Save Payment")} onSave={submitPay} onCancel={()=>setShowAdd(false)} err={payErr} saving={paySaving}>
             <div style={{ display:"flex",gap:12 }}>
-              <div style={{ flex:1 }}><label style={LBL()}>Amount *</label><input style={INP()} type="number" placeholder="0.00" value={payAmount} onChange={e=>{setPayAmount(e.target.value);setPayErr("");}}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Amount *")}</label><input style={INP()} type="number" placeholder="0.00" value={payAmount} onChange={e=>{setPayAmount(e.target.value);setPayErr("");}}/></div>
               <div style={{ width:110 }}>
-                <label style={LBL()}>Currency</label>
+                <label style={LBL()}>{t("Currency")}</label>
                 <select value={payCurrency} onChange={e=>setPayCurrency(e.target.value)} style={{...INP(),cursor:"pointer",color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
                   {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
                 </select>
               </div>
-              <div style={{ flex:1 }}><label style={LBL()}>Payment Date *</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={payDate} onChange={e=>{setPayDate(e.target.value);setPayErr("");}}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Payment Date *")}</label><DateInput style={INP()} value={payDate} onChange={e=>{setPayDate(e.target.value);setPayErr("");}}/></div>
             </div>
-            <div><label style={LBL()}>Payment Method</label>
+            <div><label style={LBL()}>{t("Payment Method")}</label>
               <select value={payMethod} onChange={e=>setPayMethod(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
                 {PAYMENT_METHODS.map(m=><option key={m}>{m}</option>)}
               </select>
             </div>
-            <div><label style={LBL()}>Related Invoice <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
+            <div><label style={LBL()}>{t("Related Invoice")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label>
               <select value={payInvRef} onChange={e=>setPayInvRef(e.target.value)} style={{ ...INP(),cursor:"pointer" }}>
-                <option value="">— None —</option>
+                <option value="">{t("— None —")}</option>
                 {projInvoices.map(i=><option key={i.id||i.invId} value={fmtInvId(i)}>{fmtInvId(i)} · ${Number(i.amount).toLocaleString()}</option>)}
               </select>
             </div>
-            <div><label style={LBL()}>Notes <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={payNotes} onChange={e=>setPayNotes(e.target.value)} placeholder="Reference number, comments…"/></div>
+            <div><label style={LBL()}>{t("Notes")} <span style={{fontWeight:400,color:C.muted}}>({t("optional")})</span></label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={payNotes} onChange={e=>setPayNotes(e.target.value)} placeholder={t("Reference number, comments…")}/></div>
             <div>
               <label style={LBL()}>Attach Receipt <span style={{fontWeight:400,color:C.muted}}>(optional)</span></label>
               {payReceipt
@@ -4222,7 +4286,7 @@ function PaymentsPanel({ project, payments, addPayment, updatePayment, removePay
               <input ref={payFileRef} type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.gif,.bmp,.doc,.docx" style={{ display:"none" }} onChange={e=>{const f=e.target.files[0];if(f)handlePayFile(f);e.target.value="";}}/>
             </div>
           </InlineFormShell>
-        :<Btn variant="success" onClick={()=>{ setPayAmount("");setPayDate("");setPayMethod(PAYMENT_METHODS[0]);setPayInvRef("");setPayNotes("");setPayReceipt(null);setPayErr("");setPayCurrency(project?.currency||gCur);setShowAdd(true); }}>+ Record Payment</Btn>
+        :<Btn variant="success" onClick={()=>{ setPayAmount("");setPayDate("");setPayMethod(PAYMENT_METHODS[0]);setPayInvRef("");setPayNotes("");setPayReceipt(null);setPayErr("");setPayCurrency(project?.currency||gCur);setShowAdd(true); }}>+ {t("Record Payment")}</Btn>
       }
     </div>
   );
@@ -4247,24 +4311,24 @@ function PaymentsPage({ payments, allProjects, addPayment, allInvoices, removePa
 
   return(
     <div>
-      {showAdd&&<AddPaymentModal allProjects={allProjects} allInvoices={allInvoices} onConfirm={p=>{addPayment(p);setShowAdd(false);}} onCancel={()=>setShowAdd(false)}/>}
+      {showAdd&&<AddPaymentModal allProjects={allProjects} allInvoices={allInvoices} onConfirm={async p=>{try{await addPayment(p);}catch(e){console.error("Payment save failed:",e);}setShowAdd(false);}} onCancel={()=>setShowAdd(false)}/>}
       {editingPayment&&(
         <EditPaymentModal payment={editingPayment} allProjects={allProjects} allInvoices={allInvoices}
           onConfirm={patch=>{ setEditingPayment(null); setConfirmEditPay({id:editingPayment.id,patch}); }}
           onCancel={()=>setEditingPayment(null)}/>
       )}
       {confirmEditPay&&(
-        <ConfirmDialog title="Save Payment Changes?" message="Are you sure you want to apply these changes to this payment?"
-          confirmLabel="Yes, Save" variant="edit"
-          onConfirm={()=>{ updatePayment&&updatePayment(confirmEditPay.id,confirmEditPay.patch); setConfirmEditPay(null); }}
+        <ConfirmDialog title={t("Save Payment Changes?")} message={t("Are you sure you want to apply these changes to this payment?")}
+          confirmLabel={t("Yes, Save")} variant="edit"
+          onConfirm={async()=>{ if(updatePayment)try{await updatePayment(confirmEditPay.id,confirmEditPay.patch);}catch(e){console.error("Payment update failed:",e);} setConfirmEditPay(null); }}
           onCancel={()=>setConfirmEditPay(null)}/>
       )}
       {confirmDelete&&(
         <ConfirmDialog
-          title="Delete Payment?"
-          message={`Are you sure you want to delete this payment of $${Number(confirmDelete.amount||0).toLocaleString()}? This action cannot be undone.`}
-          confirmLabel="Yes, Delete" variant="delete"
-          onConfirm={()=>{ if(removePayment)removePayment(confirmDelete.id); setConfirmDelete(null); }}
+          title={t("Delete Payment?")}
+          message={`${t("Are you sure you want to delete this payment of")} $${Number(confirmDelete.amount||0).toLocaleString()}? ${t("This action cannot be undone.")}`}
+          confirmLabel={t("Yes, Delete")} variant="delete"
+          onConfirm={async()=>{ if(removePayment)try{await removePayment(confirmDelete.id);}catch(e){console.error("Payment delete failed:",e);} setConfirmDelete(null); }}
           onCancel={()=>setConfirmDelete(null)}>
           <div style={{ background:C.surface,border:`1px solid ${C.border}`,borderRadius:9,padding:"10px 14px",display:"flex",justifyContent:"space-between",alignItems:"center" }}>
             <span style={{ color:C.muted,fontFamily:F,fontSize:13 }}>{confirmDelete.project} · {confirmDelete.dateFmt}</span>
@@ -4384,8 +4448,8 @@ function ReportPage({ tasks, allProjects, allInvoices }){
         <SLabel>{t("Report Configuration")}</SLabel>
         <div style={{ display:"flex",gap:16,flexWrap:"wrap",alignItems:"flex-end" }}>
           <div style={{ flex:2,minWidth:200 }}><label style={LBL()}>{t("Project")}</label><select value={projId||""} onChange={e=>{setProjId(e.target.value);setReport(null);}} style={{ ...INP(),cursor:"pointer" }}>{(allProjects||[]).map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></div>
-          <div style={{ flex:1,minWidth:140 }}><label style={LBL()}>{t("From")}</label><input type="date" value={from} onChange={e=>{setFrom(e.target.value);setReport(null);}} style={{ ...INP(),colorScheme:"dark" }}/></div>
-          <div style={{ flex:1,minWidth:140 }}><label style={LBL()}>{t("To")}</label><input type="date" value={to} onChange={e=>{setTo(e.target.value);setReport(null);}} style={{ ...INP(),colorScheme:"dark" }}/></div>
+          <div style={{ flex:1,minWidth:140 }}><label style={LBL()}>{t("From")}</label><DateInput style={INP()} value={from} onChange={e=>{setFrom(e.target.value);setReport(null);}}/></div>
+          <div style={{ flex:1,minWidth:140 }}><label style={LBL()}>{t("To")}</label><DateInput style={INP()} value={to} onChange={e=>{setTo(e.target.value);setReport(null);}}/></div>
           <button onClick={generate} disabled={generating} style={{ background:generating?"transparent":C.accent,color:generating?C.accent:"#000",border:generating?`1px solid ${C.accent}44`:"none",padding:"10px 28px",borderRadius:8,fontFamily:F,fontWeight:700,fontSize:14,cursor:"pointer",display:"flex",alignItems:"center",gap:8,flexShrink:0,height:40 }}>
             {generating?<><div style={{ width:15,height:15,border:"2px solid #f59e0b44",borderTopColor:C.accent,borderRadius:"50%",animation:"spin .7s linear infinite" }}/>{t("Generating…")}</>:t("Generate Report")}
           </button>
@@ -4642,7 +4706,7 @@ function CalendarPage({ allInvoices,tasks,onAddTask,projectEvents=[],payments=[]
       {view==="day"&&(
         <div>
           <div style={{ display:"flex",alignItems:"center",gap:10,marginBottom:16 }}>
-            <input type="date" value={dayDate} onChange={e=>setDayDate(e.target.value)} style={{ ...INP(),width:"auto",colorScheme:"dark" }}/>
+            <DateInput style={{ ...INP(),width:"auto" }} value={dayDate} onChange={e=>setDayDate(e.target.value)}/>
             {dayDate&&<span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:15 }}>{new Date(dayDate+"T12:00:00").toLocaleDateString(locale,{weekday:"long",year:"numeric",month:"long",day:"numeric"})}</span>}
           </div>
           <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:14,padding:"20px 24px" }}>
@@ -5399,8 +5463,8 @@ function EditProjectModal({ project, onConfirm, onCancel }){
               <div>
                 <label style={{ ...LBL(),marginBottom:12 }}>{t("Project Timeline")}</label>
                 <div style={{ display:"flex",gap:14 }}>
-                  <div style={{ flex:1 }}><label style={LBL()}>{t("Starting Date")}</label><input type="date" value={startISO} onChange={e=>setStartISO(e.target.value)} style={{ ...INP(),colorScheme:"dark" }}/></div>
-                  <div style={{ flex:1 }}><label style={LBL()}>{t("Expected Finish Date")}</label><input type="date" value={endISO} onChange={e=>setEndISO(e.target.value)} style={{ ...INP(),colorScheme:"dark" }}/></div>
+                  <div style={{ flex:1 }}><label style={LBL()}>{t("Starting Date")}</label><DateInput style={INP()} value={startISO} onChange={e=>setStartISO(e.target.value)}/></div>
+                  <div style={{ flex:1 }}><label style={LBL()}>{t("Expected Finish Date")}</label><DateInput style={INP()} value={endISO} onChange={e=>setEndISO(e.target.value)}/></div>
                 </div>
                 {startISO&&endISO&&(()=>{
                   const diff=Math.round((new Date(endISO)-new Date(startISO))/(1000*60*60*24));
@@ -5595,11 +5659,11 @@ function NewProjectModal({ onConfirm, onCancel }){
                 <div style={{ display:"flex",gap:14 }}>
                   <div style={{ flex:1 }}>
                     <label style={LBL()}>{t("Starting Date")}</label>
-                    <input type="date" value={startISO} onChange={e=>setStartISO(e.target.value)} style={{ ...INP(),colorScheme:"dark" }}/>
+                    <DateInput style={INP()} value={startISO} onChange={e=>setStartISO(e.target.value)}/>
                   </div>
                   <div style={{ flex:1 }}>
                     <label style={LBL()}>{t("Expected Finish Date")}</label>
-                    <input type="date" value={endISO} onChange={e=>setEndISO(e.target.value)} style={{ ...INP(),colorScheme:"dark" }}/>
+                    <DateInput style={INP()} value={endISO} onChange={e=>setEndISO(e.target.value)}/>
                   </div>
                 </div>
                 {startISO&&endISO&&(()=>{
@@ -6207,7 +6271,7 @@ function EditInvoiceModal({ invoice, allProjects, onConfirm, onCancel }){
           <div><label style={LBL()}>{t("Description")}</label><textarea style={{ ...INP(),resize:"none" }} rows={2} value={desc} onChange={e=>setDesc(e.target.value)} placeholder={t("Invoice description")}/></div>
           <div style={{ display:"flex",gap:12 }}>
             <div style={{ flex:1 }}><label style={LBL()}>{t("Amount *")}</label><input style={INP()} type="number" value={amount} onChange={e=>{setAmount(e.target.value);setErr("");}} onWheel={e=>e.target.blur()} placeholder="0.00"/></div>
-            <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={due} onChange={e=>setDue(e.target.value)}/></div>
+            <div style={{ flex:1 }}><label style={LBL()}>{t("Due Date")}</label><DateInput style={INP()} value={due} onChange={e=>setDue(e.target.value)}/></div>
           </div>
           <div><label style={LBL()}>{t("Status")}</label>
             <div style={{ display:"flex",gap:8 }}>
@@ -6327,7 +6391,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
             {/* Invoice # + Date */}
             <div style={{ display:"flex",gap:12 }}>
               <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice # *")}</label><input style={INP()} value={invNum} onChange={e=>setInvNum(e.target.value)} placeholder="INV-001"/></div>
-              <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
+              <div style={{ flex:1 }}><label style={LBL()}>{t("Invoice Date")}</label><DateInput style={INP()} value={invDate} onChange={e=>setInvDate(e.target.value)}/></div>
             </div>
             {/* Project */}
             <div><label style={LBL()}>{t("Project *")}</label>
@@ -6357,7 +6421,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
                   {CURRENCIES.map(c=><option key={c}>{c}</option>)}
                 </select>
               </div>
-              <div style={{ flex:1.5 }}><label style={LBL()}>{t("Due Date")}</label><input style={{ ...INP(),colorScheme:"dark" }} type="date" value={due} onChange={e=>setDue(e.target.value)}/></div>
+              <div style={{ flex:1.5 }}><label style={LBL()}>{t("Due Date")}</label><DateInput style={INP()} value={due} onChange={e=>setDue(e.target.value)}/></div>
             </div>
             {/* Status */}
             <div><label style={LBL()}>{t("Status")}</label>
@@ -7549,9 +7613,9 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
         data:{
           labels: MONTH_LBLS.slice(lo,hi+1),
           datasets:[
-            {type:'bar',  label:'Inflows',    data:vis.map(m=>m.inflow),   backgroundColor:C.blueDim,  borderRadius:3, barPercentage:.55, order:2},
-            {type:'bar',  label:'Outflows',   data:vis.map(m=>-m.outflow), backgroundColor:C.redDim,   borderRadius:3, barPercentage:.55, order:2},
-            {type:'line', label:'Cumulative', data:cumVals.slice(lo,hi+1), borderColor:C.green, backgroundColor:'transparent',
+            {type:'bar',  label:t('Inflows'),    data:vis.map(m=>m.inflow),   backgroundColor:C.blueDim,  borderRadius:3, barPercentage:.55, order:2},
+            {type:'bar',  label:t('Outflows'),   data:vis.map(m=>-m.outflow), backgroundColor:C.redDim,   borderRadius:3, barPercentage:.55, order:2},
+            {type:'line', label:t('Cumulative'), data:cumVals.slice(lo,hi+1), borderColor:C.green, backgroundColor:'transparent',
              borderWidth:2.5, pointBackgroundColor:C.green, pointRadius:4, tension:.35, order:1},
           ]
         },
@@ -7565,7 +7629,7 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
       });
     }).catch(()=>{});
     return ()=>{ if(cumulInst.current){cumulInst.current.destroy();cumulInst.current=null;} };
-  },[subPage,cfData,quarter,currency,C]);
+  },[subPage,cfData,quarter,currency,C,lang]);
 
   useEffect(()=>{
     if(subPage!=="costs"||!costData.length) return;
@@ -8355,13 +8419,13 @@ function AppInner({ session, profile, onLogout }){
     const ts=new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
     // 1. Remove all payments linked to this project
     const linkedPayments=payments.filter(p=>p.projId===proj.id||p.project===proj.name);
-    for(const p of linkedPayments){ removePayment(p.id); }
+    for(const p of linkedPayments){ await removePayment(p.id); }
     // 2. Remove all dynamic invoices linked to this project
     const linkedInvoices=allInvoices.filter(i=>i.projId===proj.id||i.project===proj.name);
     for(const i of linkedInvoices){ await removeInvoice(i.id); }
     // 3. Remove tasks linked to this project
     const linkedTasks=tasks.filter(t=>t.projId===proj.id||t.project===proj.name);
-    for(const t of linkedTasks){ removeTask(t.id); }
+    for(const t of linkedTasks){ await removeTask(t.id); }
     // 4. Delete the project itself
     await deleteProject(proj.id);
     // 5. If we're currently viewing this project, go back to list
