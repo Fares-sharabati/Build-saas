@@ -29,7 +29,12 @@ export default function LoginPage({ onLogin }) {
     })
 
     if (authError) {
-      setError('Invalid email or password. Please try again.')
+      const msg = authError.message || ''
+      if (msg.toLowerCase().includes('email') && msg.toLowerCase().includes('confirm')) {
+        setError('Please confirm your email address before signing in. Check your inbox.')
+      } else {
+        setError(msg || 'Invalid email or password. Please try again.')
+      }
       setLoading(false)
       return
     }

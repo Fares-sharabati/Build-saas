@@ -95,7 +95,7 @@ const auth = {
         body: JSON.stringify({ email, password }),
       })
       const data = await res.json()
-      if (!res.ok) return { data: null, error: { message: data.error_description || 'Login failed' } }
+      if (!res.ok) return { data: null, error: { message: data.error_description || data.msg || data.message || 'Login failed' } }
       setToken(data.access_token)
       setRefreshToken(data.refresh_token)
       const session = { access_token: data.access_token, user: data.user }
