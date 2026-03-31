@@ -4,6 +4,13 @@
 const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL
 const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY
 
+if (!SUPABASE_URL || SUPABASE_URL === 'undefined') {
+  throw new Error('[supabaseClient] VITE_SUPABASE_URL is not defined. Check your .env.local file.')
+}
+if (!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY === 'undefined') {
+  throw new Error('[supabaseClient] VITE_SUPABASE_ANON_KEY is not defined. Check your .env.local file.')
+}
+
 const getToken        = () => { try { return localStorage.getItem('bf_token') } catch { return null } }
 const getRefreshToken = () => { try { return localStorage.getItem('bf_refresh') } catch { return null } }
 const setToken        = (t) => { try { localStorage.setItem('bf_token', t||'') } catch {} }
