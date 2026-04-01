@@ -15,7 +15,10 @@
       "Bash(xargs ls:*)",
       "Bash(curl -s http://localhost:5173)",
       "Bash(ls -la /Users/fares/Desktop/saas-app/.env*)",
-      "Bash(ls /Users/fares/Desktop/saas-app/.env*)"
+      "Bash(ls /Users/fares/Desktop/saas-app/.env*)",
+      "mcp__be0bd42b-50fb-4fe2-83b1-d2ed65fb2f55__list_projects",
+      "mcp__be0bd42b-50fb-4fe2-83b1-d2ed65fb2f55__execute_sql",
+      "mcp__be0bd42b-50fb-4fe2-83b1-d2ed65fb2f55__apply_migration"
     ]
   }
 }

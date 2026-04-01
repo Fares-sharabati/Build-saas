@@ -25,6 +25,7 @@ export const dbProjects = {
     address:     p.address     || '',
     client:      p.client      || {},
     value:       Number(p.value) || 0,
+    currency:    p.currency    || 'USD',
     status:      p.status      || 'quoting',
     progress:    Number(p.progress) || 0,
     phase:       p.phase       || '',
@@ -52,6 +53,7 @@ export const dbProjects = {
     if (patch.dueFmt      !== undefined) dbPatch.due_fmt    = patch.dueFmt
     if (patch.projType    !== undefined) dbPatch.proj_type  = patch.projType
     if (patch.desc        !== undefined) dbPatch.description = patch.desc
+    if (patch.currency    !== undefined) dbPatch.currency    = patch.currency
     // Uses user JWT via supabase client — respects RLS, no service key in frontend
     return supabase.from('projects').update(dbPatch).eq('id', id)
   },
@@ -348,6 +350,7 @@ export const mapProject = (row) => ({
   client:       row.client       || {},
   contacts:     row.contacts     || [],
   value:        row.value        || 0,
+  currency:     row.currency     || 'USD',
   status:       row.status       || 'active',
   progress:     row.progress     || 0,
   phase:        row.phase        || '',

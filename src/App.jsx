@@ -2615,7 +2615,7 @@ function AddInvoiceFormModal({ project, onConfirm, onCancel, allInvoices=[] }){
   const nextId=()=>nextInvId(allInvoices);
   const [supplier,setSupplier]=useState("");const [invNum,setInvNum]=useState("");
   const [invDate,setInvDate]=useState("");const [dueDate,setDueDate]=useState("");
-  const [amount,setAmount]=useState("");const [currency,setCurrency]=useState("AED");
+  const [amount,setAmount]=useState("");const [currency,setCurrency]=useState(project?.currency||"AED");
   const [desc,setDesc]=useState("");const [status,setStatus]=useState("pending");
   const [docFile,setDocFile]=useState(null);
   const [aiRunning,setAiRunning]=useState(false);const [aiNote,setAiNote]=useState("");
@@ -2762,7 +2762,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
   const [invDate,setInvDate]     = useState("");
   const [dueDate,setDueDate]     = useState("");
   const [amount,setAmount]       = useState("");
-  const [currency,setCurrency]   = useState("AED");
+  const [currency,setCurrency]   = useState(project?.currency||"AED");
   const [desc,setDesc]           = useState(INVOICE_CATS[0]);
   const [status,setStatus]       = useState("pending");
   const [docFile,setDocFile]     = useState(null);
@@ -2785,7 +2785,7 @@ function InvoicesPanel({ project, onActivity, onAddGlobalInvoice, onRemoveGlobal
 
   const resetForm = () => {
     setSupplier(""); setInvNum(""); setInvDate(""); setDueDate("");
-    setAmount(""); setCurrency("AED"); setDesc(""); setStatus("pending");
+    setAmount(""); setCurrency(project?.currency||"AED"); setDesc(""); setStatus("pending");
     setDocFile(null); setAiRunning(false); setAiNote(""); setFormErr(""); setSaving(false);
   };
 
@@ -4915,7 +4915,7 @@ function ReportPage({ tasks, allProjects, allInvoices }){
           {report.logs.length>0&&(
             <div style={{ background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"20px 24px" }}>
               <SLabel>{t("Activity Log")}</SLabel>
-              <div style={{ display:"flex",flexDirection:"column",gap:7 }}>
+              <div style={{ display:"flex",flexDirection:"column",gap:7,maxHeight:400,overflowY:"auto",overscrollBehavior:"contain" }}>
                 {report.logs.map(e=>(
                   <div key={e.id} onClick={()=>setLogDetail(e)} style={{ display:"flex",alignItems:"center",gap:12,padding:"8px 12px",background:C.surface,borderRadius:7,cursor:"pointer" }} onMouseEnter={el=>el.currentTarget.style.background=C.surf2||C.card} onMouseLeave={el=>el.currentTarget.style.background=C.surface}>
                     <div style={{ width:30,height:30,background:C.card,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0 }}>{getActivityIcon(e.icon)}</div>
@@ -5686,7 +5686,7 @@ function ProjectPage({ project,onBack,onOpenTeam,extraLog=[],payments=[],addPaym
               <span style={{ color:C.text,fontFamily:F,fontWeight:700,fontSize:12 }}>{t("Activity")}</span>
               <span style={{ background:C.accentDim,color:C.accent,borderRadius:99,fontSize:10,fontWeight:700,padding:"1px 7px" }}>{mergedLog.length}</span>
             </div>
-            <div>
+            <div style={{ overflowY:"auto",maxHeight:340,overscrollBehavior:"contain" }}>
               {mergedLog.map((e,i)=>(
                 <div key={e.id} onClick={()=>setLogDetail(e)} style={{ display:"flex",gap:8,padding:"10px 12px",borderBottom:i<mergedLog.length-1?`1px solid ${C.border}22`:"none",alignItems:"flex-start",cursor:"pointer",transition:"background .12s",borderRadius:4 }} onMouseEnter={e2=>e2.currentTarget.style.background=C.surf2||C.surface} onMouseLeave={e2=>e2.currentTarget.style.background="transparent"}>
                   <div style={{ width:26,height:26,background:C.surface,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0,marginTop:1 }}>{getActivityIcon(e.icon)}</div>
@@ -5716,6 +5716,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
   const [endISO,setEndISO]     = useState(project.due||"");
   const [projType,setProjType] = useState(project.projType||"business");
   const [value,setValue]       = useState(String(project.value||""));
+  const [currency,setCurrency] = useState(project.currency||"USD");
   const [status,setStatus]     = useState(project.status||"active");
   const [contacts,setContacts] = useState(project.contacts?.length ? project.contacts : [emptyContact()]);
   const [step,setStep]         = useState(1);
@@ -5742,7 +5743,7 @@ function EditProjectModal({ project, onConfirm, onCancel }){
       name:name.trim(), address:address.trim(), desc:desc.trim(),
       startDateISO:startISO, due:endISO,
       startDate:fmtD(startISO), dueFmt:fmtD(endISO),
-      projType, status,
+      projType, status, currency,
       value:parseFloat(value)||project.value||0,
       location:address.trim().split(",")[0]||"",
       client:{ name:primaryClient.name, company:primaryClient.company||"", phone:primaryClient.phone||"", email:primaryClient.email||"", initials },
@@ -5791,8 +5792,16 @@ function EditProjectModal({ project, onConfirm, onCancel }){
               <div><label style={LBL()}>{t("Project Address *")}</label><input style={INP()} value={address} onChange={e=>{setAddress(e.target.value);setErr("");}}/></div>
               <div><label style={LBL()}>{t("Description")} <span style={{color:C.muted,fontWeight:400}}>({t("optional")})</span></label>
                 <textarea style={{ ...INP(),resize:"none",lineHeight:1.55 }} rows={3} value={desc} onChange={e=>setDesc(e.target.value)}/></div>
-              <div><label style={LBL()}>{t("Contract Value")}</label>
-                <input style={INP()} type="number" value={value} onChange={e=>setValue(e.target.value)} placeholder="0.00" onWheel={e=>e.target.blur()}/>
+              <div style={{ display:"flex",gap:12 }}>
+                <div style={{ flex:1 }}><label style={LBL()}>{t("Contract Value")}</label>
+                  <input style={INP()} type="number" value={value} onChange={e=>setValue(e.target.value)} placeholder="0.00" onWheel={e=>e.target.blur()}/>
+                </div>
+                <div style={{ width:120 }}>
+                  <label style={LBL()}>{t("Currency")}</label>
+                  <select value={currency} onChange={e=>setCurrency(e.target.value)} style={{...INP(),cursor:"pointer",color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
+                    {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
               </div>
               <div><label style={LBL()}>{t("Project Status")}</label>
                 <div style={{ display:"flex",gap:8,flexWrap:"wrap" }}>
@@ -5904,6 +5913,7 @@ function NewProjectModal({ onConfirm, onCancel }){
   const [endISO,setEndISO]=useState("");
   const [projType,setProjType]=useState("business");
   const [projStatus,setProjStatus]=useState("active");
+  const [currency,setCurrency]=useState("USD");
   const [contacts,setContacts]=useState([emptyContact()]);
   const [step,setStep]=useState(1); // 1=info, 2=timeline&type, 3=contacts
   const [err,setErr]=useState("");
@@ -5933,7 +5943,7 @@ function NewProjectModal({ onConfirm, onCancel }){
       id:newId, name:name.trim(), address:address.trim(), desc:desc.trim(),
       startDateISO:startISO, due:endISO,
       startDate:fmtD(startISO), dueFmt:fmtD(endISO),
-      projType, status:projStatus, progress:0,
+      projType, status:projStatus, progress:0, currency,
       value:parseFloat(value)||0, location:address.trim().split(",")[0]||"",
       client:{ name:primaryClient.name, company:primaryClient.company||"", phone:primaryClient.phone||"", email:primaryClient.email||"", initials },
       contacts:validContacts,
@@ -5991,9 +6001,17 @@ function NewProjectModal({ onConfirm, onCancel }){
                 <label style={LBL()}>{t("Project Description")} <span style={{ color:C.muted,fontWeight:400 }}>({t("optional")})</span></label>
                 <textarea style={{ ...INP(),resize:"none",lineHeight:1.55 }} rows={3} placeholder={t("Brief overview of scope, objectives, or special requirements…")} value={desc} onChange={e=>setDesc(e.target.value)}/>
               </div>
-              <div>
-                <label style={LBL()}>{t("Contract Value")} <span style={{ color:C.muted,fontWeight:400 }}>({t("optional")})</span></label>
-                <input style={INP()} type="number" value={value} onChange={e=>setValue(e.target.value)} placeholder="0.00" onWheel={e=>e.target.blur()}/>
+              <div style={{ display:"flex",gap:12 }}>
+                <div style={{ flex:1 }}>
+                  <label style={LBL()}>{t("Contract Value")} <span style={{ color:C.muted,fontWeight:400 }}>({t("optional")})</span></label>
+                  <input style={INP()} type="number" value={value} onChange={e=>setValue(e.target.value)} placeholder="0.00" onWheel={e=>e.target.blur()}/>
+                </div>
+                <div style={{ width:120 }}>
+                  <label style={LBL()}>{t("Currency")}</label>
+                  <select value={currency} onChange={e=>setCurrency(e.target.value)} style={{...INP(),cursor:"pointer",color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
+                    {CURRENCIES.map(c=><option key={c} value={c}>{c}</option>)}
+                  </select>
+                </div>
               </div>
             </div>
           )}
@@ -6644,7 +6662,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
   const [desc,setDesc]          = useState(INVOICE_CATS[0]);  // category
   const [notes,setNotes]         = useState("");                 // free-text notes
   const [amount,setAmount]      = useState("");
-  const [currency,setCurrency]  = useState(gCur);
+  const [currency,setCurrency]  = useState(()=>allProjects[0]?.currency||gCur);
   const [invNum,setInvNum]      = useState(()=>nextInvId(allInvoices));
   const [invDate,setInvDate]    = useState("");
   const [due,setDue]            = useState("");
@@ -6655,7 +6673,7 @@ function AddGlobalInvoiceModal({ allProjects, allInvoices=[], onConfirm, onCance
   const [err,setErr]            = useState("");
   const fileRef                 = useRef();
 
-  useEffect(()=>{ const p=allProjects.find(p=>p.name===project); if(p&&p.client)setClient(p.client.company||p.client.name||""); },[project,allProjects]);
+  useEffect(()=>{ const p=allProjects.find(p=>p.name===project); if(p&&p.client)setClient(p.client.company||p.client.name||""); if(p?.currency)setCurrency(p.currency); },[project,allProjects]);
   // refresh suggested invoice# whenever allInvoices grows
   useEffect(()=>{ if(!invNum||invNum===nextInvId(allInvoices.slice(0,-1))) setInvNum(nextInvId(allInvoices)); },[allInvoices]);
 
@@ -7823,16 +7841,12 @@ async function generatePdfBlob(metrics, report){
 function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
   const { t,lang }=useLang();
   const { currency:gCur, setCurrency:setGCur } = useCurrencyCtx();
-  const [projId,setProjId]    = useState(()=>allProjects[0]?.id||null);
+  const [projId,setProjId]    = useState(null);
   const [subPage,setSubPage]  = useState("cashflow"); // cashflow|costs|invoices|payments
   const [quarter,setQuarter]  = useState("all");       // all|q1|q2|q3|q4
   const [costFilter,setCostFilter] = useState("all"); // all|over|warn
   const [invStatus,setInvStatus]   = useState("all");
   const [invCat,setInvCat]         = useState("all");
-  const [report,setReport]    = useState(null);
-  const [generating,setGen]   = useState(false);
-  const [pdfBuilding,setPdfB] = useState(false);
-  const [err,setErr]          = useState("");
   const [currency,setCurrencyLocal] = useState(gCur);
 
   // Chart canvas refs
@@ -7843,14 +7857,17 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
   const costInst      = useRef(null);
   const burnInst      = useRef(null);
 
+  // Seed projId once projects load from DB (lazy useState runs before async load)
+  useEffect(()=>{
+    if(!projId && allProjects.length > 0) setProjId(allProjects[0].id);
+  },[allProjects, projId]);
+
   const project = useMemo(()=>allProjects.find(p=>p.id===projId)||allProjects[0]||null,[projId,allProjects]);
 
   useEffect(()=>{
     const p = allProjects.find(x=>x.id===projId);
     setCurrencyLocal(p?.currency||gCur);
   },[projId,gCur,allProjects]);
-
-  const handleCurrencyChange = (c)=>{ setCurrencyLocal(c); setGCur(c); };
 
   // ── Filter invoices + payments to selected project ──────────────────────────
   const projInvoices = useMemo(()=>{
@@ -8039,82 +8056,8 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
     };
   },[subPage,costData,costFilter,currency,C]);
 
-  // ── AI report generation (unchanged logic) ───────────────────────────────────
-  const generate = async()=>{
-    if(!project||!metrics){ setErr(t("Please select a project first.")); return; }
-    setGen(true); setErr(""); setReport(null);
-    try{
-      const prompt=`You are a professional construction accountant preparing a formal financial report for a contractor in the GCC market (UAE/Saudi Arabia).
-
-Analyze the following financial data and write a professional Accountant's Report narrative (4-6 paragraphs). Use proper accounting language and provide a clear financial assessment.
-
-PROJECT: ${project.name}
-Client: ${project.client?.company||project.client?.name||"N/A"}
-Contract Value: ${fmtCurS(metrics.projectValue, currency)}
-Status: ${project.status} | Phase: ${project.phase||"N/A"}
-
-INVOICES: Total ${fmtCurS(metrics.totalInvoiced, currency)} (${metrics.invoiceCount} invoices)
-  Paid: ${fmtCurS(metrics.totalPaid, currency)} | Overdue: ${fmtCurS(metrics.totalOverdue, currency)} | Pending: ${fmtCurS(metrics.totalPending, currency)}
-  Collection rate: ${metrics.invoicePaidPct}%
-
-PAYMENTS FROM CLIENT: ${fmtCurS(metrics.totalReceived, currency)} (${metrics.paymentCount} payments)
-  Remaining to collect: ${fmtCurS(metrics.remainToReceive, currency)} (${metrics.receivedPct}% collected)
-
-FINANCIAL BALANCE:
-  Gross Profit Estimate: ${fmtCurS(metrics.grossProfit, currency)}
-  Net Cash Position: ${fmtCurS(metrics.netBalance, currency)}
-  Outstanding invoice obligations: ${fmtCurS(metrics.remainToPayInv, currency)}
-
-Write 5 short paragraphs — no markdown, no headers, just plain text paragraphs:
-1. Executive Summary
-2. Revenue & Contract Performance
-3. Invoice & Cost Analysis
-4. Payment Collections & Cash Flow
-5. Financial Position & Recommendations
-Address the contractor as "the Company". Flag overdue amounts if any.`;
-
-      const res = await fetch("https://api.anthropic.com/v1/messages",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({ model:"claude-sonnet-4-20250514", max_tokens:1000, messages:[{role:"user",content:prompt}] })
-      });
-      const data = await res.json();
-      const narrative = data.content?.filter(b=>b.type==="text").map(b=>b.text).join("")||"Could not generate report.";
-      const paragraphs = narrative.split(/\n\n+/).filter(p=>p.trim().length>0);
-      const now = new Date().toLocaleString(langLocale(lang),{month:"long",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});
-      const rpt = { narrative, paragraphs, generatedAt:now };
-      setReport(rpt);
-      setPdfB(true);
-      try{
-        const blob = await generatePdfBlob({...metrics, currency}, rpt);
-        const url  = URL.createObjectURL(blob);
-        const a    = document.createElement("a");
-        a.href=url; a.download=`BuildFlow_Report_${project.name.replace(/\s+/g,"_")}_${new Date().toISOString().slice(0,10)}.pdf`;
-        document.body.appendChild(a); a.click(); document.body.removeChild(a);
-        setTimeout(()=>URL.revokeObjectURL(url),5000);
-      }catch(pe){ setErr("Report generated but PDF export failed. Use Download button to retry."); }
-      setPdfB(false);
-    }catch(e){ setErr("AI generation failed: "+e.message); }
-    setGen(false);
-  };
-
-  const downloadPdf = async()=>{
-    if(!report||!metrics||pdfBuilding) return;
-    setPdfB(true); setErr("");
-    try{
-      const blob = await generatePdfBlob({...metrics, currency}, report);
-      const url  = URL.createObjectURL(blob);
-      const a    = document.createElement("a");
-      a.href=url; a.download=`BuildFlow_Report_${project.name.replace(/\s+/g,"_")}_${new Date().toISOString().slice(0,10)}.pdf`;
-      document.body.appendChild(a); a.click(); document.body.removeChild(a);
-      setTimeout(()=>URL.revokeObjectURL(url),5000);
-    }catch(e){ setErr("PDF export failed: "+e.message); }
-    setPdfB(false);
-  };
-
   const fmt  = n=>fmtCur(n, currency);
   const fmtS = n=>fmtCurS(n, currency);
-  const busy  = generating||pdfBuilding;
 
   // ── Quarter filter helper ─────────────────────────────────────────────────────
   const [lo,hi] = Q_RANGE[quarter]||Q_RANGE.all;
@@ -8175,42 +8118,18 @@ Address the contractor as "the Company". Flag overdue amounts if any.`;
         icon={<Ic.Accountant size={20} color={C.accent}/>}
         title={t("Finance")}
         subtitle={t("Live financial view — synced from Invoices, Payments & Projects")}
-        action={
-          <div style={{display:"flex",gap:8,alignItems:"center",flexWrap:"wrap"}}>
-            {report&&<>
-              <Btn onClick={downloadPdf} disabled={busy} variant="ghost">
-                {pdfBuilding?<><div style={{width:12,height:12,border:`2px solid ${C.accent}`,borderTopColor:"transparent",borderRadius:"50%",animation:"spin .7s linear infinite"}}/>{t("Building…")}</>:<>↓ {t("Download PDF")}</>}
-              </Btn>
-              <Btn onClick={generate} disabled={busy} variant="ghost">↺ {t("Regenerate")}</Btn>
-            </>}
-          </div>
-        }
+        action={null}
       />
 
-      {/* Project + currency selector */}
+      {/* Project selector */}
       <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"18px 22px",marginBottom:18,display:"flex",gap:14,alignItems:"flex-end",flexWrap:"wrap"}}>
         <div style={{flex:1,minWidth:180}}>
           <label style={LBL()}>{t("Project")}</label>
-          <select value={projId||""} onChange={e=>{setProjId(e.target.value);setReport(null);setErr("");}}
+          <select value={project?.id||""} onChange={e=>{ setProjId(e.target.value); }}
             style={{...INP(),fontWeight:600}}>
             {allProjects.map(p=><option key={p.id} value={p.id}>{p.name}</option>)}
           </select>
         </div>
-        <div style={{minWidth:110}}>
-          <label style={LBL()}>{t("Currency")}</label>
-          <select value={currency} onChange={e=>handleCurrencyChange(e.target.value)}
-            style={{...INP(),color:C.accent,fontWeight:700,border:`1px solid ${C.accent}55`}}>
-            {CURRENCIES.map(c=><option key={c}>{c}</option>)}
-          </select>
-        </div>
-        <Btn onClick={generate} disabled={busy||!project} variant="primary">
-          {generating?<><div style={{width:12,height:12,border:"2px solid",borderColor:"#fff",borderTopColor:"transparent",borderRadius:"50%",animation:"spin .7s linear infinite"}}/>{t("Generating…")}</>
-          :pdfBuilding?<><div style={{width:12,height:12,border:"2px solid",borderColor:"#fff",borderTopColor:"transparent",borderRadius:"50%",animation:"spin .7s linear infinite"}}/>{t("Building PDF…")}</>
-          :<>{t("Generate Report & PDF")}</>}
-        </Btn>
-        {err&&<div style={{width:"100%",color:C.red,fontFamily:F,fontSize:12,padding:"8px 12px",background:C.redDim,borderRadius:6,display:"flex",alignItems:"center",gap:6}}>
-          <Ic.Warning size={13} color={C.red}/>{err}
-        </div>}
       </div>
 
       {/* Sub-navigation */}
