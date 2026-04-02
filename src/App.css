@@ -161,10 +161,19 @@
   }
 }
 
+/* Hide native browser date picker icon — custom SVG icon used instead */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.8);
-  cursor: pointer;
-  opacity: 0.7;
+  display: none;
+  opacity: 0;
+  -webkit-appearance: none;
+}
+input[type="date"]::-webkit-inner-spin-button,
+input[type="date"]::-webkit-clear-button {
+  display: none;
+}
+input[type="date"] {
+  appearance: textfield;
+  -moz-appearance: textfield;
 }
 
 .ticks {

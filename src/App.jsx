@@ -1867,15 +1867,15 @@ function RowBtn({ type, onClick, children }){
   );
 }
 
-/** Date input with a visible calendar icon overlay — clicking icon or input opens the native picker */
+/** Date input with a visible calendar icon overlay — clicking anywhere in container opens the native picker */
 function DateInput({ value, onChange, style={}, id }){
   const ref = useRef();
+  const openPicker = ()=>{ try{ ref.current?.showPicker(); }catch{ ref.current?.focus(); } };
   return(
-    <div style={{ position:'relative', display:'flex', alignItems:'center' }}>
+    <div onClick={openPicker} style={{ position:'relative', display:'flex', alignItems:'center', cursor:'pointer' }}>
       <input ref={ref} id={id} type="date" value={value} onChange={onChange}
         style={{ ...style, paddingRight:34, cursor:'pointer', colorScheme:'dark', width:'100%' }}/>
-      <span onClick={()=>{ try{ ref.current?.showPicker(); }catch{ ref.current?.focus(); } }}
-        style={{ position:'absolute', right:9, pointerEvents:'auto', cursor:'pointer', display:'flex', alignItems:'center', color:C.muted }}>
+      <span style={{ position:'absolute', right:9, pointerEvents:'none', display:'flex', alignItems:'center', color:C.muted }}>
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
           <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
         </svg>
@@ -8520,49 +8520,6 @@ function AccountantPage({ allProjects=[], allInvoices=[], payments=[] }){
         </div>
       )}
 
-      {/* ── AI REPORT (shown after generation, any sub-page) ─────────────────── */}
-      {report&&metrics&&(
-        <div style={{background:C.card,border:`1px solid ${C.border}`,borderRadius:14,overflow:"hidden",marginTop:20}}>
-          <div style={{background:`linear-gradient(135deg,#1e3a5f 0%,#2563eb 100%)`,padding:"24px 28px"}}>
-            <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:12}}>
-              <div>
-                <div style={{color:"rgba(180,210,255,0.9)",fontFamily:F,fontSize:10,fontWeight:700,textTransform:"uppercase",letterSpacing:1.2,marginBottom:5}}>{t("Confidential Financial Report")}</div>
-                <div style={{color:"#fff",fontFamily:F,fontSize:20,fontWeight:800,marginBottom:3}}>{metrics.project.name}</div>
-                <div style={{color:"rgba(180,210,255,0.85)",fontFamily:F,fontSize:12}}>
-                  {t("Client")}: <span style={{color:"#fff",fontWeight:600}}>{metrics.project.client?.company||metrics.project.client?.name||"N/A"}</span>
-                  &nbsp;·&nbsp;<span style={{background:"rgba(255,255,255,0.15)",padding:"1px 8px",borderRadius:10,fontWeight:700}}>{(metrics.project.status||"").toUpperCase()}</span>
-                </div>
-              </div>
-              <div style={{textAlign:"right"}}>
-                <div style={{color:"rgba(200,220,255,0.7)",fontFamily:F,fontSize:10,marginBottom:2}}>{t("Generated")}</div>
-                <div style={{color:"#fff",fontFamily:F,fontSize:11,fontWeight:600}}>{report.generatedAt}</div>
-                <div style={{color:"rgba(200,220,255,0.7)",fontFamily:F,fontSize:10,marginTop:3}}>BuildFlow AI</div>
-              </div>
-            </div>
-          </div>
-          <div style={{padding:"22px 28px"}}>
-            <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:16}}>
-              <div style={{width:26,height:26,background:C.purpleDim,borderRadius:7,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <Ic.Reports size={13} color={C.purple}/>
-              </div>
-              <div style={{color:C.text,fontFamily:F,fontWeight:700,fontSize:13,textTransform:"uppercase",letterSpacing:.5}}>{t("Accountant's Analysis")}</div>
-              <div style={{color:C.muted,fontFamily:F,fontSize:10,marginLeft:"auto"}}>{report.generatedAt}</div>
-            </div>
-            <div style={{display:"flex",flexDirection:"column",gap:11}}>
-              {report.paragraphs.map((para,i)=>(
-                <p key={i} style={{color:C.text,fontFamily:F,fontSize:13,lineHeight:1.75,margin:0,
-                  ...(i===0?{background:C.surface,borderLeft:`3px solid ${C.accent}`,borderRadius:"0 6px 6px 0",padding:"11px 14px"}:{padding:"0 2px"})}}>
-                  {para}
-                </p>
-              ))}
-            </div>
-            <div style={{marginTop:18,padding:"10px 14px",background:C.purpleDim,borderRadius:8,display:"flex",alignItems:"center",gap:8}}>
-              <Ic.Warning size={13} color={C.purple}/>
-              <span style={{color:C.muted,fontFamily:F,fontSize:11}}>{t("AI-generated using BuildFlow data. For formal auditing or regulatory submission, please have this reviewed by a licensed accountant.")}</span>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ── EMPTY STATE ──────────────────────────────────────────────────────────── */}
       {!project&&(

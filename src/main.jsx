@@ -1,6 +1,7 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom/client'
+import './App.css'
 import { supabase } from './supabaseClient'
 import LoginPage from './LoginPage'
 import App from './App.jsx'
